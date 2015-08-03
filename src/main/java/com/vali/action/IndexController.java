@@ -9,7 +9,7 @@ import java.util.HashMap;
 @Controller
 public class IndexController {
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/index")
     public ModelAndView listProjects() {
         return new ModelAndView("index", new HashMap());
     }
