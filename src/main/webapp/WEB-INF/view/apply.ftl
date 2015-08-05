@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        .form-horizontal .control-label {
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: left;}
+    </style>
+</head>
+
+<body>
+
+<div style="margin-top:40px;margin-left:150px;visibility:visible">
+    <form class="form-horizontal form-inline">
+        <div class="col-sm-10">
+            <table class="table .table-condensed table-striped ">
+                <tr style="text-align: center;">
+                    <td colspan="4"><label id="cishu" class="col-sm-40 control-label">出 差 申 请 详 细 信 息 填 写</label></td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-8 control-label">申请人</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                        </div>
+                    </td>
+                    <td><label class="col-sm-8 control-label">申请时间</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-8 control-label">类  型</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                        </div>
+                    </td>
+                    <td><label class="col-sm-8 control-label">目的地</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-8 control-label">出差时间</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                        </div>
+                    </td>
+                    <td><label class="col-sm-8 control-label">仓 位</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-8 control-label">行 程</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                        </div>
+                    </td>
+                    <td><label class="col-sm-8 control-label">目的地</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-10 control-label">机票预算(元)</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                        </div>
+                    </td>
+                    <td><label class="col-sm-8 control-label">宾馆房价(元)</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-8 control-label">天 数</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                        </div>
+                    </td>
+                    <td><label class="col-sm-8 control-label">住宿预算(元)</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-10 control-label">其它费用(元)</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td ><label style="margin-left: 22px;" class="col-sm-40 control-label">总计(元)</label></td>
+                    <td>
+                        <div class="col-sm-10">
+                            <input type="total" class="form-control" id="inputtotal" placeholder="0.00">
+                        </div>
+                    </td>
+                    <td>
+                        <p>
+                            <button style ="margin-left: 17px;" type="button" class="btn btn-primary">
+                                提 交 报 销 申 请
+                            </button>
+                        </p>
+                    </td>
+                    <td></td>
+                </tr>
+                </p>
+
+            </table>
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript">
+</script>
+
+</html>
