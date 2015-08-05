@@ -19,7 +19,7 @@
     <form class="form-horizontal form-inline">
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
-                <tr style="text-align: center;">
+                <tr>
                     <td colspan="4"><label id="cishu" class="col-sm-40 control-label">出 差 申 请 详 细 信 息 填 写</label></td>
                 </tr>
                 <tr>
