@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by fanshuai on 15/8/5.
  */
 @Controller
-public class LoginAction {
+public class ApplyListAction {
 
-    @RequestMapping(value = "/login")
-    public String login(){
-        
-        return "login";
+    @RequestMapping(value = "applyList")
+    public String applyList(){
+
+        return "applyList";
     }
 }
