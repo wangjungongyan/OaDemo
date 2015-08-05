@@ -15,7 +15,7 @@
 
 <body>
 
-<div style="margin-top:40px;margin-left:150px;visibility:visible">
+<div style="margin-top:10px;margin-left:10px;visibility:visible">
     <form class="form-horizontal form-inline">
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
