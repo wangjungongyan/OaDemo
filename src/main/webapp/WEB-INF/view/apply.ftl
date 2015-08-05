@@ -20,7 +20,7 @@
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
                 <tr>
-                    <td colspan="4"><label id="cishu" class="col-sm-40 control-label">出 差 申 请 详 细 信 息 填 写</label></td>
+                    <td colspan="4"><label id="cishu" style="margin-left: 300px;" class="col-sm-40 control-label">出 差 申 请 详 细 信 息</label></td>
                 </tr>
                 <tr>
                     <td><label class="col-sm-8 control-label">申请人</label></td>
@@ -117,7 +117,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td ><label style="margin-left: 22px;" class="col-sm-40 control-label">总计(元)</label></td>
+                    <td ><label style="margin-left: 1px;" class="col-sm-40 control-label">总计(元)</label></td>
                     <td>
                         <div class="col-sm-10">
                             <input type="total" class="form-control" id="inputtotal" placeholder="0.00">
@@ -125,7 +125,7 @@
                     </td>
                     <td>
                         <p>
-                            <button style ="margin-left: 17px;" type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary">
                                 提 交 报 销 申 请
                             </button>
                         </p>
