@@ -26,13 +26,13 @@
                     <td><label class="col-sm-8 control-label">申请人</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">申请时间</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="2015-09-01">
                         </div>
                     </td>
                 </tr>
@@ -40,13 +40,13 @@
                     <td><label class="col-sm-8 control-label">类  型</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">目的地</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
                         </div>
                     </td>
                 </tr>
@@ -54,7 +54,7 @@
                     <td><label class="col-sm-8 control-label">出差时间</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="2015-08-09">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">仓 位</label></td>
@@ -68,13 +68,13 @@
                     <td><label class="col-sm-8 control-label">行 程</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">目的地</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
                         </div>
                     </td>
                 </tr>
@@ -82,13 +82,13 @@
                     <td><label class="col-sm-10 control-label">机票预算(元)</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0.00">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">宾馆房价(元)</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0.00">
                         </div>
                     </td>
                 </tr>
@@ -96,13 +96,13 @@
                     <td><label class="col-sm-8 control-label">天 数</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0.00">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">住宿预算(元)</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0">
+                            <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0.00">
                         </div>
                     </td>
                 </tr>
@@ -110,7 +110,7 @@
                     <td><label class="col-sm-10 control-label">其它费用(元)</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                            <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0.00">
                         </div>
                     </td>
                     <td></td>
@@ -125,7 +125,7 @@
                     </td>
                     <td>
                         <p>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-info">
                                 提 交 报 销 申 请
                             </button>
                         </p>
