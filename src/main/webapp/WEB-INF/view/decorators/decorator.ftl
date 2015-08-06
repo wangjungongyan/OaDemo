@@ -111,9 +111,7 @@
 
 <div style="background-color:powderblue;height: 90px;border-bottom: 1px solid #ccc">
     <img style="height: 55px;margin: 12px 0 18px 100px;" src="/image/logo.png"/>
-    <!--
     <h1 style="margin-left: 700px;line-height:1px;position: relative;top: -50px;">罗尔斯.罗伊斯 <small>OA自动化办公系统</small></h1>
-    -->
 
 </div>
 
