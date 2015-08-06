@@ -125,7 +125,7 @@ name---------${name}
             <div class="sidebar-menu">
                 <a href="#userMeun" class="nav-header menu-first collapsed" data-toggle="collapse">
                     <i class="icon-user-md icon-large"></i> 用户管理</a>
-                <ul id="userMeun" class="nav nav-list collapse menu-second">
+                <ul id="userMeun" class="nav nav-list collapse menu-second" style="height: auto;">
                     <li><a href="/apply"><i class="icon-user"></i> 增加用户</a></li>
                     <li><a href="#"><i class="icon-edit"></i> 修改用户</a></li>
                     <li><a href="#"><i class="icon-trash"></i> 删除用户</a></li>
@@ -134,7 +134,7 @@ name---------${name}
                 </ul>
                 <a href="#articleMenu" class="nav-header menu-first collapsed" data-toggle="collapse">
                     <i class="icon-book icon-large"></i> 出差申请</a>
-                <ul id="articleMenu" class="nav nav-list collapse menu-second">
+                <ul id="articleMenu" class="nav nav-list collapse menu-second" style="height: auto;">
                     <li><a href="/apply"><i class="icon-apply"></i> 我要申请</a></li>
                     <li><a href="#"><i class="icon-myApply"></i> 我的申请</a></li>
                     <li><a href="#"><i class="icon-audit"></i> 我要审批</a></li>
@@ -142,7 +142,7 @@ name---------${name}
                 </ul>
                 <a href="#baoxiaoMenu" class="nav-header menu-first collapsed" data-toggle="collapse">
                     <i class="icon-book icon-large"></i> 报销申请</a>
-                <ul id="baoxiaoMenu" class="nav nav-list collapse menu-second">
+                <ul id="baoxiaoMenu" class="nav nav-list collapse menu-second" style="height: auto;">
                     <li><a href="#"><i class="icon-"></i> 我要报销</a></li>
                     <li><a href="#"><i class="icon-myApply"></i> 我的报销</a></li>
                     <li><a href="#"><i class="icon-audit"></i> 我要审批</a></li>
