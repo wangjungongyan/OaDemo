@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 </head>
 <body >
-<div>
+<div class="container">
     <form class="form-inline">
         <div class="form-group">
-            <label for="exampleInputName2">Name</label>
-            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-            <label for="exampleInputEmail2">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-            <button type="submit" class="btn btn-default">Send invitation</button>
+            <label for="exampleInputName2">申请人</label>
+            <input type="text" class="form-control" id="exampleInputName2" placeholder="张三">
+            <label for="exampleInputEmail2">申请时间</label>
+            <input size="10" id="startTime" type="text"  readonly class="form_datetime" style="width: 100px;">
+            <label for="exampleInputEmail2">到</label>
+            <input size="10" id="endTime" type="text"  readonly class="form_datetime" style="width: 100px;">
+            <button type="submit" class="btn btn-default">查询</button>
         </div>
-        <div class="form-group">
-
-        </div>
-
     </form>
 </div>
 <div class="container">
@@ -135,5 +134,10 @@
     </ul>
 </nav>
 </div>
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+     $("#startTime").datetimepicker({format: 'yyyy-mm-dd',minView:2,todayHighlight:true,initialDate:new Date()});
+     $("#endTime").datetimepicker({format: 'yyyy-mm-dd',minView:2,todayHighlight:true,initialDate:new Date()});
+    </script>
 </body>
 </html>
