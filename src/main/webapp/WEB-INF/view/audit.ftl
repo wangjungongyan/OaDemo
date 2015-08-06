@@ -49,7 +49,7 @@
         <td><label class="col-sm-5 control-label">国际</label></td>
         <td><label class="col-sm-5 control-label">20000.00</label></td>
         <td>
-            <a href="javascript:void(0)" onclick="auditApply()" data-toggle="modal"
+            <a href="javascript:void(0)" data-toggle="modal"
                data-target="#editModal">点击审批</a></td>
         </td>
     </tr>
@@ -59,7 +59,8 @@
         <td><label class="col-sm-5 control-label">国际</label></td>
         <td><label class="col-sm-5 control-label">20000.00</label></td>
         <td>
-            <button type="button" class="btn btn-info">点击审批</button>
+            <a href="javascript:void(0)" data-toggle="modal"
+               data-target="#editModal">点击审批</a></td>
         </td>
     </tr>
     <tr>
@@ -68,7 +69,8 @@
         <td><label class="col-sm-5 control-label">国际</label></td>
         <td><label class="col-sm-5 control-label">20000.00</label></td>
         <td>
-            <button type="button" class="btn btn-info">点击审批</button>
+            <a href="javascript:void(0)" data-toggle="modal"
+               data-target="#editModal">点击审批</a></td>
         </td>
     </tr>
     <tr>
@@ -77,7 +79,8 @@
         <td><label class="col-sm-5 control-label">国际</label></td>
         <td><label class="col-sm-5 control-label">20000.00</label></td>
         <td>
-            <button type="button" class="btn btn-info">点击审批</button>
+            <a href="javascript:void(0)" data-toggle="modal"
+               data-target="#editModal">点击审批</a></td>
         </td>
     </tr>
     <tr>
@@ -86,7 +89,8 @@
         <td><label class="col-sm-5 control-label">国际</label></td>
         <td><label class="col-sm-5 control-label">20000.00</label></td>
         <td>
-            <button type="button" class="btn btn-info">点击审批</button>
+            <a href="javascript:void(0)" data-toggle="modal"
+               data-target="#editModal">点击审批</a></td>
         </td>
     </tr>
     <tr>
@@ -95,7 +99,8 @@
         <td><label class="col-sm-5 control-label">国际</label></td>
         <td><label class="col-sm-5 control-label">20000.00</label></td>
         <td>
-            <button type="button" class="btn btn-info">点击审批</button>
+            <a href="javascript:void(0)" data-toggle="modal"
+               data-target="#editModal">点击审批</a></td>
         </td>
     </tr>
     <tr>
@@ -104,16 +109,7 @@
         <td><label class="col-sm-5 control-label">国际</label></td>
         <td><label class="col-sm-5 control-label">20000.00</label></td>
         <td>
-            <button type="button" class="btn btn-info">点击审批</button>
-        </td>
-    </tr>
-    <tr>
-        <td><label class="col-sm-5 control-label">王俊</label></td>
-        <td><label class="col-sm-10 control-label">2015-08-01 02:09:00</label></td>
-        <td><label class="col-sm-5 control-label">国际</label></td>
-        <td><label class="col-sm-5 control-label">20000.00</label></td>
-        <td>
-            <a href="javascript:void(0)" onclick="auditApply()" data-toggle="modal"
+            <a href="javascript:void(0)" data-toggle="modal"
                data-target="#editModal">点击审批</a></td>
         </td>
     </tr>
@@ -156,7 +152,7 @@
                         <td><label class="col-sm-8 control-label">申请人</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="">
+                                <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="王俊">
                             </div>
                         </td>
                         <td><label class="col-sm-8 control-label">申请时间</label></td>
@@ -170,13 +166,13 @@
                         <td><label class="col-sm-8 control-label">类  型</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
+                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="国际">
                             </div>
                         </td>
                         <td><label class="col-sm-8 control-label">目的地</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
+                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="美国">
                             </div>
                         </td>
                     </tr>
@@ -190,7 +186,7 @@
                         <td><label class="col-sm-8 control-label">仓 位</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0">
+                                <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="100">
                             </div>
                         </td>
                     </tr>
@@ -198,13 +194,13 @@
                         <td><label class="col-sm-8 control-label">行 程</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
+                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="上海->香港->芝加哥">
                             </div>
                         </td>
                         <td><label class="col-sm-8 control-label">目的地</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
+                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="芝加哥">
                             </div>
                         </td>
                     </tr>
@@ -212,13 +208,13 @@
                         <td><label class="col-sm-10 control-label">机票预算(元)</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0.00">
+                                <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="2000.00">
                             </div>
                         </td>
                         <td><label class="col-sm-8 control-label">宾馆房价(元)</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="0.00">
+                                <input type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="200.00">
                             </div>
                         </td>
                     </tr>
@@ -226,13 +222,13 @@
                         <td><label class="col-sm-8 control-label">天 数</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0.00">
+                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="10">
                             </div>
                         </td>
                         <td><label class="col-sm-8 control-label">住宿预算(元)</label></td>
                         <td>
                             <div class="col-sm-3">
-                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="0.00">
+                                <input type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="2000.00">
                             </div>
                         </td>
                     </tr>
@@ -250,7 +246,7 @@
                         <td ><label style="margin-left: 1px;" class="col-sm-40 control-label">总计(元)</label></td>
                         <td>
                             <div class="col-sm-10">
-                                <input type="total" class="form-control" id="inputtotal" placeholder="0.00">
+                                <input type="total" class="form-control" id="inputtotal" placeholder="4000.00">
                             </div>
                         </td>
                         <td>
