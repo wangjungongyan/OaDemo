@@ -16,8 +16,6 @@
             <button type="submit" class="btn btn-default">查询</button>
         </div>
     </form>
-</div>
-<div class="container">
     <table class="table  table-striped table-bordered table-hover ">
         <thead >
             <tr style="background-color: #eee">
@@ -26,24 +24,27 @@
                 <th>目的地</th>
                 <th>天数</th>
                 <th>总费用</th>
+                <th>状态</th>
                 <th>查看</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr class="success">
                 <td>张三</td>
                 <td>2015-01-01</td>
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>审批通过</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
-            <tr>
+            <tr class="danger" style="background-color: red">
                 <td>李四</td>
                 <td>2015-01-01</td>
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>已拒绝</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
             <tr>
@@ -52,6 +53,7 @@
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>未审批</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
             <tr>
@@ -60,6 +62,7 @@
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>未审批</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
             <tr>
@@ -68,6 +71,7 @@
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>未审批</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
             <tr>
@@ -76,6 +80,7 @@
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>未审批</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
             <tr>
@@ -84,6 +89,7 @@
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>未审批</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
             <tr>
@@ -92,6 +98,7 @@
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>未审批</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
             <tr>
@@ -100,6 +107,7 @@
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>未审批</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
             <tr>
@@ -108,6 +116,7 @@
                 <td>北京</td>
                 <td>5天</td>
                 <td>32425.00</td>
+                <td>未审批</td>
                 <td><a href="applyDetail">查看详情</a></td>
             </tr>
         </tbody>

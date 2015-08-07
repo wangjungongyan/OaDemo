@@ -14,4 +14,8 @@ public class ApplyListAction {
 
         return "applyList";
     }
+    @RequestMapping(value = "applyDetail")
+    public String applyDetail(){
+        return "applyDetail";
+    }
 }

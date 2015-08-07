@@ -111,7 +111,7 @@
 
 <div style="background-color:powderblue;height: 90px;border-bottom: 1px solid #ccc">
     <img style="height: 55px;margin: 12px 0 18px 100px;" src="/image/logo.png"/>
-    <h1 style="margin-left: 700px;line-height:1px;position: relative;top: -50px;">罗尔斯.罗伊斯 <small>OA自动化办公系统</small></h1>
+    <h1 style="margin-left: 700px;line-height:1px;position: relative;top: -50px;">罗尔斯.罗伊斯</h1>
 
 </div>
 
@@ -136,8 +136,8 @@ name---------${name}
                     <i class="icon-book icon-large"></i> 出差申请</a>
                 <ul id="articleMenu" class="nav nav-list collapse menu-second" style="height: auto;">
                     <li><a href="/apply"><i class="icon-apply"></i> 我要申请</a></li>
-                    <li><a href="#"><i class="icon-myApply"></i> 我的申请</a></li>
-                    <li><a href="#"><i class="icon-audit"></i> 我要审批</a></li>
+                    <li><a href="/applyList"><i class="icon-myApply"></i> 我的申请</a></li>
+                    <li><a href="/audit"><i class="icon-audit"></i> 我要审批</a></li>
                     <li><a href="#"><i class="icon-my-audit"></i> 我的审批</a></li>
                 </ul>
                 <a href="#baoxiaoMenu" class="nav-header menu-first collapsed" data-toggle="collapse">

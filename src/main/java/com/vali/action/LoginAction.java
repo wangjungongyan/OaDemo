@@ -14,4 +14,10 @@ public class LoginAction {
         
         return "login";
     }
+
+    @RequestMapping(value = "/")
+    public String index(){
+
+        return "login";
+    }
 }
