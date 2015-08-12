@@ -26,9 +26,9 @@
                 font-weight: bold;">
             快速登录
         </div>
-        <form>
+        <form action="loginVerify" method="post">
             <div>
-                <input style="height: 25px;
+                <input name="userName" style="height: 25px;
                                 width: 290px;
                                 margin-left: 25px;
                                 margin-top: 35px;
@@ -36,7 +36,7 @@
                                 border: 1px solid #ccc;" placeholder="请输入用户名" value="admin">
             </div>
             <div>
-                <input type="password" style="height: 25px;
+                <input name="passWord" type="password" style="height: 25px;
                                 width: 290px;
                                 margin-left: 25px;
                                 margin-top: 35px;
@@ -44,8 +44,7 @@
                                 border: 1px solid #ccc;" placeholder="请输入密码" value="admin">
             </div>
             <div>
-                <a href="main.html" >
-                    <input type="button" style="height: 35px;
+                    <input type="submit" style="height: 35px;
                             width: 290px;
                             margin-left: 25px;
                             margin-top: 35px;
@@ -53,7 +52,6 @@
                             border: 1px solid #ccc;
                             background-color: red;
                             line-height: 31px;cursor: pointer" value="登录">
-                </a>
             </div>
         </form>
     </div>
