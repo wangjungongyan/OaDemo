@@ -99,6 +99,15 @@
             padding: 0px;
             margin: 0px;
         }
+
+        .mainBody-div {
+            width: 100%;
+            /* margin-left: 221px; */
+            margin-top: 0px;
+            position: absolute;
+            top: 91px;
+            right: 0px;
+        }
     </style>
     <sitemesh:write property='head'/>
 </head>
@@ -114,9 +123,6 @@
     <h1 style="margin-left: 700px;line-height:1px;position: relative;top: -50px;">罗尔斯.罗伊斯</h1>
 
 </div>
-
-name---------${name}
-
 <div class="center-div" style="width: 100%;height: auto;min-height: 500px;border: 0px solid blue;">
     <div class="left-menu-div"
          style="background-color:#eee;width: 220px;border: 0px solid red;height: 100%;float: left;position: absolute;top: 91px;border-right: 1px solid #ccc;">
@@ -150,9 +156,12 @@ name---------${name}
                 </ul>
             </div>
         </div>
-        <div class="mainBody-div" style="width: 980px;border: 0px solid green;margin-left: 240px;margin-top: 10px;">
+    </div>
+    <div class="mainBody-div" >
+        <div style="margin-left: 221px;background-color: red">
             <sitemesh:write property='body'/>
         </div>
-
+    </div>
+</div>
 </body>
 </html>
