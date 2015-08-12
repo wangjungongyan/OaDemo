@@ -44,7 +44,7 @@
                                 border: 1px solid #ccc;" placeholder="请输入密码" value="admin">
             </div>
             <div>
-                <a href="applyList" >
+                <a href="main.html" >
                     <input type="button" style="height: 35px;
                             width: 290px;
                             margin-left: 25px;

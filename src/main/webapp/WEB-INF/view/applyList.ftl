@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/js/jquery-1.8.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 </head>
 <body >
