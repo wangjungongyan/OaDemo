@@ -39,10 +39,10 @@
                 </div>
             </div>
         </div>
-        <script src="../../js/jquery-1.8.2.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
-        <script src="../../jqueryUi/jquery-ui-1.10.0.custom.min.js"></script>
-        <script src="../../jqueryUi/menuTabs.js"></script>
+        <script src="/js/jquery-1.8.2.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/jqueryUi/jquery-ui-1.10.0.custom.min.js"></script>
+        <script src="/jqueryUi/menuTabs.js"></script>
 
         <script type="text/javascript" language="javascript">
 
