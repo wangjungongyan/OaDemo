@@ -1,4 +1,4 @@
-package com.vali;
+package com.vali.enums;
 
 /**
  * Created by fanshuai on 15/8/13.

@@ -1,6 +1,6 @@
 package com.vali.service.leave.impl;
 
-import com.vali.AuditStatusEnum;
+import com.vali.enums.AuditStatusEnum;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.service.leave.remote.LeaveService;
 
@@ -39,6 +39,11 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     public List<LeaveApplyDTO> myApply(Integer applicantID, Integer leaveType, String leaveReason, Date applyTime_begin, Date applyTime_end) {
+        return null;
+    }
+
+    @Override
+    public LeaveApplyDTO applyDetail(Integer applyId) {
         return null;
     }
 }

@@ -11,14 +11,14 @@ import java.util.Date;
  */
 @Data
 public class LeaveApplyPO implements Serializable {
-    Integer id;
-    Integer applicantID;
-    Integer leaveType;
-    Date leaveStartTime;
-    Date leaveEndTime;
-    BigDecimal leaveDays;
-    String leaveReason;
-    Date applyTime;
-    Date addTime;
-    Date updateTime;
+    private Integer id;
+    private Integer applicantID;
+    private Integer leaveType;
+    private Date leaveStartTime;
+    private Date leaveEndTime;
+    private BigDecimal leaveDays;
+    private String leaveReason;
+    private Date applyTime;
+    private Date addTime;
+    private Date updateTime;
 }
