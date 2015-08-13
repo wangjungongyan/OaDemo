@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
         LoginVerifyDTO dto = new LoginVerifyDTO();
         dto.setVerify(true);
-        
+
         return dto;
     }
 
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(5);
 
         FirstMenuDTO firstMenuDTO1 = new FirstMenuDTO();
-        firstMenuDTO1.setHref("#oneMenuId_001");
+        firstMenuDTO1.setHref("oneMenuId_001");
         firstMenuDTO1.setName("请假");
 
         SecondMenuDTO secondMenuDTO1 = new SecondMenuDTO();
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         firstMenuDTO1.setSecondMenus(secondMenus1);
 
         FirstMenuDTO firstMenuDTO2 = new FirstMenuDTO();
-        firstMenuDTO2.setHref("#oneMenuId_002");
+        firstMenuDTO2.setHref("oneMenuId_002");
         firstMenuDTO2.setName("");
 
         SecondMenuDTO secondMenuDTO11 = new SecondMenuDTO();

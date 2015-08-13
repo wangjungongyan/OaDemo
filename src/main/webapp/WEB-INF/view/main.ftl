@@ -28,6 +28,16 @@
                         <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','绱����绠＄��','http://localhost:8080/weixin/uploadMaterialIndex.action','1008');">��������宠��</a></li>
                         <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','���瑕�瀹℃��','http://localhost:8080/weixin/uploadMediaIndex.action','1009');">���瑕�瀹℃��</a></li>
                     </ul>
+                    <#list menus as menu>
+                        <a href="#${menu.href}" class="nav-header menu-first collapsed" data-toggle="collapse">${menu.name}</a>
+                        <ul id="${menu.href}" class="nav nav-list collapse menu-second" >
+                            <#if menu.secondMenus??>
+                                <#list menu.secondMenus as secondMenu>
+                                    <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','${secondMenu.name}','${secondMenu.href}','${secondMenu.index}');">${secondMenu.name}</a></li>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </#list>
                 </div>
             </div>
             <div class="mainBody-div"  >
