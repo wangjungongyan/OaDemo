@@ -1,6 +1,6 @@
 package com.vali.service.leave.impl;
 
-import com.vali.enums.AuditStatusEnum;
+import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.service.leave.remote.LeaveService;
 

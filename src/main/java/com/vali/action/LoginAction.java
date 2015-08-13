@@ -1,6 +1,6 @@
 package com.vali.action;
 
-import com.vali.service.user.dto.LoginVerifyDTO;
+import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.service.user.remote.UserService;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;

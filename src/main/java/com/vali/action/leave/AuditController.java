@@ -1,4 +1,4 @@
-package com.vali.action;
+package com.vali.action.leave;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

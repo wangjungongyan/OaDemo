@@ -1,6 +1,6 @@
 package com.vali.service.user.impl;
 
-import com.vali.service.user.dto.LoginVerifyDTO;
+import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.service.user.remote.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.vali.service.user.dto;
+package com.vali.dto.login;
 
 import lombok.Data;
 
