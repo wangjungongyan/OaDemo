@@ -11,11 +11,11 @@ import java.util.Date;
 @Data
 public class LeaveApplyDTO{
 
-    private Integer id;
+    private int id;
 
-    private Integer applicantID;
+    private int applicantID;
 
-    private Integer leaveType;
+    private int leaveType;
 
     private Date leaveStartTime;
 
