@@ -3,12 +3,12 @@ package com.vali.action;
 import com.vali.service.user.dto.LoginVerifyDTO;
 import com.vali.service.user.remote.UserService;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +19,7 @@ import java.util.Map;
 public class LoginAction {
 
     @Setter
-    //@Autowired(required = false)
-    @Qualifier("userService")
+    @Resource(name = "userService")
     private UserService userService;
 
     @RequestMapping(value = "/loginVerify", method = RequestMethod.POST)
