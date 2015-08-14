@@ -56,20 +56,20 @@ public class UserServiceImpl implements UserService {
 
         FirstMenuDTO firstMenuDTO2 = new FirstMenuDTO();
         firstMenuDTO2.setHref("oneMenuId_002");
-        firstMenuDTO2.setName("");
+        firstMenuDTO2.setName("菜单2");
 
         SecondMenuDTO secondMenuDTO11 = new SecondMenuDTO();
-        secondMenuDTO11.setName("");
+        secondMenuDTO11.setName("子菜单1");
         secondMenuDTO11.setHref("/apply");
         secondMenuDTO11.setIndex(1008);
 
         SecondMenuDTO secondMenuDTO22 = new SecondMenuDTO();
-        secondMenuDTO22.setName("");
+        secondMenuDTO22.setName("子菜单2");
         secondMenuDTO22.setHref("/applyList");
         secondMenuDTO22.setIndex(1009);
 
         SecondMenuDTO secondMenuDTO33 = new SecondMenuDTO();
-        secondMenuDTO33.setName("");
+        secondMenuDTO33.setName("子菜单3");
         secondMenuDTO33.setHref("/audit");
         secondMenuDTO33.setIndex(1010);
 
