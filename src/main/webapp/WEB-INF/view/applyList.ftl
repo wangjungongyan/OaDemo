@@ -3,8 +3,7 @@
 <head>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
-    <script src="/js/jquery-1.8.2.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+
     <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 </head>
 <body >
@@ -147,6 +146,8 @@
     </ul>
 </nav>
 </div>
+<script src="/js/jquery-1.8.2.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
      $("#startTime").datetimepicker({format: 'yyyy-mm-dd',minView:2,todayHighlight:true,initialDate:new Date()});

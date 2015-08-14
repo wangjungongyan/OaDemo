@@ -3,6 +3,9 @@ package com.vali.dto.user;
 import com.vali.enums.user.DepartmentEnum;
 import com.vali.enums.user.RoleEnum;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * Created by vali on 15-8-14.
@@ -11,19 +14,22 @@ import lombok.Data;
 @Data
 public class UserDTO {
 
-    private int id;
+    private Integer id;
 
     private String userName;
 
-    private int departMent;
+    private Integer departMent;
 
-    private int role;
+    private Integer role;
 
     private String email;
 
     private String phone;
 
     private String password;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date joinDate;
 
     private UserDTO manger;
 

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by fanshuai on 15/8/14.
@@ -26,7 +28,9 @@ public class UserAction {
         int userId = userService.addUser(userDTO);
         if(userId==0){
             //保存失败
-            return new ModelAndView("user/addUserIndex");
+            Map model = new HashMap();
+            model.put("user",userDTO);
+            return new ModelAndView("user/addUserIndex",model);
         }
         //保存成功，直接定位到列表页
         return new ModelAndView("redirect:/user/list");
