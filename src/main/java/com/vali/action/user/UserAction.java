@@ -2,6 +2,7 @@ package com.vali.action.user;
 
 import com.vali.dto.user.UserDTO;
 import com.vali.service.user.remote.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,6 +11,7 @@ import javax.annotation.Resource;
 /**
  * Created by fanshuai on 15/8/14.
  */
+@Controller
 public class UserAction {
     @Resource(name = "userService")
     private UserService userService;
