@@ -9,7 +9,8 @@ package com.vali.enums.user;
  */
 public enum DepartmentEnum {
 
-    HR(3,"HR");
+    HR(3,"HR"),
+    DEV(1,"技术");
 
     private int type;
 
