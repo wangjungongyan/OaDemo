@@ -32,9 +32,8 @@ public class LoginAction {
         Map model = new HashMap();
 
         if (loginVerifyDTO.isVerify()) {
-            List<FirstMenuDTO> menus = userService.getUserMenus(1);
-            model.put("menus",menus);
-            return new ModelAndView("main", model);
+
+            return new ModelAndView("redirect:/main", model);
         }
 
         model.put("msg", loginVerifyDTO.getMsg());
@@ -43,7 +42,22 @@ public class LoginAction {
     }
 
     @RequestMapping(value = "/login")
-    public String index() {
+    public String login() {
         return "login";
+    }
+
+
+    @RequestMapping(value = "/")
+    public String index() {
+
+        return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/main")
+    public ModelAndView main() {
+        Map model = new HashMap();
+        List<FirstMenuDTO> menus = userService.getUserMenus(1);
+        model.put("menus",menus);
+        return new ModelAndView("main",model);
     }
 }
