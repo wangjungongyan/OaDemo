@@ -2,6 +2,8 @@ package com.vali.dto.user;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * Created by vali on 15-8-14.
  */
@@ -20,6 +22,8 @@ public class UserDTO {
     private String email;
 
     private String phone;
+
+    private Date joinDate;
 
     private UserDTO manger;
 
