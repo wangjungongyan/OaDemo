@@ -16,18 +16,6 @@
             <div class="left-menu-div" >
                     <!--Sidebar content-->
                 <div class="sidebar-menu">
-                    <a href="#oneMenuId_001" class="nav-header menu-first collapsed" data-toggle="collapse">缃�绔�</a>
-                    <ul id="oneMenuId_001" class="nav nav-list collapse menu-second" >
-                        <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','��惧害','/apply','1005');">��惧害</a></li>
-                        <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','126���绠�','/applyList','1006');">126���绠�</a></li>
-                        <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','126���绠�','/audit','1006');">126���绠�</a></li>
-                    </ul>
-                    <a href="#oneMenuId_002" class="nav-header menu-first collapsed" data-toggle="collapse">渚�瀛�</a>
-                    <ul id="oneMenuId_002" class="nav nav-list collapse menu-second" >
-                        <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','���浠剁�＄��','http://localhost:8080/weixin/uploadMediaIndex.action','1007');">���瑕���宠��</a></li>
-                        <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','绱����绠＄��','http://localhost:8080/weixin/uploadMaterialIndex.action','1008');">��������宠��</a></li>
-                        <li><a href="javascript:void(0)" onclick="openMenu('menuTabsContent','���瑕�瀹℃��','http://localhost:8080/weixin/uploadMediaIndex.action','1009');">���瑕�瀹℃��</a></li>
-                    </ul>
                     <#list menus as menu>
                         <a href="#${menu.href}" class="nav-header menu-first collapsed" data-toggle="collapse">${menu.name}</a>
                         <ul id="${menu.href}" class="nav nav-list collapse menu-second" >
