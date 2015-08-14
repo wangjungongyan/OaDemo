@@ -1,10 +1,13 @@
 package com.vali.service.user.impl;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.dto.menu.FirstMenuDTO;
 import com.vali.dto.menu.SecondMenuDTO;
+import com.vali.dto.user.UserDTO;
 import com.vali.service.user.remote.UserService;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +16,27 @@ import java.util.List;
  * Created by vali on 15-8-12.
  */
 
-@Component("userService")
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
-    @Override public LoginVerifyDTO verifyLoginUser(String userName, String password) {
-
+    @Override
+    public LoginVerifyDTO verifyLoginUser(String email, String password) {
         LoginVerifyDTO dto = new LoginVerifyDTO();
-        dto.setVerify(true);
-
+        UserDTO u=loadUser(email);
+        if(u==null){
+            dto.setVerify(false);
+            return dto;
+        }
+        if(u.getPassword().equals(password)){
+            dto.setVerify(true);
+            return dto;
+        }
+        dto.setVerify(false);
         return dto;
     }
 
-    @Override public List<FirstMenuDTO> getUserMenus(int userId) {
+    @Override
+    public List<FirstMenuDTO> getUserMenus(int userId) {
 
         List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(5);
 
@@ -84,6 +96,46 @@ public class UserServiceImpl implements UserService {
         menus.add(firstMenuDTO2);
 
         return menus;
+    }
+
+    @Override
+    public int addUser(UserDTO userDTO) {
+        return 0;
+    }
+
+    @Override
+    public int updateUser(UserDTO userDTO) {
+        return 0;
+    }
+
+    @Override
+    public UserDTO loadUser(int userId) {
+        if(userId==(UserDTO.getVali().getId())){
+            return UserDTO.getVali();
+        }
+        if(userId==(UserDTO.getKerith().getId())){
+            return UserDTO.getKerith();
+        }
+        return null;
+    }
+
+    @Override
+    public UserDTO loadUser(String email) {
+        if(email.equals(UserDTO.getVali().getEmail())){
+            return UserDTO.getVali();
+        }
+        if(email.equals(UserDTO.getKerith().getEmail())){
+            return UserDTO.getKerith();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean hasSameUser(UserDTO userDTO) {
+        if(userDTO.getEmail().equals(loadUser(userDTO.getEmail()))) {
+            return true;
+        }
+        return false;
     }
 
 }
