@@ -28,7 +28,7 @@
         </div>
         <form action="loginVerify" method="post">
             <div>
-                <input name="userName" style="height: 25px;
+                <input name="loginName" style="height: 25px;
                                 width: 290px;
                                 margin-left: 25px;
                                 margin-top: 35px;

@@ -1,6 +1,5 @@
 package com.vali.service.user.remote;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.dto.menu.FirstMenuDTO;
 import com.vali.dto.user.UserDTO;
@@ -16,7 +15,6 @@ public interface UserService {
 
     public List<FirstMenuDTO> getUserMenus(int userId);
 
-
     public int addUser(UserDTO userDTO);
 
 
@@ -28,6 +26,7 @@ public interface UserService {
      * @return
      */
     public UserDTO loadUser(int userId);
+
     public UserDTO loadUser(String email);
 
     /**

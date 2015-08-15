@@ -3,13 +3,16 @@ package com.vali.action;
 import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.dto.menu.FirstMenuDTO;
 import com.vali.service.user.remote.UserService;
+import com.vali.util.Constant;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,20 +27,22 @@ public class LoginAction {
     @Resource(name = "userService")
     private UserService userService;
 
+    @Autowired
+    HttpSession session;
+
     @RequestMapping(value = "/loginVerify", method = RequestMethod.POST)
-    public ModelAndView login(String userName, String passWord) {
+    public ModelAndView login(String loginName, String passWord) {
 
-        LoginVerifyDTO loginVerifyDTO = userService.verifyLoginUser(userName, passWord);
-
-        Map model = new HashMap();
+        LoginVerifyDTO loginVerifyDTO = userService.verifyLoginUser(loginName, passWord);
 
         if (loginVerifyDTO.isVerify()) {
-
-            return new ModelAndView("redirect:/main", model);
+            setLoginUser2Session(loginName);
+            return new ModelAndView("redirect:/main");
         }
 
+        Map model = new HashMap();
         model.put("msg", loginVerifyDTO.getMsg());
-        return new ModelAndView("login", model);
+        return new ModelAndView("redirect:/login", model);
 
     }
 
@@ -46,18 +51,22 @@ public class LoginAction {
         return "login";
     }
 
-
     @RequestMapping(value = "/")
     public String index() {
-
         return "redirect:/login";
     }
 
     @RequestMapping(value = "/main")
     public ModelAndView main() {
+
         Map model = new HashMap();
         List<FirstMenuDTO> menus = userService.getUserMenus(1);
-        model.put("menus",menus);
-        return new ModelAndView("main",model);
+        model.put("menus", menus);
+        return new ModelAndView("main", model);
     }
+
+    private void setLoginUser2Session(String loginName) {
+        session.setAttribute(Constant.LOGIN_USER, userService.loadUser(loginName));
+    }
+
 }

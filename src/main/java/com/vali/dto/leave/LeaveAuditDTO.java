@@ -1,6 +1,7 @@
 package com.vali.dto.leave;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -10,14 +11,15 @@ import java.util.Date;
 @Data
 public class LeaveAuditDTO {
 
-    private int id;
+    private Integer id;
 
-    private int applyId;
+    private Integer applyId;
 
-    private int managerId;
+    private Integer managerId;
 
-    private int managerAuditStatus;
+    private Integer managerAuditStatus;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date managerAuditTime;
 
     private String managerAuditSuggest;
@@ -26,12 +28,9 @@ public class LeaveAuditDTO {
 
     private Integer hrAuditStatus;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date hrAuditTime;
 
     private String hrAuditSuggest;
-
-    private Date addTime;
-
-    private Date updateTime;
 
 }
