@@ -10,7 +10,9 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath*:config/spring/service/appcontext-service.xml
+            classpath*:config/spring/idal-common.xml,
+            classpath*:config/spring/service/appcontext-service.xml,
+            classpath*:config/spring/service/appcontext-dao.xml
         </param-value>
     </context-param>
 

@@ -1,14 +1,15 @@
 package com.vali.service.user.impl;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+import com.vali.dao.leave.LeaveApplyDao;
 import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.dto.menu.FirstMenuDTO;
 import com.vali.dto.menu.SecondMenuDTO;
 import com.vali.dto.user.UserDTO;
 import com.vali.service.user.remote.UserService;
-import org.springframework.stereotype.Component;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +20,21 @@ import java.util.List;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+    @Setter
+    @Resource(name="leaveApplyDao")
+    private LeaveApplyDao leaveApplyDao;
+
     @Override
     public LoginVerifyDTO verifyLoginUser(String email, String password) {
+
+        int id = leaveApplyDao.getLeaveApply();
         LoginVerifyDTO dto = new LoginVerifyDTO();
-        UserDTO u=loadUser(email);
-        if(u==null){
+        UserDTO u = loadUser(email);
+        if (u == null) {
             dto.setVerify(false);
             return dto;
         }
-        if(u.getPassword().equals(password)){
+        if (u.getPassword().equals(password)) {
             dto.setVerify(true);
             return dto;
         }
