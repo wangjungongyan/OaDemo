@@ -9,7 +9,7 @@ package com.vali.enums.user;
  */
 public enum RoleEnum {
 
-    NOMALR(0, "普通员工"), HR(1, "人事"),MANAGE(10,"经理"),BOSS(999,"总经理");
+    NOMALR(0, "普通员工"), HR(1, "人事"),MANAGE(2,"经理"),BOSS(3,"总经理");
 
     private int type;
 
