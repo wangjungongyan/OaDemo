@@ -16,27 +16,62 @@ public class UserDTO {
 
     private Integer id;
 
-    private String userName;
+    /**
+     * 姓名
+     */
+    private String name;
 
+    /**
+     * 部门代码
+     */
     private Integer departMent;
 
+    /**
+     * 角色
+     */
     private Integer role;
 
+    /**
+     * 邮箱
+     */
     private String email;
 
+    /**
+     * 手机号
+     */
     private String phone;
 
+    /**
+     * 密码
+     */
     private String password;
 
+    /**
+     * 入职时间
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date joinDate;
 
+    /**
+     * 直接上级
+     */
     private UserDTO manger;
 
-    public static UserDTO getVali(){
+    /**
+     * 员工状态
+     */
+    private int status;
+
+    /**
+     * 离职时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date departureTime;
+
+    public static UserDTO getVali() {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(1);
-        userDTO.setUserName("王俊");
+        userDTO.setName("王俊");
         userDTO.setEmail("vali@ll.com");
         userDTO.setPassword("123456");
         userDTO.setPhone("18521352927");
@@ -45,10 +80,11 @@ public class UserDTO {
         userDTO.setManger(getKerith());
         return userDTO;
     }
-    public static UserDTO getKerith(){
+
+    public static UserDTO getKerith() {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(2);
-        userDTO.setUserName("樊帅");
+        userDTO.setName("樊帅");
         userDTO.setEmail("kerith@ll.com");
         userDTO.setPassword("123456");
         userDTO.setPhone("18521352927");

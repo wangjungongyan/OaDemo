@@ -3,16 +3,25 @@ package com.vali.dto.menu;
 import lombok.Data;
 
 /**
- * Created by vali on 15-8-13.
+ * 二级菜单
  */
 
 @Data
 public class SecondMenuDTO {
 
+    /**
+     * 链接
+     */
     private String href;
 
+    /**
+     * 菜单名
+     */
     private String name;
 
+    /**
+     * 排序
+     */
     private int index;
 
 }
