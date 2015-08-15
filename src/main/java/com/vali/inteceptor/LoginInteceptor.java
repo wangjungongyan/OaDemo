@@ -1,7 +1,7 @@
 package com.vali.inteceptor;
 
 import com.vali.bo.LoginBO;
-import com.vali.dto.user.UserDTO;
+import com.vali.dto.user.EmployeeDTO;
 import com.vali.util.Constant;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,7 +28,7 @@ public class LoginInteceptor implements HandlerInterceptor {
         }
 
         HttpSession session = httpServletRequest.getSession();
-        UserDTO loginUser = (UserDTO) session.getAttribute(Constant.LOGIN_USER);
+        EmployeeDTO loginUser = (EmployeeDTO) session.getAttribute(Constant.LOGIN_USER);
 
         if (loginUser == null) {
             httpServletResponse.sendRedirect("redirect:/login");

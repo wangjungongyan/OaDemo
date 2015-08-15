@@ -33,4 +33,11 @@
         </property>
     </bean>
 
+    <bean id="employeeDao" parent="parentDao">
+        <property name="proxyInterfaces" value="com.vali.dao.user.EmployeeDao"/>
+        <property name="target">
+            <ref local="iBatisGenericDao"/>
+        </property>
+    </bean>
+
 </beans>

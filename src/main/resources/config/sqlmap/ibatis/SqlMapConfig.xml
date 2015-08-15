@@ -7,5 +7,6 @@
 		maxSessions="10" maxTransactions="5" useStatementNamespaces="true" />
 
 	<sqlMap resource="config/sqlmap/ibatis/LeaveApply.xml" />
+    <sqlMap resource="config/sqlmap/ibatis/Employee.xml" />
 
 </sqlMapConfig>

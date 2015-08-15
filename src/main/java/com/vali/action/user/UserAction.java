@@ -1,7 +1,7 @@
 package com.vali.action.user;
 
-import com.vali.dto.user.UserDTO;
-import com.vali.service.user.remote.UserService;
+import com.vali.dto.user.EmployeeDTO;
+import com.vali.service.user.remote.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,45 +15,47 @@ import java.util.Map;
  */
 @Controller
 public class UserAction {
-    @Resource(name = "userService")
-    private UserService userService;
+
+    @Resource(name = "employeeService")
+    private EmployeeService employeeService;
+
     @RequestMapping("/user/addUserIndex")
-    public ModelAndView addUserIndex(UserDTO userDTO){
+    public ModelAndView addUserIndex(EmployeeDTO userDTO) {
 
         return new ModelAndView("user/addUserIndex");
     }
 
     @RequestMapping("/user/addUser")
-    public ModelAndView addUser(UserDTO userDTO){
-        int userId = userService.addUser(userDTO);
-        if(userId==0){
+    public ModelAndView addUser(EmployeeDTO userDTO) {
+        int userId = employeeService.addEmployee(userDTO);
+        if (userId == 0) {
             //保存失败
             Map model = new HashMap();
-            model.put("user",userDTO);
-            return new ModelAndView("user/addUserIndex",model);
+            model.put("user", userDTO);
+            return new ModelAndView("user/addUserIndex", model);
         }
         //保存成功，直接定位到列表页
         return new ModelAndView("redirect:/user/list");
     }
 
     @RequestMapping("/user/list")
-    public String userList(UserDTO userDTO){
+    public String userList(EmployeeDTO userDTO){
 
         return "user/list";
     }
 
     @RequestMapping("/user/detail")
-    public String userInfoDetail(UserDTO userDTO){
+    public String userInfoDetail(EmployeeDTO userDTO){
         return "user/detail";
     }
 
     @RequestMapping("/user/updateUserIndex")
-    public String updateUserIndex(UserDTO userDTO){
+    public String updateUserIndex(EmployeeDTO userDTO){
         return "user/updateUserIndex";
     }
 
     @RequestMapping("/user/updateUser")
-    public String updateUser(UserDTO userDTO){
+    public String updateUser(EmployeeDTO userDTO){
         return "user/updateUser";
     }
 

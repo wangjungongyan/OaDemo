@@ -12,7 +12,7 @@ import java.util.Date;
  */
 
 @Data
-public class UserDTO {
+public class EmployeeDTO {
 
     private Integer id;
 
@@ -81,10 +81,10 @@ public class UserDTO {
     /**
      * 直接上级
      */
-    private UserDTO manger;
+    private EmployeeDTO manger;
 
-    public static UserDTO getVali() {
-        UserDTO userDTO = new UserDTO();
+    public static EmployeeDTO getVali() {
+        EmployeeDTO userDTO = new EmployeeDTO();
         userDTO.setId(1);
         userDTO.setChineseName("王俊");
         userDTO.setEmail("vali@ll.com");
@@ -96,8 +96,8 @@ public class UserDTO {
         return userDTO;
     }
 
-    public static UserDTO getKerith() {
-        UserDTO userDTO = new UserDTO();
+    public static EmployeeDTO getKerith() {
+        EmployeeDTO userDTO = new EmployeeDTO();
         userDTO.setId(2);
         userDTO.setChineseName("樊帅");
         userDTO.setEmail("kerith@ll.com");

@@ -56,5 +56,7 @@
         </form>
     </div>
 </div>
+msg: '${msg}'
+
 </body>
 </html>

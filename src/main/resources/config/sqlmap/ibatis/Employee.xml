@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Employee">
+
+    <typeAlias alias="EmployeePO" type="com.vali.po.user.EmployeePO"/>
+
+    <resultMap id="EmployeeResult" class="EmployeePO">
+        <result column="ID" property="id"/>
+        <result column="ChineseName" property="chineseName"/>
+        <result column="FirstName" property="firstName"/>
+        <result column="MiddleName" property="middleName"/>
+        <result column="LastName" property="lastName"/>
+        <result column="DepartMent" property="departMent"/>
+        <result column="Role" property="role"/>
+        <result column="Email" property="email"/>
+        <result column="Phone" property="phone"/>
+        <result column="Password" property="password"/>
+        <result column="JoinDate" property="joinDate"/>
+        <result column="Status" property="status"/>
+        <result column="DepartureDate" property="departureDate"/>
+        <result column="MangerId" property="mangerId"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <select id="getEmployeeByEmail" resultMap="EmployeeResult">
+		SELECT
+		ID,
+		ChineseName,
+		FirstName,
+		MiddleName,
+		LastName,
+		DepartMent,
+		Role,
+		Email,
+		Phone,
+		Password,
+		JoinDate,
+		Status,
+		DepartureDate,
+		MangerId,
+		AddTime,
+		UpdateTime
+		FROM
+		LL_Employee
+		where Email = #email#
+	</select>
+
+</sqlMap>
