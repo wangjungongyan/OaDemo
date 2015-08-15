@@ -1,5 +1,6 @@
 package com.vali.action;
 
+import com.vali.bo.LoginBO;
 import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.dto.menu.FirstMenuDTO;
 import com.vali.service.user.remote.EmployeeService;
@@ -8,9 +9,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -31,21 +30,19 @@ public class LoginAction {
     @Autowired
     HttpSession session;
 
-    @RequestMapping(value = "/loginVerify", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginVerify")
     public ModelAndView login(String loginName, String passWord) {
 
         LoginVerifyDTO loginVerifyDTO = employeeService.verifyLoginUser(loginName, passWord);
 
         if (loginVerifyDTO.isVerify()) {
             setLoginUser2Session(loginName);
-            return new ModelAndView("redirect:/main?loginName=" + loginName);
+            return new ModelAndView("redirect:/main");
         }
 
         Map model = new HashMap();
         model.put("msg", loginVerifyDTO.getMsg());
-        //return new ModelAndView("redirect:/login", model);
-        return  new ModelAndView(new RedirectView("login"), model);
-
+        return  new ModelAndView("forward:/login", model);
     }
 
     @RequestMapping(value = "/")
@@ -59,9 +56,9 @@ public class LoginAction {
     }
 
     @RequestMapping(value = "/main")
-    public ModelAndView main(String loginName) {
-
+    public ModelAndView main() {
         Map model = new HashMap();
+        String loginName = LoginBO.getLoginUser().getEmail();
         List<FirstMenuDTO> menus = employeeService.getEmployeeMenus(loginName);
         model.put("menus", menus);
         return new ModelAndView("main", model);
