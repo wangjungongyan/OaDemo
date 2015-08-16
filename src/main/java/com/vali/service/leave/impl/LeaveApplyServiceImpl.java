@@ -8,7 +8,7 @@ import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.enums.leave.LeaveTypeEnum;
 import com.vali.po.leave.EmployeeHolidayPO;
 import com.vali.po.leave.LeaveApplyPO;
-import com.vali.service.leave.remote.LeaveService;
+import com.vali.service.leave.remote.LeaveApplyService;
 import lombok.Setter;
 import net.sf.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
@@ -23,8 +23,8 @@ import java.util.List;
  * Created by fanshuai on 15/8/13.
  */
 
-@Service("leaveService")
-public class LeaveServiceImpl implements LeaveService {
+@Service("leaveApplyService")
+public class LeaveApplyServiceImpl implements LeaveApplyService {
 
     @Setter
     @Resource(name = "employeeHolidayDao")
@@ -52,21 +52,6 @@ public class LeaveServiceImpl implements LeaveService {
         return false;
     }
 
-    @Override
-    public boolean manageAudit(int manageId, String managerAuditSuggest, AuditStatusEnum auditStatus) {
-        return false;
-    }
-
-    @Override
-    public boolean hrAudit(int hrId, String hrAuditSuggest, AuditStatusEnum auditStatus) {
-        return false;
-    }
-
-    @Override
-    public boolean revoke(int hrId, int applyId) {
-        return false;
-    }
-
     @Override public List<LeaveApplyDTO> getApplyRecords(Integer applicantID, Integer leaveType, Date applyTime_begin,
                                                          Date applyTime_end) {
         return null;
@@ -86,13 +71,13 @@ public class LeaveServiceImpl implements LeaveService {
             LeaveApplyDTO dto = new LeaveApplyDTO();
             ENTITY2DTO4LeaveApply.copy(po, dto, null);
 
-            LeaveTypeEnum typeEnum =LeaveTypeEnum.getLeaveType(po.getLeaveType());
-            if (typeEnum!=null){
+            LeaveTypeEnum typeEnum = LeaveTypeEnum.getLeaveType(po.getLeaveType());
+            if (typeEnum != null) {
                 dto.setLeaveName(typeEnum.getName());
             }
 
-            AuditStatusEnum auditStatus=AuditStatusEnum.getAuditStatus(po.getStatus());
-            if (auditStatus!=null){
+            AuditStatusEnum auditStatus = AuditStatusEnum.getAuditStatus(po.getStatus());
+            if (auditStatus != null) {
                 dto.setStatusName(auditStatus.getAuditStatusName());
             }
 
@@ -112,25 +97,4 @@ public class LeaveServiceImpl implements LeaveService {
         return null;
     }
 
-    @Override public List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId) {
-
-        List<EmployeeHolidayPO> pos = employeeHolidayDao.getEmployeeHoliday(employeeId);
-
-        if (CollectionUtils.isEmpty(pos)) {
-            return new ArrayList<EmployeeHolidayDTO>(1);
-        }
-
-        List<EmployeeHolidayDTO> dtos = new ArrayList<EmployeeHolidayDTO>(pos.size());
-
-        for (EmployeeHolidayPO po : pos) {
-            EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
-            ENTITY2DTO4Holiday.copy(po, dto, null);
-            LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(po.getType());
-            dto.setName(leaveTypeEnum.getName());
-            dto.setDesc(leaveTypeEnum.getDesc());
-            dtos.add(dto);
-        }
-
-        return dtos;
-    }
 }

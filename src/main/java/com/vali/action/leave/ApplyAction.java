@@ -4,7 +4,8 @@ import com.vali.bo.LoginBO;
 import com.vali.dto.leave.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.user.EmployeeDTO;
-import com.vali.service.leave.remote.LeaveService;
+import com.vali.service.leave.remote.LeaveApplyService;
+import com.vali.service.user.remote.EmployeeHolidayService;
 import com.vali.service.user.remote.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,14 +24,17 @@ public class ApplyAction {
     @Resource(name = "employeeService")
     private EmployeeService employeeService;
 
-    @Resource(name = "leaveService")
-    private LeaveService leaveService;
+    @Resource(name = "leaveApplyService")
+    private LeaveApplyService leaveService;
+
+    @Resource(name = "employeeHolidayService")
+    private EmployeeHolidayService employeeHolidayService;
 
     @RequestMapping(value = "/leave")
     public ModelAndView leaveIndex() {
 
         EmployeeDTO employee = LoginBO.getLoginUser();
-        List<EmployeeHolidayDTO> employeeHolidays = leaveService.getEmployeeHoliday(employee.getId());
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(employee.getId());
 
         Map model = new HashMap();
         model.put("employee", employee);
@@ -62,7 +66,7 @@ public class ApplyAction {
 
         int applicantID = LoginBO.getLoginUser().getId();
         List<LeaveApplyDTO> myLeaveApplys = leaveService.getApplyRecords(applicantID);
-        List<EmployeeHolidayDTO> employeeHolidays = leaveService.getEmployeeHoliday(applicantID);
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
 
         Map model = new HashMap();
         model.put("myApplys", myLeaveApplys);
