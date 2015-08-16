@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="LeaveAudit">
+
+    <typeAlias alias="LeaveAuditPO" type="com.vali.po.leave.LeaveAuditPO"/>
+
+    <resultMap id="LeaveAuditResult" class="LeaveAuditPO">
+        <result column="ID" property="id"/>
+        <result column="ApplyId" property="applyId"/>
+        <result column="ManagerId" property="managerId"/>
+        <result column="ManagerAuditStatus" property="managerAuditStatus"/>
+        <result column="ManagerAuditTime" property="managerAuditTime"/>
+        <result column="ManagerAuditSuggest" property="managerAuditSuggest"/>
+        <result column="HrId" property="hrId"/>
+        <result column="HrAuditStatus" property="hrAuditStatus"/>
+        <result column="HrAuditTime" property="hrAuditTime"/>
+        <result column="HrAuditSuggest" property="hrAuditSuggest"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+
+    <select id="getAuidtByApplyId" resultMap="LeaveAuditResult">
+		SELECT
+		ID,
+		ApplyId,
+		ManagerId,
+		ManagerAuditStatus,
+		ManagerAuditTime,
+		ManagerAuditSuggest,
+		HrId,
+		HrAuditStatus,
+		HrAuditTime,
+		HrAuditSuggest,
+		AddTime,
+		UpdateTime
+		FROM
+		LL_LeaveAudit
+		where ApplyId = #applyId#
+	</select>
+
+
+
+</sqlMap>

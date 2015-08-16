@@ -1,5 +1,6 @@
 package com.vali.dto.leave;
 
+import com.vali.dto.user.EmployeeDTO;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,6 +25,11 @@ public class LeaveAuditDTO {
     private Integer managerId;
 
     /**
+     * 上级
+     */
+    private EmployeeDTO manager;
+
+    /**
      * 上级审批状态
      */
     private Integer managerAuditStatus;
@@ -43,6 +49,11 @@ public class LeaveAuditDTO {
      * hr id
      */
     private Integer hrId;
+
+    /**
+     * hr
+     */
+    private EmployeeDTO hr;
 
     /**
      * hr审批状态

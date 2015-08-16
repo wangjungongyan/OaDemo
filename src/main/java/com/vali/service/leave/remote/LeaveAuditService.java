@@ -1,5 +1,6 @@
 package com.vali.service.leave.remote;
 
+import com.vali.dto.leave.LeaveAuditDTO;
 import com.vali.enums.leave.AuditStatusEnum;
 
 /**
@@ -26,6 +27,14 @@ public interface LeaveAuditService {
      * @return
      */
     boolean hrAudit(int hrId, String hrAuditSuggest, AuditStatusEnum auditStatus);
+
+    /**
+     * 根据申请ID查询审批链
+     *
+     * @param applyId
+     * @return
+     */
+    LeaveAuditDTO getAuidtChain(int applyId);
 
     /**
      * 销假

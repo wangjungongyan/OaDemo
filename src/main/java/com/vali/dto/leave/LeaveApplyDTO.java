@@ -24,6 +24,9 @@ public class LeaveApplyDTO {
      */
     private Integer leaveType;
 
+    /**
+     * 请假类型名
+     */
     private String leaveName;
 
     /**
@@ -53,8 +56,14 @@ public class LeaveApplyDTO {
      */
     private Date applyTime;
 
+    /**
+     * 申请状态
+     */
     private int status;
 
+    /**
+     * 申请状态名
+     */
     private String statusName;
 
     /**
@@ -62,8 +71,14 @@ public class LeaveApplyDTO {
      */
     private LeaveAuditDTO audit;
 
+    /**
+     * 添加时间
+     */
     private Date addTime;
 
+    /**
+     * 修改时间
+     */
     private Date updateTime;
 
 }

@@ -47,4 +47,11 @@
         </property>
     </bean>
 
+    <bean id="leaveAuditDao" parent="parentDao">
+        <property name="proxyInterfaces" value="com.vali.dao.leave.LeaveAuditDao"/>
+        <property name="target">
+            <ref local="iBatisGenericDao"/>
+        </property>
+    </bean>
+
 </beans>

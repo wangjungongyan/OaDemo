@@ -51,7 +51,35 @@
                     </#if>
                     <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
                     <td>${myApply.leaveName}</td>
-                    <td>审批流</td>
+                    <td>
+                        <#if myApply.audit??>
+                            <#assign audit = myApply.audit/>
+                            <#assign manager = audit.manager/>
+                                ${manager.chineseName}
+                                <#if audit.managerAuditStatus == 1>
+                                    审核通过
+                                <#elseif audit.managerAuditStatus == 2 >
+                                    审核不通过
+                                <#else>
+                                    暂未审核
+                                </#if>
+                                ->
+                            <#if audit.hr??>
+                                <#assign hr = audit.hr/>
+                                   ${hr.chineseName}(HR)
+                                   <#if audit.hrAuditStatus == 1>
+                                       审核通过
+                                   <#elseif audit.hrAuditStatus == 2 >
+                                       审核不通过
+                                   <#else>
+                                       暂未审核
+                                   </#if>
+                            </#if>
+                        <#else>
+                            申请中，暂未审批
+                        </#if>
+
+                    </td>
                     <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')} 至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
                     <td>${myApply.statusName}</td>
                     <td><a href="/leaveApplyDetail">查看详情</a></td>

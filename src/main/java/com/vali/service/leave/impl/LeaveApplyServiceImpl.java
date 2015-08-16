@@ -1,14 +1,13 @@
 package com.vali.service.leave.impl;
 
-import com.vali.dao.leave.EmployeeHolidayDao;
 import com.vali.dao.leave.LeaveApplyDao;
-import com.vali.dto.leave.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
+import com.vali.dto.leave.LeaveAuditDTO;
 import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.enums.leave.LeaveTypeEnum;
-import com.vali.po.leave.EmployeeHolidayPO;
 import com.vali.po.leave.LeaveApplyPO;
 import com.vali.service.leave.remote.LeaveApplyService;
+import com.vali.service.leave.remote.LeaveAuditService;
 import lombok.Setter;
 import net.sf.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
@@ -27,18 +26,16 @@ import java.util.List;
 public class LeaveApplyServiceImpl implements LeaveApplyService {
 
     @Setter
-    @Resource(name = "employeeHolidayDao")
-    private EmployeeHolidayDao employeeHolidayDao;
-
-    @Setter
     @Resource(name = "leaveApplyDao")
     private LeaveApplyDao leaveApplyDao;
+
+    @Setter
+    @Resource(name = "leaveAuditService")
+    private LeaveAuditService leaveAuditService;
 
     private BeanCopier DTO2ENTITY4LeaveApply = BeanCopier.create(LeaveApplyDTO.class, LeaveApplyPO.class, false);
 
     private BeanCopier ENTITY2DTO4LeaveApply = BeanCopier.create(LeaveApplyPO.class, LeaveApplyDTO.class, false);
-
-    private BeanCopier ENTITY2DTO4Holiday = BeanCopier.create(EmployeeHolidayPO.class, EmployeeHolidayDTO.class, false);
 
     @Override
     public int saveApplyDetail(LeaveApplyDTO applyDetail) {
@@ -80,6 +77,9 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
             if (auditStatus != null) {
                 dto.setStatusName(auditStatus.getAuditStatusName());
             }
+
+            LeaveAuditDTO auditDTO = leaveAuditService.getAuidtChain(po.getId());
+            dto.setAudit(auditDTO);
 
             dtos.add(dto);
         }
