@@ -46,4 +46,27 @@
 		where Email = #email#
 	</select>
 
+	<select id="getEmployeeByID" resultMap="EmployeeResult">
+		SELECT
+		ID,
+		ChineseName,
+		FirstName,
+		MiddleName,
+		LastName,
+		DepartMent,
+		Role,
+		Email,
+		Phone,
+		Password,
+		JoinDate,
+		Status,
+		DepartureDate,
+		MangerId,
+		AddTime,
+		UpdateTime
+		FROM
+		LL_Employee
+		where ID = #ID#
+	</select>
+
 </sqlMap>

@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return loginVerifyDTO;
         }
 
-        EmployeePO employeePO = employeeDao.getEmployeeByEmail(loginName);
+        EmployeePO employeePO = loadEmployee(loginName);
 
         if (employeePO == null) {
             loginVerifyDTO.setVerify(false);
@@ -60,40 +60,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<FirstMenuDTO> getEmployeeMenus(String loginName) {
-        EmployeePO employeePO = employeeDao.getEmployeeByEmail(loginName);
+        EmployeePO employeePO = loadEmployee(loginName);
         return MenuBO.getMenuByRole(employeePO.getRole());
     }
 
     @Override
     public int addEmployee(EmployeeDTO userDTO) {
+        //TODO add
         return 0;
     }
 
     @Override
     public int updateEmployee(EmployeeDTO userDTO) {
+        //TODO update
         return 0;
     }
 
     @Override
     public EmployeeDTO loadEmployee(int userId) {
-        if (userId == (EmployeeDTO.getVali().getId())) {
-            return EmployeeDTO.getVali();
-        }
-        if (userId == (EmployeeDTO.getKerith().getId())) {
-            return EmployeeDTO.getKerith();
-        }
-        return null;
+        return employeeDao.getEmployeeByID(userId);
     }
 
     @Override
     public EmployeeDTO loadEmployee(String email) {
-        if (email.equals(EmployeeDTO.getVali().getEmail())) {
-            return EmployeeDTO.getVali();
-        }
-        if (email.equals(EmployeeDTO.getKerith().getEmail())) {
-            return EmployeeDTO.getKerith();
-        }
-        return null;
+        return  employeeDao.getEmployeeByEmail(email);
     }
 
     @Override
