@@ -41,27 +41,33 @@ public class MenuBO {
 
         FirstMenuDTO firstMenuDTO1 = new FirstMenuDTO();
         firstMenuDTO1.setHref("oneMenuId_001");
-        firstMenuDTO1.setName("请假");
+        firstMenuDTO1.setName("我的请假");
 
         SecondMenuDTO secondMenuDTO1 = new SecondMenuDTO();
-        secondMenuDTO1.setName("假期申请");
-        secondMenuDTO1.setHref("/apply");
+        secondMenuDTO1.setName("我要申请");
+        secondMenuDTO1.setHref("/leave/index");
         secondMenuDTO1.setIndex(1005);
 
         SecondMenuDTO secondMenuDTO2 = new SecondMenuDTO();
-        secondMenuDTO2.setName("假期申请历史");
-        secondMenuDTO2.setHref("/applyList");
+        secondMenuDTO2.setName("我的申请");
+        secondMenuDTO2.setHref("/leave/myApplyt");
         secondMenuDTO2.setIndex(1006);
 
         SecondMenuDTO secondMenuDTO3 = new SecondMenuDTO();
-        secondMenuDTO3.setName("假期审核");
-        secondMenuDTO3.setHref("/audit");
+        secondMenuDTO3.setName("我要审核");
+        secondMenuDTO3.setHref("/leave/audit");
         secondMenuDTO3.setIndex(1007);
+
+        SecondMenuDTO secondMenuDTO4 = new SecondMenuDTO();
+        secondMenuDTO4.setName("我的审核");
+        secondMenuDTO4.setHref("/leave/myAudit");
+        secondMenuDTO4.setIndex(1008);
 
         List<SecondMenuDTO> secondMenus1 = new ArrayList<SecondMenuDTO>(3);
         secondMenus1.add(secondMenuDTO1);
         secondMenus1.add(secondMenuDTO2);
         secondMenus1.add(secondMenuDTO3);
+        secondMenus1.add(secondMenuDTO4);
 
         firstMenuDTO1.setSecondMenus(secondMenus1);
 
