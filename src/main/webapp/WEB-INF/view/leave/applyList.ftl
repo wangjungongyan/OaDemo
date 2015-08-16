@@ -42,7 +42,11 @@
         <tbody>
             <#if myApplys??>
                 <#list myApplys as myApply>
-                <tr class="success">
+                    <#if myApply.status != 2>
+                        <tr class="success">
+                        <#else>
+                        <tr class="warning">
+                    </#if>
                     <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm')}</td>
                     <td>${myApply.leaveName}</td>
                     <td>审批流</td>
