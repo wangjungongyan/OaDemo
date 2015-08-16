@@ -5,7 +5,7 @@ package com.vali.enums.leave;
  */
 public enum AuditStatusEnum {
 
-    APPLY(0, "提交申请"),
+    AUDITING(0, "审核中"),
 
     PASS(1, "通过"),
 

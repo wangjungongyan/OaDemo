@@ -42,12 +42,14 @@
         <tbody>
             <#if myApplys??>
                 <#list myApplys as myApply>
-                    <#if myApply.status != 2>
+                    <#if myApply.status == 0>
+                        <tr class="info">
+                        <#elseif myApply.status == 1>
                         <tr class="success">
                         <#else>
                         <tr class="warning">
                     </#if>
-                    <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm')}</td>
+                    <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
                     <td>${myApply.leaveName}</td>
                     <td>审批流</td>
                     <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')} 至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
