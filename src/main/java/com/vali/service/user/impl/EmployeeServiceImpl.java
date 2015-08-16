@@ -9,6 +9,7 @@ import com.vali.dto.user.EmployeeDTO;
 import com.vali.po.user.EmployeePO;
 import com.vali.service.user.remote.EmployeeService;
 import lombok.Setter;
+import net.sf.cglib.beans.BeanCopier;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Resource(name = "employeeDao")
     private EmployeeDao employeeDao;
 
+    private BeanCopier ENTITY_2_DTO = BeanCopier.create(EmployeePO.class, EmployeeDTO.class, false);
+
     @Override
     public LoginVerifyDTO verifyLoginUser(String loginName, String password) {
 
@@ -37,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return loginVerifyDTO;
         }
 
-        EmployeePO employeePO = loadEmployee(loginName);
+        EmployeePO employeePO = employeeDao.getEmployeeByEmail(loginName);
 
         if (employeePO == null) {
             loginVerifyDTO.setVerify(false);
@@ -60,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<FirstMenuDTO> getEmployeeMenus(String loginName) {
-        EmployeePO employeePO = loadEmployee(loginName);
+        EmployeePO employeePO = employeeDao.getEmployeeByEmail(loginName);
         return MenuBO.getMenuByRole(employeePO.getRole());
     }
 
@@ -78,12 +81,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO loadEmployee(int userId) {
-        return employeeDao.getEmployeeByID(userId);
+        EmployeePO po = employeeDao.getEmployeeByID(userId);
+        EmployeeDTO dto = new EmployeeDTO();
+        ENTITY_2_DTO.copy(po, dto, null);
+        return dto;
     }
 
     @Override
     public EmployeeDTO loadEmployee(String email) {
-        return  employeeDao.getEmployeeByEmail(email);
+        EmployeePO po = employeeDao.getEmployeeByEmail(email);
+        EmployeeDTO dto = new EmployeeDTO();
+        ENTITY_2_DTO.copy(po, dto, null);
+        return dto;
     }
 
     @Override

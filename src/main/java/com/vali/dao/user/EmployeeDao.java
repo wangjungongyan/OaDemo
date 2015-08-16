@@ -16,6 +16,6 @@ public interface EmployeeDao {
     public EmployeePO getEmployeeByEmail(@ParamName("email") String email);
 
     @Action(action = ActionType.QUERY_OBJECT)
-    public EmployeePO getEmployeeByID(@ParamName("ID") int id);
+    public EmployeePO getEmployeeByID(@ParamName("id") int id);
 
 }
