@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by fanshuai on 15/8/13.
  */
 @Data
-public class LeaveApplyPO{
+public class LeaveApplyPO {
 
     private Integer id;
 
@@ -26,6 +26,8 @@ public class LeaveApplyPO{
     private String leaveReason;
 
     private Date applyTime;
+
+    private int status;
 
     private Date addTime;
 

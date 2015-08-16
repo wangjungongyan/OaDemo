@@ -22,13 +22,17 @@ public class LoginInteceptor implements HandlerInterceptor {
                                        Object o) throws Exception {
 
         String requestUri = httpServletRequest.getRequestURI();
-
-        if (excludedUrls.contains(requestUri)) {
-            return true;
-        }
-
         HttpSession session = httpServletRequest.getSession();
         EmployeeDTO loginUser = (EmployeeDTO) session.getAttribute(Constant.LOGIN_USER);
+
+        if (excludedUrls.contains(requestUri)) {
+            if (loginUser != null) {
+                httpServletResponse.sendRedirect("redirect:/main");
+                return false;
+            }
+
+            return true;
+        }
 
         if (loginUser == null) {
             httpServletResponse.sendRedirect("redirect:/login");

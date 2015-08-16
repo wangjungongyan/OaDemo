@@ -2,6 +2,22 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="LeaveApply">
 
+    <typeAlias alias="LeaveApplyPO" type="com.vali.po.leave.LeaveApplyPO"/>
+
+    <resultMap id="LeaveApplyResult" class="LeaveApplyPO">
+        <result column="ID" property="id"/>
+        <result column="ApplicantID" property="applicantID"/>
+        <result column="LeaveType" property="leaveType"/>
+        <result column="LeaveStartTime" property="leaveStartTime"/>
+        <result column="LeaveEndTime" property="leaveEndTime"/>
+        <result column="LeaveDays" property="leaveDays"/>
+        <result column="LeaveReason" property="leaveReason"/>
+        <result column="ApplyTime" property="applyTime"/>
+        <result column="Status" property="status"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
     <select id="getLeaveApply" resultClass="int">
 		SELECT
 		ID
@@ -11,11 +27,28 @@
 	</select>
 
     <insert id="saveLeaveApplyDetail">
-        insert into LL_LeaveApply(ApplicantID,LeaveType,LeaveStartTime,LeaveEndTime,LeaveDays,LeaveReason,ApplyTime,AddTime,UpdateTime)
-        values (#apply.applicantID#,#apply.leaveType#,#apply.leaveStartTime#,#apply.leaveEndTime#,#apply.leaveDays#,#apply.leaveReason#,#apply.applyTime#,NOW(),NOW())
+        insert into LL_LeaveApply(ApplicantID,LeaveType,LeaveStartTime,LeaveEndTime,LeaveDays,LeaveReason,ApplyTime,Status,AddTime,UpdateTime)
+        values (#apply.applicantID#,#apply.leaveType#,#apply.leaveStartTime#,#apply.leaveEndTime#,#apply.leaveDays#,#apply.leaveReason#,#apply.applyTime#,0,NOW(),NOW())
         <selectKey resultClass="java.lang.Integer" keyProperty="id">
             SELECT @@IDENTITY AS ff
         </selectKey>
     </insert>
+
+    <select id="getLeaveApplyRecords" resultMap="LeaveApplyResult">
+        select ID,
+               ApplicantID,
+               LeaveType,
+               LeaveStartTime,
+               LeaveEndTime,
+               LeaveDays,
+               LeaveReason,
+               ApplyTime,
+               Status,
+               AddTime,
+               UpdateTime
+        from LL_LeaveApply
+        where ApplicantID = #applicantID#
+        order by AddTime desc
+    </select>
 
 </sqlMap>

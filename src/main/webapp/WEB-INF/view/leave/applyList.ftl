@@ -10,118 +10,48 @@
 <div class="container">
     <form class="form-inline">
         <div class="form-group">
-            <label for="exampleInputName2">申请人</label>
-            <input type="text" class="form-control" id="exampleInputName2" placeholder="张三">
-            <label for="exampleInputEmail2">申请时间</label>
-            <input size="10" id="startTime" type="text"  readonly class="form_datetime" style="width: 100px;">
-            <label for="exampleInputEmail2">到</label>
-            <input size="10" id="endTime" type="text"  readonly class="form_datetime" style="width: 100px;">
+
+            <label>申请类型</label>
+            <select name ="leaveType">
+                <#list employeeHolidays as holiday>
+                    <option value ="${holiday.type}">${holiday.name}</option>
+                </#list>
+            </select>
+
+            <label>申请时间</label>
+            <input size="15" id="startTime" type="text"  readonly class="form_datetime" style="width: 100px;">
+
+            <label>到</label>
+            <input size="15" id="endTime" type="text"  readonly class="form_datetime" style="width: 100px;">
+
             <button type="submit" class="btn btn-default">查询</button>
+
         </div>
     </form>
     <table class="table  table-striped table-bordered table-hover ">
         <thead >
             <tr style="background-color: #eee">
-                <th>申请人</th>
                 <th>申请时间</th>
-                <th>目的地</th>
-                <th>天数</th>
-                <th>总费用</th>
+                <th>请假类型</th>
+                <th>审批流</th>
+                <th>请假时间段</th>
                 <th>状态</th>
-                <th>查看</th>
+                <th>查看详情</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="success">
-                <td>张三</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>审批通过</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr class="danger" style="background-color: red">
-                <td>李四</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>已拒绝</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr>
-                <td>王五</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>未审批</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr>
-                <td>刘七</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>未审批</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr>
-                <td>吴八</td>
-                <td>2013-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>未审批</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr>
-                <td>张三</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>未审批</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr>
-                <td>张三</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>未审批</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr>
-                <td>张三</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>未审批</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr>
-                <td>张三</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>未审批</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
-            <tr>
-                <td>张三</td>
-                <td>2015-01-01</td>
-                <td>北京</td>
-                <td>5天</td>
-                <td>32425.00</td>
-                <td>未审批</td>
-                <td><a href="applyDetail">查看详情</a></td>
-            </tr>
+            <#if myApplys??>
+                <#list myApplys as myApply>
+                <tr class="success">
+                    <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm')}</td>
+                    <td>${myApply.leaveName}</td>
+                    <td>审批流</td>
+                    <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')} 至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
+                    <td>${myApply.statusName}</td>
+                    <td><a href="/leaveApplyDetail">查看详情</a></td>
+                </tr>
+                </#list>
+            </#if>
         </tbody>
     </table>
 </div>
@@ -150,8 +80,23 @@
 <script src="/js/bootstrap.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
-     $("#startTime").datetimepicker({format: 'yyyy-mm-dd',minView:2,todayHighlight:true,initialDate:new Date()});
-     $("#endTime").datetimepicker({format: 'yyyy-mm-dd',minView:2,todayHighlight:true,initialDate:new Date()});
+
+        $("#startTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            minView:0,
+            todayHighlight:true,
+            todayBtn:true,
+            autoclose:true
+        });
+
+        $("#endTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            minView:0,
+            todayHighlight:true,
+            todayBtn:true,
+            autoclose:true
+        });
+
     </script>
 </body>
 </html>

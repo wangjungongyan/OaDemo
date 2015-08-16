@@ -44,6 +44,7 @@ public enum LeaveTypeEnum {
     }
 
     public static LeaveTypeEnum getLeaveType(int type) {
+
         LeaveTypeEnum[] enums = LeaveTypeEnum.values();
 
         for (LeaveTypeEnum t : enums) {

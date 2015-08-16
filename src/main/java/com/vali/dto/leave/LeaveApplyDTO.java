@@ -24,6 +24,8 @@ public class LeaveApplyDTO {
      */
     private Integer leaveType;
 
+    private String leaveName;
+
     /**
      * 请假开始时间
      */
@@ -50,6 +52,10 @@ public class LeaveApplyDTO {
      * 申请时间
      */
     private Date applyTime;
+
+    private int status;
+
+    private String statusName;
 
     /**
      * 审批详情

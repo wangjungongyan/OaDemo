@@ -6,6 +6,8 @@ import com.leya.idal.annotation.ParamName;
 import com.leya.idal.enums.ActionType;
 import com.vali.po.leave.LeaveApplyPO;
 
+import java.util.List;
+
 /**
  * Created by vali on 15-8-15.
  */
@@ -17,5 +19,8 @@ public interface LeaveApplyDao {
     public Integer getLeaveApply();
 
     @Action(action = ActionType.INSERT)
-    public int saveLeaveApplyDetail(@ParamName("apply")LeaveApplyPO apply);
+    public int saveLeaveApplyDetail(@ParamName("apply") LeaveApplyPO apply);
+
+    @Action(action = ActionType.QUERY_LIST)
+    public List<LeaveApplyPO> getLeaveApplyRecords(@ParamName("applicantID") int applicantID);
 }

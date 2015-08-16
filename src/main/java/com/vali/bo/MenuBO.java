@@ -50,7 +50,7 @@ public class MenuBO {
 
         SecondMenuDTO secondMenuDTO2 = new SecondMenuDTO();
         secondMenuDTO2.setName("我的申请");
-        secondMenuDTO2.setHref("/leave/myApplyt");
+        secondMenuDTO2.setHref("/myLeaveApply");
         secondMenuDTO2.setIndex(1006);
 
         SecondMenuDTO secondMenuDTO3 = new SecondMenuDTO();

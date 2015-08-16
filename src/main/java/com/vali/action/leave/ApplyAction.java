@@ -50,14 +50,25 @@ public class ApplyAction {
         return "redirct:/myLeaveApply";
     }
 
+    //TODO
     private BigDecimal caculateLeaveDays(Date leaveStartTime, Date leaveEndTime) {
+        //计算规则：请假时长以4个小时为单位，小于等于4小时则算作请假4小时，大于4小时按照8小时算
+        //碰到双休/国定假等非工作日，不计算在请假天数内
         return new BigDecimal(11);
     }
 
     @RequestMapping(value = "/myLeaveApply")
     public ModelAndView myApply() {
-        //查询出申请记录，按照时间倒序
-        return new ModelAndView("leave/myLeaveApply");
+
+        int applicantID = LoginBO.getLoginUser().getId();
+        List<LeaveApplyDTO> myLeaveApplys = leaveService.getApplyRecords(applicantID);
+        List<EmployeeHolidayDTO> employeeHolidays = leaveService.getEmployeeHoliday(applicantID);
+
+        Map model = new HashMap();
+        model.put("myApplys", myLeaveApplys);
+        model.put("employeeHolidays", employeeHolidays);
+
+        return new ModelAndView("leave/applyList", model);
     }
 
     @RequestMapping(value = "/leaveApplyDetail")

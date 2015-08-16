@@ -34,14 +34,16 @@ public class LeaveServiceImpl implements LeaveService {
     @Resource(name = "leaveApplyDao")
     private LeaveApplyDao leaveApplyDao;
 
-    private BeanCopier ENTITY2DTO4LeaveApply = BeanCopier.create(LeaveApplyDTO.class, LeaveApplyPO.class, false);
+    private BeanCopier DTO2ENTITY4LeaveApply = BeanCopier.create(LeaveApplyDTO.class, LeaveApplyPO.class, false);
+
+    private BeanCopier ENTITY2DTO4LeaveApply = BeanCopier.create(LeaveApplyPO.class, LeaveApplyDTO.class, false);
 
     private BeanCopier ENTITY2DTO4Holiday = BeanCopier.create(EmployeeHolidayPO.class, EmployeeHolidayDTO.class, false);
 
     @Override
     public int saveApplyDetail(LeaveApplyDTO applyDetail) {
         LeaveApplyPO po = new LeaveApplyPO();
-        ENTITY2DTO4LeaveApply.copy(applyDetail, po, null);
+        DTO2ENTITY4LeaveApply.copy(applyDetail, po, null);
         return leaveApplyDao.saveLeaveApplyDetail(po);
     }
 
@@ -65,7 +67,41 @@ public class LeaveServiceImpl implements LeaveService {
         return false;
     }
 
-    @Override
+    @Override public List<LeaveApplyDTO> getApplyRecords(Integer applicantID, Integer leaveType, Date applyTime_begin,
+                                                         Date applyTime_end) {
+        return null;
+    }
+
+    @Override public List<LeaveApplyDTO> getApplyRecords(Integer applicantID) {
+
+        List<LeaveApplyPO> pos = leaveApplyDao.getLeaveApplyRecords(applicantID);
+
+        if (CollectionUtils.isEmpty(pos)) {
+            return new ArrayList<LeaveApplyDTO>(1);
+        }
+
+        List<LeaveApplyDTO> dtos = new ArrayList<LeaveApplyDTO>(pos.size());
+
+        for (LeaveApplyPO po : pos) {
+            LeaveApplyDTO dto = new LeaveApplyDTO();
+            ENTITY2DTO4LeaveApply.copy(po, dto, null);
+
+            LeaveTypeEnum typeEnum =LeaveTypeEnum.getLeaveType(po.getLeaveType());
+            if (typeEnum!=null){
+                dto.setLeaveName(typeEnum.getName());
+            }
+
+            AuditStatusEnum auditStatus=AuditStatusEnum.getAuditStatus(po.getStatus());
+            if (auditStatus!=null){
+                dto.setStatusName(auditStatus.getAuditStatusName());
+            }
+
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
     public List<LeaveApplyDTO> myApply(Integer applicantID, Integer leaveType, String leaveReason, Date applyTime_begin,
                                        Date applyTime_end) {
         return null;
@@ -80,16 +116,16 @@ public class LeaveServiceImpl implements LeaveService {
 
         List<EmployeeHolidayPO> pos = employeeHolidayDao.getEmployeeHoliday(employeeId);
 
-        if (CollectionUtils.isEmpty(pos)){
-            return  new ArrayList<EmployeeHolidayDTO>(1);
+        if (CollectionUtils.isEmpty(pos)) {
+            return new ArrayList<EmployeeHolidayDTO>(1);
         }
 
         List<EmployeeHolidayDTO> dtos = new ArrayList<EmployeeHolidayDTO>(pos.size());
 
-        for (EmployeeHolidayPO po :pos){
+        for (EmployeeHolidayPO po : pos) {
             EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
             ENTITY2DTO4Holiday.copy(po, dto, null);
-            LeaveTypeEnum leaveTypeEnum =LeaveTypeEnum.getLeaveType(po.getType());
+            LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(po.getType());
             dto.setName(leaveTypeEnum.getName());
             dto.setDesc(leaveTypeEnum.getDesc());
             dtos.add(dto);

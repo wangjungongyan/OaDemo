@@ -52,7 +52,10 @@ public interface LeaveService {
      */
     boolean revoke(int hrId,int applyId);
 
-    List<LeaveApplyDTO> myApply(Integer applicantID,Integer leaveType,String leaveReason,Date applyTime_begin,Date applyTime_end);
+    List<LeaveApplyDTO> getApplyRecords(Integer applicantID, Integer leaveType, Date applyTime_begin,
+                                        Date applyTime_end);
+
+    List<LeaveApplyDTO> getApplyRecords(Integer applicantID);
 
     /**
      * 请假详细信息
