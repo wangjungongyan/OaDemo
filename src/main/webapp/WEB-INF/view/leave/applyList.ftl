@@ -60,8 +60,6 @@
                                     审核通过
                                 <#elseif audit.managerAuditStatus == 2 >
                                     审核不通过
-                                <#else>
-                                    暂未审核
                                 </#if>
                                 ->
                             <#if audit.hr??>
@@ -72,11 +70,11 @@
                                    <#elseif audit.hrAuditStatus == 2 >
                                        审核不通过
                                    <#else>
-                                       暂未审核
+                                       未审核
                                    </#if>
                             </#if>
                         <#else>
-                            申请中，暂未审批
+                            暂未审批
                         </#if>
 
                     </td>

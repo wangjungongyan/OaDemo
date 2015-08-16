@@ -51,7 +51,7 @@ public class ApplyAction {
         applyDTO.setLeaveDays(caculateLeaveDays(applyDTO.getLeaveStartTime(), applyDTO.getLeaveEndTime()));
 
         leaveService.saveApplyDetail(applyDTO);
-        return "redirct:/myLeaveApply";
+        return "redirect:/myLeaveApply";
     }
 
     //TODO
