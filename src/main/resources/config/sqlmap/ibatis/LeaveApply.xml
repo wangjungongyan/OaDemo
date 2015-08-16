@@ -2,12 +2,20 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="LeaveApply">
 
-	<select id="getLeaveApply" resultClass="int">
+    <select id="getLeaveApply" resultClass="int">
 		SELECT
 		ID
 		FROM
 		LL_LeaveApply
 		where ID = 1
 	</select>
+
+    <insert id="saveLeaveApplyDetail">
+        insert into LL_LeaveApply(ApplicantID,LeaveType,LeaveStartTime,LeaveEndTime,LeaveDays,LeaveReason,ApplyTime,AddTime,UpdateTime)
+        values (#apply.applicantID#,#apply.leaveType#,#apply.leaveStartTime#,#apply.leaveEndTime#,#apply.leaveDays#,#apply.leaveReason#,#apply.applyTime#,NOW(),NOW())
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+    </insert>
 
 </sqlMap>

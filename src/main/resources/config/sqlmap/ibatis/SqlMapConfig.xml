@@ -8,5 +8,6 @@
 
 	<sqlMap resource="config/sqlmap/ibatis/LeaveApply.xml" />
     <sqlMap resource="config/sqlmap/ibatis/Employee.xml" />
+    <sqlMap resource="config/sqlmap/ibatis/EmployeeHoliday.xml" />
 
 </sqlMapConfig>

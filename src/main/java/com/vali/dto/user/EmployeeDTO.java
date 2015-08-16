@@ -83,6 +83,11 @@ public class EmployeeDTO {
      */
     private EmployeeDTO manger;
 
+    /**
+     * HR
+     */
+    private EmployeeDTO hr;
+
     public static EmployeeDTO getVali() {
         EmployeeDTO userDTO = new EmployeeDTO();
         userDTO.setId(1);

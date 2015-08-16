@@ -74,6 +74,17 @@
                 </property>
             </bean>
         </mvc:interceptor>
+
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/leave/*"/>-->
+            <!--<bean class="com.vali.inteceptor.LoginInteceptor"/>-->
+        <!--</mvc:interceptor>-->
+
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/user/*"/>-->
+            <!--<bean class="com.vali.inteceptor.LoginInteceptor"/>-->
+        <!--</mvc:interceptor>-->
+
     </mvc:interceptors>
 
 

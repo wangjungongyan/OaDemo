@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="EmployeeHoliday">
+
+    <typeAlias alias="EmployeeHolidayPO" type="com.vali.po.leave.EmployeeHolidayPO"/>
+
+    <resultMap id="EmployeeHolidayResult" class="EmployeeHolidayPO">
+        <result column="ID" property="id"/>
+        <result column="EmployeeId" property="employeeId"/>
+        <result column="Year" property="year"/>
+        <result column="Own" property="own"/>
+        <result column="Used" property="used"/>
+        <result column="Surplus" property="surplus"/>
+        <result column="Type" property="type"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <select id="getEmployeeHoliday" resultMap="EmployeeHolidayResult">
+		SELECT
+		ID,
+		EmployeeId,
+		Year,
+		Own,
+		Used,
+		Type,
+		(Own - Used) as Surplus,
+		AddTime,
+		UpdateTime
+		FROM
+		LL_EmployeeHoliday
+		where EmployeeId = #employeeId#
+	</select>
+
+</sqlMap>

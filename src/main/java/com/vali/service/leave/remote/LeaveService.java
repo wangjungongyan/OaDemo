@@ -1,7 +1,8 @@
 package com.vali.service.leave.remote;
 
-import com.vali.enums.leave.AuditStatusEnum;
+import com.vali.dto.leave.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
+import com.vali.enums.leave.AuditStatusEnum;
 
 import java.util.Date;
 import java.util.List;
@@ -59,4 +60,6 @@ public interface LeaveService {
      * @return
      */
     LeaveApplyDTO applyDetail(Integer applyId);
+
+    List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId);
 }

@@ -40,4 +40,11 @@
         </property>
     </bean>
 
+    <bean id="employeeHolidayDao" parent="parentDao">
+        <property name="proxyInterfaces" value="com.vali.dao.leave.EmployeeHolidayDao"/>
+        <property name="target">
+            <ref local="iBatisGenericDao"/>
+        </property>
+    </bean>
+
 </beans>

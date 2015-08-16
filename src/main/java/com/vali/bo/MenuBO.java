@@ -45,7 +45,7 @@ public class MenuBO {
 
         SecondMenuDTO secondMenuDTO1 = new SecondMenuDTO();
         secondMenuDTO1.setName("我要申请");
-        secondMenuDTO1.setHref("/leave/index");
+        secondMenuDTO1.setHref("/leave");
         secondMenuDTO1.setIndex(1005);
 
         SecondMenuDTO secondMenuDTO2 = new SecondMenuDTO();

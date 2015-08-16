@@ -6,6 +6,7 @@ import com.vali.dao.user.EmployeeDao;
 import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.dto.menu.FirstMenuDTO;
 import com.vali.dto.user.EmployeeDTO;
+import com.vali.enums.user.RoleEnum;
 import com.vali.po.user.EmployeePO;
 import com.vali.service.user.remote.EmployeeService;
 import lombok.Setter;
@@ -89,10 +90,35 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO loadEmployee(String email) {
+
         EmployeePO po = employeeDao.getEmployeeByEmail(email);
+
         EmployeeDTO dto = new EmployeeDTO();
         ENTITY_2_DTO.copy(po, dto, null);
+        dto.setManger(getManger(po.getMangerId()));
+        dto.setHr(getHr());
+
         return dto;
+    }
+
+    private EmployeeDTO getManger(int mangerId){
+
+        EmployeePO mangerPO =employeeDao.getEmployeeByID(mangerId);
+
+        EmployeeDTO mangerDTO = new EmployeeDTO();
+        ENTITY_2_DTO.copy(mangerPO, mangerDTO, null);
+
+        return mangerDTO;
+    }
+
+    private EmployeeDTO getHr(){
+
+        List<EmployeePO> hrs =employeeDao.getEmployeeByRole(RoleEnum.HR.getType());
+
+        EmployeeDTO hrrDTO = new EmployeeDTO();
+        ENTITY_2_DTO.copy(hrs.get(0), hrrDTO, null);
+
+        return hrrDTO;
     }
 
     @Override

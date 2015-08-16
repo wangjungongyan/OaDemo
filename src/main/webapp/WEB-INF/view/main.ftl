@@ -31,8 +31,7 @@
             <div class="mainBody-div"  >
                 <div class="mainBody-div-main" >
                     <div class="menuTabsContent" id="menuTabsContent" >
-                        <ul class="tabs-title-ul" >
-                        </ul>
+                        <ul class="tabs-title-ul"/>
                     </div>
                 </div>
             </div>

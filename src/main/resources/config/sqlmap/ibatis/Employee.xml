@@ -69,4 +69,27 @@
 		where ID = #id#
 	</select>
 
+    <select id="getEmployeeByRole" resultMap="EmployeeResult">
+        SELECT
+        ID,
+        ChineseName,
+        FirstName,
+        MiddleName,
+        LastName,
+        DepartMent,
+        Role,
+        Email,
+        Phone,
+        Password,
+        JoinDate,
+        Status,
+        DepartureDate,
+        MangerId,
+        AddTime,
+        UpdateTime
+        FROM
+        LL_Employee
+        where Role = #role#
+    </select>
+
 </sqlMap>
