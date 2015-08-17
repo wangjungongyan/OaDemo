@@ -138,7 +138,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return mangerDTO;
     }
 
-    private EmployeeDTO getHr(){
+    public EmployeeDTO getHr(){
 
         List<EmployeePO> hrs =employeeDao.getEmployeeByRole(RoleEnum.HR.getType());
 

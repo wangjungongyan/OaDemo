@@ -16,4 +16,7 @@ public interface LeaveAuditDao {
     @Action(action = ActionType.QUERY_OBJECT)
     public LeaveAuditPO getAuidtByApplyId(@ParamName("applyId") int applyId);
 
+    @Action(action = ActionType.INSERT)
+    public int saveAudit(@ParamName("po") LeaveAuditPO po);
+
 }

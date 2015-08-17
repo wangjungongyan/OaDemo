@@ -36,6 +36,8 @@ public interface LeaveAuditService {
      */
     LeaveAuditDTO getAuidtChain(int applyId);
 
+    int saveAudit(LeaveAuditDTO dto);
+
     /**
      * 销假
      *

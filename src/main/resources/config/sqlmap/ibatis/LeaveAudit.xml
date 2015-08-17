@@ -39,6 +39,35 @@
 		where ApplyId = #applyId#
 	</select>
 
+    <insert id="saveAudit">
+        insert into LL_LeaveAudit(
+        ApplyId,
+		ManagerId,
+		ManagerAuditStatus,
+		ManagerAuditTime,
+		ManagerAuditSuggest,
+		HrId,
+		HrAuditStatus,
+		HrAuditTime,
+		HrAuditSuggest,
+		AddTime,
+		UpdateTime)values(
+		#po.applyId#,
+		#po.managerId#,
+		#po.managerAuditStatus#,
+		#po.managerAuditTime#,
+		#po.managerAuditSuggest#,
+		#po.hrId#,
+		#po.hrAuditStatus#,
+		#po.hrAuditTime#,
+		#po.hrAuditSuggest#,
+		NOW(),
+		NOW())
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+    </insert>
+
 
 
 </sqlMap>

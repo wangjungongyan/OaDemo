@@ -29,6 +29,8 @@ public class LeaveAuditServiceImpl implements LeaveAuditService {
 
     private BeanCopier ENTITY2DTO4LeaveAudit = BeanCopier.create(LeaveAuditPO.class, LeaveAuditDTO.class, false);
 
+    private BeanCopier DTO2ENTITY4LeaveAudit = BeanCopier.create(LeaveAuditDTO.class, LeaveAuditPO.class, false);
+
     @Override public boolean manageAudit(int manageId, String managerAuditSuggest, AuditStatusEnum auditStatus) {
         return false;
     }
@@ -55,8 +57,21 @@ public class LeaveAuditServiceImpl implements LeaveAuditService {
         ENTITY2DTO4LeaveAudit.copy(po, dto, null);
         dto.setManager(manger);
         dto.setHr(hr);
-        
+
         return dto;
+    }
+
+    @Override public int saveAudit(LeaveAuditDTO dto) {
+
+        if (dto == null) {
+            return 0;
+        }
+
+        LeaveAuditPO po = new LeaveAuditPO();
+        DTO2ENTITY4LeaveAudit.copy(dto, po, null);
+
+        return leaveAuditDao.saveAudit(po);
+
     }
 
     @Override public boolean revoke(int hrId, int applyId) {

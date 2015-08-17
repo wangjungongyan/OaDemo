@@ -60,6 +60,8 @@
                                     审核通过
                                 <#elseif audit.managerAuditStatus == 2 >
                                     审核不通过
+                                <#else>
+                                    未审核
                                 </#if>
                                 ->
                             <#if audit.hr??>

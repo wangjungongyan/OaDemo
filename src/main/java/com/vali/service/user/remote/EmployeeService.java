@@ -29,6 +29,8 @@ public interface EmployeeService {
 
     public EmployeeDTO loadEmployee(String email);
 
+    public EmployeeDTO getHr();
+
     /**
      * 判断是否已经存在相同用户，根据邮箱判断
      *
