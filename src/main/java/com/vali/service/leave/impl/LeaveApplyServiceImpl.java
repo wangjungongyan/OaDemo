@@ -38,6 +38,8 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
 
     private BeanCopier DTO2ENTITY4LeaveApply = BeanCopier.create(LeaveApplyDTO.class, LeaveApplyPO.class, false);
 
+    private BeanCopier PAGECopier = BeanCopier.create(PageModel.class, PageModel.class, false);
+
     private BeanCopier DTO2ENTITY4LeaveApplyQuery = BeanCopier.create(LeaveApplyQueryDTO.class, LeaveApplyQueryPO.class, false);
 
     private BeanCopier ENTITY2DTO4LeaveApply = BeanCopier.create(LeaveApplyPO.class, LeaveApplyDTO.class, false);
@@ -92,10 +94,33 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         return dtos;
     }
 
-    @Override public PageModel getApplyRecords(LeaveApplyQueryDTO dto,int pageNo,int pageSize) {
-        LeaveApplyQueryPO po = new LeaveApplyQueryPO();
-        DTO2ENTITY4LeaveApplyQuery.copy(dto,po,null);
-        return leaveApplyDao.pageLeaveApplyRecords(po,pageNo,pageSize);
+    @Override public PageModel getApplyRecords(LeaveApplyQueryDTO queryDTO,int pageNo,int pageSize) {
+
+        LeaveApplyQueryPO queryPO = new LeaveApplyQueryPO();
+        DTO2ENTITY4LeaveApplyQuery.copy(queryDTO,queryPO,null);
+        PageModel queryModel = leaveApplyDao.pageLeaveApplyRecords(queryPO,pageNo,pageSize);
+
+        PageModel result = new PageModel();
+        PAGECopier.copy(queryModel,result,null);
+
+        if (queryModel == null || CollectionUtils.isEmpty(queryModel.getRecords())){
+            return result;
+        }
+
+        List<LeaveApplyDTO> resultDTOS= new ArrayList<LeaveApplyDTO>(10);
+
+        for(LeaveApplyPO record : (List<LeaveApplyPO>)queryModel.getRecords()){
+            LeaveApplyDTO dto = new LeaveApplyDTO();
+            ENTITY2DTO4LeaveApply.copy(record,dto,null);
+            int leaveType = record.getLeaveType();
+            LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(leaveType);
+            dto.setLeaveName(leaveTypeEnum.getName());
+            resultDTOS.add(dto);
+        }
+
+        result.setRecords(resultDTOS);
+
+        return result;
     }
 
     public List<LeaveApplyDTO> myApply(Integer applicantID, Integer leaveType, String leaveReason, Date applyTime_begin,

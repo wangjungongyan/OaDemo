@@ -14,9 +14,7 @@ import com.vali.service.user.remote.EmployeeHolidayService;
 import com.vali.service.user.remote.EmployeeService;
 import com.vali.util.TimeUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -44,6 +42,7 @@ public class ApplyAction {
     public ModelAndView leaveIndex() {
 
         EmployeeDTO employee = LoginBO.getLoginUser();
+        employee.setHr(employeeService.getHr());
         List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(employee.getId());
 
         Map model = new HashMap();
@@ -67,38 +66,32 @@ public class ApplyAction {
             leaveAuditService.saveAudit(getLeaveAuditDTO(applyDTO));
         }
 
-        return "redirect:/leave/myLeaveApply/";
+        return "redirect:/leave/myLeaveApply";
     }
 
-    @RequestMapping(value = "/leave/myLeaveApply", method = RequestMethod.GET)
-    public ModelAndView getMyApplyWith() {
+    @RequestMapping(value = "/leave/myLeaveApply")
+    public ModelAndView myApplyWithConditions(LeaveApplyQueryDTO dto, Integer pageNo, Integer pageSize) {
 
         int applicantID = LoginBO.getLoginUser().getId();
-        List<LeaveApplyDTO> myLeaveApplys = leaveApplyService.getApplyRecords(applicantID);
+        dto.setApplicantID(applicantID);
+
+        PageModel pageModel = leaveApplyService.getApplyRecords(dto, initPageNo(pageNo), initPageSize(pageSize));
         List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
 
         Map model = new HashMap();
-        model.put("myApplys", myLeaveApplys);
+        model.put("queryDTO", dto);
+        model.put("pageModel", pageModel);
         model.put("employeeHolidays", employeeHolidays);
 
         return new ModelAndView("leave/applyList", model);
     }
 
-    @RequestMapping(value = "/leave/myLeaveApply/{queryConditions}", method = RequestMethod.GET)
-    public ModelAndView myApplyWithConditions(@PathVariable String queryConditions) {
+    private int initPageNo(Integer pageNo) {
+        return (pageNo == null) ? 1 : pageNo;
+    }
 
-        LeaveApplyQueryDTO dto= new LeaveApplyQueryDTO(queryConditions);
-
-        int applicantID = LoginBO.getLoginUser().getId();
-        PageModel pageModel = this.leaveApplyService.getApplyRecords(dto,1,10);
-        List<LeaveApplyDTO> myLeaveApplys = null;
-        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
-
-        Map model = new HashMap();
-        model.put("myApplys", myLeaveApplys);
-        model.put("employeeHolidays", employeeHolidays);
-
-        return new ModelAndView("leave/applyList", model);
+    private int initPageSize(Integer pageSize) {
+        return (pageSize == null) ? 10 : pageSize;
     }
 
     @RequestMapping(value = "/leaveApplyDetail")

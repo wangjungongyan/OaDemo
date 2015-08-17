@@ -8,24 +8,26 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-inline" id="queryForm">
+    <form class="form-inline" id="queryForm" action="/leave/myLeaveApply" method="post">
         <div class="form-group">
 
             <label>申请类型</label>
             <select id="leaveType" name="leaveType">
-            <#list employeeHolidays as holiday>
-                <option value="${holiday.type}" <#if leaveType== holiday.type>
-                        selected="selected" </#if>>${holiday.name}</option>
-            </#list>
+                <#list employeeHolidays as holiday>
+                    <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
+                            selected="selected" </#if>>${holiday.name}</option>
+                </#list>
             </select>
 
-            <label>申请时间</label>
-            <input name="startTime" type="text" class="form_datetime" style="width: 150px;">
+            &nbsp;&nbsp;&nbsp;
+            <label>申请时间从</label>
+            <input name="startTime" type="text" class="form_datetime" style="width: 150px;" value="<#if queryDTO??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 
             <label>到</label>
-            <input name="endTime" type="text" class="form_datetime" style="width: 150px;">
+            <input name="endTime" type="text" class="form_datetime" style="width: 150px;"  value="<#if queryDTO??>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 
-            <button name="queryButton" type="button" class="btn btn-default">查询</button>
+            &nbsp;&nbsp;&nbsp;
+            <button name="queryButton" type="submit" class="btn btn-default">查询</button>
 
         </div>
     </form>
@@ -41,8 +43,8 @@
         </tr>
         </thead>
         <tbody>
-        <#if myApplys??>
-            <#list myApplys as myApply>
+        <#if pageModel?? && pageModel.records?? && (pageModel.records?size>0)>
+            <#list pageModel.records as myApply>
                 <#if myApply.status == 0>
                 <tr class="info">
                 <#elseif myApply.status == 1>
@@ -50,37 +52,36 @@
                 <#else>
                 <tr class="warning">
                 </#if>
-                <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
-                <td>${myApply.leaveName}</td>
-                <td>
-                    <#if myApply.audit??>
-                        <#assign audit = myApply.audit/>
-                        <#assign manager = audit.manager/>
-                    ${manager.chineseName}
-                        <#if audit.managerAuditStatus == 1>
-                            审核通过
-                        <#elseif audit.managerAuditStatus == 2 >
-                            审核不通过
-                        <#else>
-                            未审核
-                        </#if>
-                        ->
-                        <#if audit.hr??>
-                            <#assign hr = audit.hr/>
-                        ${hr.chineseName}(HR)
-                            <#if audit.hrAuditStatus == 1>
+                    <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                    <td>${myApply.leaveName}</td>
+                    <td>
+                        <#if myApply.audit??>
+                            <#assign audit = myApply.audit/>
+                            <#assign manager = audit.manager/>
+                        ${manager.chineseName}
+                            <#if audit.managerAuditStatus == 1>
                                 审核通过
-                            <#elseif audit.hrAuditStatus == 2 >
+                            <#elseif audit.managerAuditStatus == 2 >
                                 审核不通过
                             <#else>
                                 未审核
                             </#if>
+                            ->
+                            <#if audit.hr??>
+                                <#assign hr = audit.hr/>
+                            ${hr.chineseName}(HR)
+                                <#if audit.hrAuditStatus == 1>
+                                    审核通过
+                                <#elseif audit.hrAuditStatus == 2 >
+                                    审核不通过
+                                <#else>
+                                    未审核
+                                </#if>
+                            </#if>
+                        <#else>
+                            暂未审批
                         </#if>
-                    <#else>
-                        暂未审批
-                    </#if>
-
-                </td>
+                    </td>
                 <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
                     至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
                 <td>${myApply.statusName}</td>
@@ -136,27 +137,21 @@
         autoclose: true
     });
 
-    function queryCondition(startTime, endTime, leaveType) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.leaveType = leaveType;
-    }
-
     $(document).ready(function () {
 
-        $("button[name='queryButton']").click(function () {
-
-            var startTime = $("input[name='startTime']").val();
-            var endTime = $("input[name='endTime']").val();
-            var leaveType = $("#leaveType").find("option:selected").attr("value");
-
-            var query = new queryCondition(startTime, endTime, leaveType);
-            var href = "/leave/myLeaveApply/" + jQuery.toJSON(query);
-
-            $("#queryForm").attr("action", href);
-            $("#queryForm").attr("method", "get");
-            $("#queryForm").submit();
-        })
+//        $("button[name='queryButton']").click(function () {
+//
+//            var startTime = $("input[name='startTime']").val();
+//            var endTime = $("input[name='endTime']").val();
+//            var leaveType = $("#leaveType").find("option:selected").attr("value");
+//
+//            var query = new queryCondition(startTime, endTime, leaveType);
+//            var href = "/leave/myLeaveApply/" + jQuery.toJSON(query);
+//
+//            $("#queryForm").attr("action", href);
+//            $("#queryForm").attr("method", "get");
+//            $("#queryForm").submit();
+//        })
 
     });
 
