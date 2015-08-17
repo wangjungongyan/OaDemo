@@ -68,15 +68,20 @@ public class EmployeeDTO {
     private Date joinDate;
 
     /**
-     * 员工状态
-     */
-    private int status;
-
-    /**
      * 离职时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date departureDate;
+
+    /**
+     * 员工状态
+     */
+    private Integer status;
+
+
+    private Date addTime;
+
+    private Date updateTime;
 
     /**
      * 直接上级
@@ -100,6 +105,7 @@ public class EmployeeDTO {
         userDTO.setManger(getKerith());
         return userDTO;
     }
+
 
     public static EmployeeDTO getKerith() {
         EmployeeDTO userDTO = new EmployeeDTO();

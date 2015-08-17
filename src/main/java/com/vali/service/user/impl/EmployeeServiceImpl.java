@@ -9,9 +9,11 @@ import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.user.RoleEnum;
 import com.vali.po.user.EmployeePO;
 import com.vali.service.user.remote.EmployeeService;
+import com.vali.util.BeanUtilsA;
 import lombok.Setter;
 import net.sf.cglib.beans.BeanCopier;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -70,21 +72,40 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public int addEmployee(EmployeeDTO userDTO) {
-        //TODO add
-        return 0;
+        EmployeePO po = new EmployeePO();
+        BeanUtils.copyProperties(userDTO, po);
+        po.setPassword(LoginBO.encryptPassword(po.getPassword()));
+        po.setMangerId(userDTO.getManger().getId());
+        return employeeDao.saveEmployee(po);
     }
 
     @Override
     public int updateEmployee(EmployeeDTO userDTO) {
-        //TODO update
-        return 0;
+        String password = userDTO.getPassword();
+        EmployeePO po = employeeDao.getEmployeeByID(userDTO.getId());
+        BeanUtilsA.copyPropertiesWithSourcePropertiesNullNotCopy(userDTO, po);
+        po.setMangerId(userDTO.getManger().getId());
+        if(password!=null){
+            po.setPassword(LoginBO.encryptPassword(password));
+        }
+        return employeeDao.updateEmployee(po);
     }
 
     @Override
     public EmployeeDTO loadEmployee(int userId) {
         EmployeePO po = employeeDao.getEmployeeByID(userId);
+        if(po==null){
+            return null;
+        }
         EmployeeDTO dto = new EmployeeDTO();
-        ENTITY_2_DTO.copy(po, dto, null);
+        BeanUtils.copyProperties(po,dto);
+        //setManager
+        EmployeePO managerPo = employeeDao.getEmployeeByID(po.getMangerId());
+        if(managerPo!=null) {
+            EmployeeDTO managerDto = new EmployeeDTO();
+            BeanUtils.copyProperties(managerPo, managerDto);
+            dto.setManger(managerDto);
+        }
         return dto;
     }
 
@@ -92,12 +113,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO loadEmployee(String email) {
 
         EmployeePO po = employeeDao.getEmployeeByEmail(email);
-
+        if(po==null){
+            return null;
+        }
         EmployeeDTO dto = new EmployeeDTO();
-        ENTITY_2_DTO.copy(po, dto, null);
-        dto.setManger(getManger(po.getMangerId()));
-        dto.setHr(getHr());
-
+        BeanUtils.copyProperties(po, dto);
+        //setManager
+        EmployeePO managerPo = employeeDao.getEmployeeByID(po.getMangerId());
+        if(managerPo!=null){
+            EmployeeDTO managerDto = new EmployeeDTO();
+            BeanUtils.copyProperties(managerPo,managerDto);
+            dto.setManger(managerDto);
+        }
         return dto;
     }
 

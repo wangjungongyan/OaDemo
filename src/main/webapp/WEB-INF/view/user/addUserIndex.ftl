@@ -30,33 +30,48 @@
     color: red;" class="col-sm-40 control-label">添加新员工</label></td>
                 </tr>
                 <tr>
-                    <td><label class="col-sm-8 control-label">员工姓名</label></td>
+                    <td><label class="col-sm-8 control-label">FirstName</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="userName" value="${user.userName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="请输入员工的姓名">
+                            <input name="firstName" value="${user.firstName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="FirstName">
                         </div>
                     </td>
-                    <td><label class="col-sm-8 control-label">员工邮箱</label></td>
+                    <td><label class="col-sm-8 control-label">MiddleName</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="email"  value="${user.email}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="请输入员工邮箱">
+                            <input name="middleName"  value="${user.middleName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="MiddleName">
                         </div>
                     </td>
                 </tr>
                 <tr>
+                    <td><label class="col-sm-8 control-label">LastName</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input name="lastName" value="${user.lastName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="LastName">
+                        </div>
+                    </td>
+                    <td><label class="col-sm-8 control-label">email</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input name="email"  value="${user.email}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="email">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-8 control-label">中文名</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input name="chineseName" value="${user.chineseName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="请输入员工中文名">
+                        </div>
+                    </td>
                     <td><label class="col-sm-8 control-label">初始密码</label></td>
                     <td>
                         <div class="col-sm-3">
                             <input name="password" value="${user.password}" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="请设置初始密码">
                         </div>
                     </td>
-                    <td><label class="col-sm-8 control-label">手机号</label></td>
-                    <td>
-                        <div class="col-sm-3">
-                            <input name="phone" value="${user.phone}" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="请输入员工手机号">
-                        </div>
-                    </td>
                 </tr>
+
                 <tr>
                     <td><label class="col-sm-8 control-label">汇报对象</label></td>
                     <td>
@@ -82,6 +97,14 @@
                     <td>
                         <div class="col-sm-3">
                             <input name="role" value="${user.role}" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-8 control-label">手机号</label></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <input name="phone" value="${user.phone}" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="请输入员工手机号">
                         </div>
                     </td>
                 </tr>

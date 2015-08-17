@@ -1,6 +1,7 @@
 package com.vali.action.user;
 
 import com.vali.dto.user.EmployeeDTO;
+import com.vali.enums.user.EmployeeStatusEnum;
 import com.vali.service.user.remote.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +28,19 @@ public class UserAction {
 
     @RequestMapping("/user/addUser")
     public ModelAndView addUser(EmployeeDTO userDTO) {
+        if(employeeService.hasSameEmployee(userDTO)){
+            Map model = new HashMap();
+            model.put("user", userDTO);
+            model.put("errorMsg","此用户邮箱已经存在");
+            return new ModelAndView("user/addUserIndex", model);
+        }
+        userDTO.setStatus(EmployeeStatusEnum.ON.getStatus());
         int userId = employeeService.addEmployee(userDTO);
         if (userId == 0) {
             //保存失败
             Map model = new HashMap();
             model.put("user", userDTO);
+            model.put("errorMsg","添加失败");
             return new ModelAndView("user/addUserIndex", model);
         }
         //保存成功，直接定位到列表页

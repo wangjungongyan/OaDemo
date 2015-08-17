@@ -92,4 +92,63 @@
         where Role = #role#
     </select>
 
+	<insert id="saveEmployee" parameterClass="map">
+		INSERT INTO LL_Employee (
+		ChineseName,
+        FirstName,
+        MiddleName,
+        LastName,
+        DepartMent,
+        Role,
+        Email,
+        Phone,
+        Password,
+        JoinDate,
+        Status,
+        DepartureDate,
+        MangerId,
+        AddTime,
+        UpdateTime
+		)
+		VALUES (
+		#employee.chineseName#,
+        #employee.firstName#,
+        #employee.middleName#,
+        #employee.lastName#,
+        #employee.departMent#,
+        #employee.role#,
+        #employee.email#,
+        #employee.phone#,
+        #employee.password#,
+        #employee.joinDate#,
+        #employee.status#,
+        #employee.departureDate#,
+        #employee.mangerId#,
+        now(),
+        now()
+		)
+		<selectKey resultClass="java.lang.Integer" keyProperty="employee.id">
+			SELECT @@IDENTITY AS ff
+		</selectKey>
+	</insert>
+	<update id="updateEmployee" parameterClass="map">
+		UPDATE LL_Employee
+		SET
+			ChineseName=#employee.chineseName#,
+			FirstName=#employee.firstName#,
+			MiddleName=#employee.middleName#,
+			LastName=#employee.lastName#,
+			DepartMent=#employee.departMent#,
+			Role=#employee.role#,
+			Email=#employee.email#,
+			Phone=#employee.phone#,
+			Password=#employee.password#,
+			JoinDate=#employee.joinDate#,
+			Status=#employee.status#,
+			DepartureDate=#employee.departureDate#,
+			MangerId=#employee.mangerId#,
+			UpdateTime = now()
+		WHERE id=#employee.id#
+	</update>
+
 </sqlMap>

@@ -63,7 +63,7 @@ public class EmployeePO {
     /**
      * 员工状态
      */
-    private int status;
+    private Integer status;
 
     /**
      * 离职时间
@@ -123,7 +123,7 @@ public class EmployeePO {
         return joinDate;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -187,7 +187,7 @@ public class EmployeePO {
         this.joinDate = joinDate;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

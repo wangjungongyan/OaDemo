@@ -27,7 +27,7 @@ public class LoginInteceptor implements HandlerInterceptor {
 
         if (excludedUrls.contains(requestUri)) {
             if (loginUser != null) {
-                httpServletResponse.sendRedirect("redirect:/main");
+                httpServletResponse.sendRedirect("/main");
                 return false;
             }
 
@@ -35,7 +35,7 @@ public class LoginInteceptor implements HandlerInterceptor {
         }
 
         if (loginUser == null) {
-            httpServletResponse.sendRedirect("redirect:/login");
+            httpServletResponse.sendRedirect("/login");
             return false;
         }
 

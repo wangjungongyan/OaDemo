@@ -23,4 +23,10 @@ public interface EmployeeDao {
     @Action(action = ActionType.QUERY_LIST)
     public List<EmployeePO> getEmployeeByRole(@ParamName("role") int role);
 
+    @Action(action = ActionType.INSERT)
+    public int saveEmployee(@ParamName("employee") EmployeePO employeePO);
+
+    @Action(action = ActionType.UPDATE)
+    public int updateEmployee(@ParamName("employee") EmployeePO employeePO);
+
 }
