@@ -27,8 +27,10 @@
 	</select>
 
     <insert id="saveLeaveApplyDetail">
-        insert into LL_LeaveApply(ApplicantID,LeaveType,LeaveStartTime,LeaveEndTime,LeaveDays,LeaveReason,ApplyTime,Status,AddTime,UpdateTime)
-        values (#apply.applicantID#,#apply.leaveType#,#apply.leaveStartTime#,#apply.leaveEndTime#,#apply.leaveDays#,#apply.leaveReason#,#apply.applyTime#,0,NOW(),NOW())
+        insert into
+        LL_LeaveApply(ApplicantID,LeaveType,LeaveStartTime,LeaveEndTime,LeaveDays,LeaveReason,ApplyTime,Status,AddTime,UpdateTime)
+        values
+        (#apply.applicantID#,#apply.leaveType#,#apply.leaveStartTime#,#apply.leaveEndTime#,#apply.leaveDays#,#apply.leaveReason#,#apply.applyTime#,0,NOW(),NOW())
         <selectKey resultClass="java.lang.Integer" keyProperty="id">
             SELECT @@IDENTITY AS ff
         </selectKey>
@@ -49,6 +51,36 @@
         from LL_LeaveApply
         where ApplicantID = #applicantID#
         order by AddTime desc
+    </select>
+
+    <select id="pageLeaveApplyRecords" resultMap="LeaveApplyResult">
+        select ID,
+        ApplicantID,
+        LeaveType,
+        LeaveStartTime,
+        LeaveEndTime,
+        LeaveDays,
+        LeaveReason,
+        ApplyTime,
+        Status,
+        AddTime,
+        UpdateTime
+        from LL_LeaveApply
+        where LeaveType =#po.leaveType#
+        <![CDATA[
+            and ApplyTime >=#po.startTime#
+            and ApplyTime<=#po.endTime#
+        ]]>
+    </select>
+
+    <select id="pageLeaveApplyRecords_count" resultClass="int">
+        select count(1)
+        from LL_LeaveApply
+        where LeaveType =#po.leaveType#
+        <![CDATA[
+            and ApplyTime >=#po.startTime#
+            and ApplyTime<=#po.endTime#
+        ]]>
     </select>
 
 </sqlMap>

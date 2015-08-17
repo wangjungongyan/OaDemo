@@ -1,11 +1,14 @@
 package com.vali.service.leave.impl;
 
+import com.leya.idal.model.PageModel;
 import com.vali.dao.leave.LeaveApplyDao;
 import com.vali.dto.leave.LeaveApplyDTO;
+import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditDTO;
 import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.enums.leave.LeaveTypeEnum;
 import com.vali.po.leave.LeaveApplyPO;
+import com.vali.po.leave.LeaveApplyQueryPO;
 import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
 import lombok.Setter;
@@ -34,6 +37,8 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
     private LeaveAuditService leaveAuditService;
 
     private BeanCopier DTO2ENTITY4LeaveApply = BeanCopier.create(LeaveApplyDTO.class, LeaveApplyPO.class, false);
+
+    private BeanCopier DTO2ENTITY4LeaveApplyQuery = BeanCopier.create(LeaveApplyQueryDTO.class, LeaveApplyQueryPO.class, false);
 
     private BeanCopier ENTITY2DTO4LeaveApply = BeanCopier.create(LeaveApplyPO.class, LeaveApplyDTO.class, false);
 
@@ -85,6 +90,12 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         }
 
         return dtos;
+    }
+
+    @Override public PageModel getApplyRecords(LeaveApplyQueryDTO dto,int pageNo,int pageSize) {
+        LeaveApplyQueryPO po = new LeaveApplyQueryPO();
+        DTO2ENTITY4LeaveApplyQuery.copy(dto,po,null);
+        return leaveApplyDao.pageLeaveApplyRecords(po,pageNo,pageSize);
     }
 
     public List<LeaveApplyDTO> myApply(Integer applicantID, Integer leaveType, String leaveReason, Date applyTime_begin,

@@ -1,8 +1,10 @@
 package com.vali.action.leave;
 
+import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
 import com.vali.dto.leave.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
+import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditDTO;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.leave.AuditStatusEnum;
@@ -12,7 +14,9 @@ import com.vali.service.user.remote.EmployeeHolidayService;
 import com.vali.service.user.remote.EmployeeService;
 import com.vali.util.TimeUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -48,7 +52,7 @@ public class ApplyAction {
         return new ModelAndView("leave/apply", model);
     }
 
-    @RequestMapping(value = "/leaveApply")
+    @RequestMapping(value = "/leave/apply")
     public String apply(LeaveApplyDTO applyDTO) {
 
         EmployeeDTO employeeDTO = LoginBO.getLoginUser();
@@ -63,7 +67,43 @@ public class ApplyAction {
             leaveAuditService.saveAudit(getLeaveAuditDTO(applyDTO));
         }
 
-        return "redirect:/myLeaveApply";
+        return "redirect:/leave/myLeaveApply/";
+    }
+
+    @RequestMapping(value = "/leave/myLeaveApply", method = RequestMethod.GET)
+    public ModelAndView getMyApplyWith() {
+
+        int applicantID = LoginBO.getLoginUser().getId();
+        List<LeaveApplyDTO> myLeaveApplys = leaveApplyService.getApplyRecords(applicantID);
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
+
+        Map model = new HashMap();
+        model.put("myApplys", myLeaveApplys);
+        model.put("employeeHolidays", employeeHolidays);
+
+        return new ModelAndView("leave/applyList", model);
+    }
+
+    @RequestMapping(value = "/leave/myLeaveApply/{queryConditions}", method = RequestMethod.GET)
+    public ModelAndView myApplyWithConditions(@PathVariable String queryConditions) {
+
+        LeaveApplyQueryDTO dto= new LeaveApplyQueryDTO(queryConditions);
+
+        int applicantID = LoginBO.getLoginUser().getId();
+        PageModel pageModel = this.leaveApplyService.getApplyRecords(dto,1,10);
+        List<LeaveApplyDTO> myLeaveApplys = null;
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
+
+        Map model = new HashMap();
+        model.put("myApplys", myLeaveApplys);
+        model.put("employeeHolidays", employeeHolidays);
+
+        return new ModelAndView("leave/applyList", model);
+    }
+
+    @RequestMapping(value = "/leaveApplyDetail")
+    public String details() {
+        return "leave/details";
     }
 
     private LeaveAuditDTO getLeaveAuditDTO(LeaveApplyDTO applyDTO) {
@@ -78,25 +118,6 @@ public class ApplyAction {
         leaveAuditDTO.setManagerAuditStatus(AuditStatusEnum.AUDITING.getAuditStatus());
 
         return leaveAuditDTO;
-    }
-
-    @RequestMapping(value = "/myLeaveApply")
-    public ModelAndView myApply() {
-
-        int applicantID = LoginBO.getLoginUser().getId();
-        List<LeaveApplyDTO> myLeaveApplys = leaveApplyService.getApplyRecords(applicantID);
-        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
-
-        Map model = new HashMap();
-        model.put("myApplys", myLeaveApplys);
-        model.put("employeeHolidays", employeeHolidays);
-
-        return new ModelAndView("leave/applyList", model);
-    }
-
-    @RequestMapping(value = "/leaveApplyDetail")
-    public String details() {
-        return "leave/details";
     }
 
 }

@@ -1,6 +1,8 @@
 package com.vali.service.leave.remote;
 
+import com.leya.idal.model.PageModel;
 import com.vali.dto.leave.LeaveApplyDTO;
+import com.vali.dto.leave.LeaveApplyQueryDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -28,6 +30,8 @@ public interface LeaveApplyService {
                                         Date applyTime_end);
 
     List<LeaveApplyDTO> getApplyRecords(Integer applicantID);
+
+    public PageModel getApplyRecords(LeaveApplyQueryDTO dto,int pageNo,int pageSize);
 
     /**
      * 请假详细信息
