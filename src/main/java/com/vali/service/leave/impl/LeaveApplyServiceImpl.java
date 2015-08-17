@@ -112,9 +112,15 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         for(LeaveApplyPO record : (List<LeaveApplyPO>)queryModel.getRecords()){
             LeaveApplyDTO dto = new LeaveApplyDTO();
             ENTITY2DTO4LeaveApply.copy(record,dto,null);
+
             int leaveType = record.getLeaveType();
             LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(leaveType);
             dto.setLeaveName(leaveTypeEnum.getName());
+
+            int status =record.getStatus();
+            AuditStatusEnum auditStatusEnum =AuditStatusEnum.getAuditStatus(status);
+            dto.setStatusName(auditStatusEnum.getAuditStatusName());
+
             resultDTOS.add(dto);
         }
 
