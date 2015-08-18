@@ -23,9 +23,7 @@
             box-shadow: 0 3px 7px rgba(0,0,0,0.3);
             background-clip: padding-box;
         }
-        textarea{
-            width: 200px;
-        }
+
     </style>
 </head>
 <body>
@@ -109,8 +107,7 @@
                 <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
                     至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
                 <td>${myApply.statusName}</td>
-                <td><a href="javascript:void(0)" name="showApplyDetail" onclick="setWith4Modal()" data-toggle="modal"
-                       data-target="#editModal">查看详情</a></td>
+                <td><a href="javascript:void(0)" name="showApplyDetail" data-toggle="modal" data-target="#editModal">查看详情</a></td>
             </tr>
             </#list>
         </#if>
@@ -133,13 +130,13 @@
                                 <td><label class="col-sm-8 control-label">申请人</label></td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <input class="form-control" readonly value="">
+                                        <input class="form-control" readonly  name="applyUser"/>
                                     </div>
                                 </td>
                                 <td><label class="col-sm-8 control-label">申请时间</label></td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <input class="form-control" readonly value="">
+                                        <input class="form-control" readonly name="applyTime"/>
                                     </div>
                                 </td>
                             </tr>
@@ -151,13 +148,13 @@
                                 </td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <input class="form-control" readonly value="">
+                                        <input class="form-control" readonly name="selectedType">
                                     </div>
                                 </td>
                                 <td><label class="col-sm-8 control-label">审批结果</label></td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <input class="form-control" readonly value="">
+                                        <input class="form-control" readonly name="auditResult"/>
                                     </div>
                                 </td>
                             </tr>
@@ -169,7 +166,7 @@
                                 </td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <input class="form-control" name="leaveStartTime" value="" readonly/>
+                                        <input class="form-control" readonly name="leaveStartTime"/>
                                     </div>
                                 </td>
                                 <td>
@@ -179,7 +176,7 @@
                                 </td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <input class="form-control" name="leaveEndTime" value="" readonly>
+                                        <input class="form-control" readonly name="leaveEndTime"/>
                                     </div>
                                 </td>
                             </tr>
@@ -191,7 +188,7 @@
                                 </td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <textarea class="form-control" rows="3" cols="40" name="leaveReason" value="" readonly></textarea>
+                                        <textarea class="form-control" rows="3" cols="40" readonly id="leaveReason"></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -276,6 +273,16 @@
     });
 
     $(document).ready(function () {
+
+        $("a[name='showApplyDetail']").click(function(){
+            $("input[name='applyUser']").val("王俊");
+            $("input[name='applyTime']").val("王俊");
+            $("input[name='selectedType']").val("王俊");
+            $("input[name='auditResult']").val("王俊");
+            $("input[name='leaveStartTime']").val("王俊");
+            $("input[name='leaveEndTime']").val("王俊");
+            $("#leaveReason").attr("value","王俊");
+        });
 
 //        $("button[name='queryButton']").click(function () {
 //
