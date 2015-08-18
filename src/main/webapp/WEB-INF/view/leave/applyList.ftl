@@ -27,7 +27,6 @@
 
     </style>
 </head>
-<#include "/WEB-INF/view/empty.ftl">
 <body>
 
 <#function cutString str,len>
