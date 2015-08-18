@@ -11,7 +11,8 @@
             padding-top: 5px;
             text-align: right;
         }
-        .modal{
+
+        .modal {
             position: fixed;
             left: 50%;
             z-index: 1050;
@@ -20,7 +21,7 @@
             border-radius: 6px;
             outline: 0;
             width: auto;
-            box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
             background-clip: padding-box;
         }
 
@@ -42,10 +43,12 @@
 
             &nbsp;&nbsp;&nbsp;
             <label>申请时间从</label>
-            <input name="startTime" type="text" class="form_datetime" style="width: 150px;" value="<#if queryDTO??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+            <input name="startTime" type="text" class="form_datetime" style="width: 150px;"
+                   value="<#if queryDTO??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 
             <label>到</label>
-            <input name="endTime" type="text" class="form_datetime" style="width: 150px;"  value="<#if queryDTO??>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+            <input name="endTime" type="text" class="form_datetime" style="width: 150px;"
+                   value="<#if queryDTO??>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 
             &nbsp;&nbsp;&nbsp;
             <button name="queryButton" type="submit" class="btn btn-default">查询</button>
@@ -107,7 +110,8 @@
                 <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
                     至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
                 <td>${myApply.statusName}</td>
-                <td><a href="javascript:void(0)" name="showApplyDetail" data-toggle="modal" data-target="#editModal">查看详情</a></td>
+                <td><a href="javascript:void(0)" name="showApplyDetail" data-toggle="modal" data-target="#editModal">查看详情</a>
+                </td>
             </tr>
             </#list>
         </#if>
@@ -115,8 +119,8 @@
     </table>
 
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true" >
-        <div class="modal-dialog" >
+         aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -130,7 +134,7 @@
                                 <td><label class="col-sm-8 control-label">申请人</label></td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <input class="form-control" readonly  name="applyUser"/>
+                                        <input class="form-control" readonly name="applyUser"/>
                                     </div>
                                 </td>
                                 <td><label class="col-sm-8 control-label">申请时间</label></td>
@@ -188,7 +192,8 @@
                                 </td>
                                 <td>
                                     <div class="col-sm-3">
-                                        <textarea class="form-control" rows="3" cols="40" readonly id="leaveReason"></textarea>
+                                        <textarea class="form-control" rows="3" cols="40" readonly
+                                                  id="leaveReason"></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -196,24 +201,12 @@
                     </form>
 
                     <div class="panel panel-default">
-                        <table class="table">
+                        <table class="table" id="auditChainTable">
                             <tr>
                                 <th>审批人</th>
                                 <th>审批时间</th>
+                                <th>审批意见</th>
                                 <th>审批结果</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    樊帅
-                                </td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        2015-09-01 10:01:09
-                                    </div>
-                                </td>
-                                <td>
-                                    审批通过
-                                </td>
                             </tr>
                         </table>
                     </div>
@@ -272,12 +265,32 @@
         autoclose: true
     });
 
+    function getStatusName(status){
+        if(status == 0){
+            return "审核中";
+        }
+        if(status == 1){
+            return "通过";
+        }
+        if(status == 2){
+            return "不通过";
+        }
+    }
+
+    function formatDate(originDate){
+        if(originDate == null){
+            return "/";
+        }
+
+        return new Date(parseInt(originDate)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");;
+    }
+
     $(document).ready(function () {
 
-        $("a[name='showApplyDetail']").click(function(){
+        $("a[name='showApplyDetail']").click(function () {
 
             var applyId = 34;
-            var url ="/leave/ajaxGetApplyDetail?applyId=" + applyId;
+            var url = "/leave/ajaxGetApplyDetail?applyId=" + applyId;
 
             $.ajax(url, {
                 dataType: "json",
@@ -288,11 +301,9 @@
                     var applyTime = result.applyTime;
                     var selectedType = result.leaveName;
                     var auditResult = result.statusName;
-                    var leaveStartTime = result.leaveStartTime;
-                    var leaveEndTime = result.leaveEndTime;
+                    var leaveStartTime = formatDate(result.leaveStartTime);
+                    var leaveEndTime = formatDate(result.leaveEndTime);
                     var leaveReason = result.leaveReason;
-
-
 
                     $("input[name='applyUser']").val(applyUser);
                     $("input[name='applyTime']").val(applyTime);
@@ -300,9 +311,27 @@
                     $("input[name='auditResult']").val(auditResult);
                     $("input[name='leaveStartTime']").val(leaveStartTime);
                     $("input[name='leaveEndTime']").val(leaveEndTime);
-                    $("#leaveReason").attr("value",leaveReason);
+                    $("#leaveReason").attr("value", leaveReason);
+
+                    var audit = result.audit;
+                    var manager = audit.manager;
+                    var hr = audit.hr;
+
+                    var auditChain="<tr>"
+                                       +"<td>" + manager.chineseName +"</td>"
+                                       +"<td>" + formatDate(audit.managerAuditTime) +"</td>"
+                                       +"<td>" + audit.managerAuditSuggest +"</td>"
+                                       +"<td>" + getStatusName(audit.managerAuditStatus) +"</td>"
+                                   +"</tr>"
+                                   +"<tr>"
+                                       +"<td>" + hr.chineseName +"</td>"
+                                       +"<td>" + formatDate(audit.hrAuditTime) +"</td>"
+                                       +"<td>" + audit.hrAuditSuggest +"</td>"
+                                       +"<td>" + getStatusName(audit.hrAuditStatus) +"</td>"
+                                    +"</tr>";
+                    $("#auditChainTable").append(auditChain);
                 },
-                error:function(){
+                error: function () {
                     alert("出错咯，稍后再试吧.");
                 }
             });
