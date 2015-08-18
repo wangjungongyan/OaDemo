@@ -25,6 +25,11 @@
             background-clip: padding-box;
         }
 
+        .modal.fade.in {
+            top: 10%;
+            margin-left: -350px;
+        }
+
     </style>
 </head>
 <body>
@@ -355,7 +360,7 @@
                 method: "get",
                 success: function (result) {
                     var applyUser = result.applicant.chineseName;
-                    var applyTime = result.applyTime;
+                    var applyTime = formatDate(result.applyTime);
                     var selectedType = result.leaveName;
                     var auditResult = result.statusName;
                     var leaveStartTime = formatDate(result.leaveStartTime);
