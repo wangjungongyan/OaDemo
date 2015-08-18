@@ -110,7 +110,7 @@
                 <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
                     至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
                 <td>${myApply.statusName}</td>
-                <td><a href="javascript:void(0)" name="showApplyDetail" data-toggle="modal" data-target="#editModal">查看详情</a>
+                <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})" data-toggle="modal" data-target="#editModal">查看详情</a>
                 </td>
             </tr>
             </#list>
@@ -248,6 +248,7 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
+    var selectedApplyId =0;
 
     $("input[name='startTime']").datetimepicker({
         format: 'yyyy-mm-dd hh:ii:ss',
@@ -264,6 +265,10 @@
         todayBtn: true,
         autoclose: true
     });
+
+    function getSelectedApplyId(id){
+        selectedApplyId = id;
+    }
 
     function getStatusName(status){
         if(status == 0){
@@ -289,8 +294,7 @@
 
         $("a[name='showApplyDetail']").click(function () {
 
-            var applyId = 34;
-            var url = "/leave/ajaxGetApplyDetail?applyId=" + applyId;
+            var url = "/leave/ajaxGetApplyDetail?applyId=" + selectedApplyId;
 
             $.ajax(url, {
                 dataType: "json",
@@ -336,21 +340,6 @@
                 }
             });
         });
-
-//        $("button[name='queryButton']").click(function () {
-//
-//            var startTime = $("input[name='startTime']").val();
-//            var endTime = $("input[name='endTime']").val();
-//            var leaveType = $("#leaveType").find("option:selected").attr("value");
-//
-//            var query = new queryCondition(startTime, endTime, leaveType);
-//            var href = "/leave/myLeaveApply/" + jQuery.toJSON(query);
-//
-//            $("#queryForm").attr("action", href);
-//            $("#queryForm").attr("method", "get");
-//            $("#queryForm").submit();
-//        })
-
     });
 
 </script>
