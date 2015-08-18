@@ -178,4 +178,32 @@
         where 1=1
 	</select>
 
+    <select id="queryAllManager" parameterClass="map" resultMap="EmployeeResult">
+      SELECT
+        ID,
+        ChineseName,
+        FirstName,
+        MiddleName,
+        LastName,
+        DepartMent,
+        Role,
+        Email,
+        Phone,
+        Password,
+        JoinDate,
+        Status,
+        DepartureDate,
+        MangerId,
+        AddTime,
+        UpdateTime
+        FROM
+        LL_Employee
+        where Role in
+        <iterate property="roleList" open="(" conjunction="," close=")">
+          #roleList[]#
+        </iterate>
+
+
+    </select>
+
 </sqlMap>

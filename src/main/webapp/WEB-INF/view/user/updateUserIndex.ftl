@@ -20,6 +20,7 @@
 
 <div style="margin-top:10px;margin-left:10px;visibility:visible">
     <form action="/user/update" class="form-horizontal form-inline" method="post">
+        <input type="hidden" name="id" value="${user.id}">
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
                 <tr>
@@ -27,13 +28,12 @@
     text-align: left;
     font-weight: bold;
     font-size: 16px;
-    color: red;" class="col-sm-40 control-label">添加新员工</label></td>
+    color: red;" class="col-sm-40 control-label">编辑员工信息</label></td>
                 </tr>
                 <tr>
                     <td><label class="col-sm-8 control-label">FirstName</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input type="hidden" name="id" value="${user.id}">
                             <input name="firstName" value="${user.firstName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="FirstName">
                         </div>
                     </td>
@@ -77,7 +77,18 @@
                     <td><label class="col-sm-8 control-label">汇报对象</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="manager.id"  value="${user.manager.id}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="">
+                            <select name="manager.id">
+                                <option value="0">
+                                    无
+                                </option>
+                            <#list manageList as manage>
+                                <option value="${manage.id}"
+                                    <#if manage.id == user.manager.id> selected </#if>
+                                        >
+                                ${manage.chineseName}
+                                </option>
+                            </#list>
+                            </select>
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">入职日期</label></td>
@@ -127,9 +138,19 @@
                         </div>
                     </td>
                     <td>
+                        在职状态
+                    </td>
+                    <td>
+                        <select name="status">
+                            <option value="0" <#if user.status == 0>selected="selected" </#if>>
+                                在职
+                            </option>
+                            <option value="1" <#if user.status == 1>selected="selected" </#if>>
+                                离职
+                            </option>
+                        </select>
 
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td ></td>
@@ -137,11 +158,14 @@
                     </td>
                     <td>
                         <p>
-                            <a href="applyList">
-                                <button type="submit" class="btn btn-info">
-                                    修改
+                            <a href="/user/list">
+                                <button type="button" class="btn btn-info">
+                                    返回用户列表
                                 </button>
                             </a>
+                            <button type="submit" class="btn btn-info">
+                                修改
+                            </button>
                         </p>
                     </td>
                     <td></td>

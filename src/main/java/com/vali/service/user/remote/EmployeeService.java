@@ -44,5 +44,6 @@ public interface EmployeeService {
 
     public PageModel queryEmployee(EmployeeDTO userDto,Date startDate,Date endDate,int pageNum,int pageSize);
 
+    public List<EmployeeDTO> queryAllManager();
 
 }

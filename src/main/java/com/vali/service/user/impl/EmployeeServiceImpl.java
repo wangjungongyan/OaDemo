@@ -16,8 +16,10 @@ import net.sf.cglib.beans.BeanCopier;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -161,6 +163,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public PageModel queryEmployee(EmployeeDTO userDto,Date startDate,Date endDate,int pageNum,int pageSize) {
        return employeeDao.pageQueryEmployee(userDto,startDate,endDate,pageNum,pageSize);
+    }
+
+    @Override
+    public List<EmployeeDTO> queryAllManager() {
+        RoleEnum[] roleEnums = RoleEnum.values();
+        List<Integer> managerRoleList = new ArrayList<Integer>();
+        for (RoleEnum roleEnum:roleEnums){
+            if(roleEnum.getType()==RoleEnum.NOMALR.getType() || roleEnum.getType() == RoleEnum.HR.getType()){
+
+            }else {
+                managerRoleList.add(roleEnum.getType());
+            }
+        }
+        List<EmployeePO> managerList = employeeDao.queryAllManager(managerRoleList);
+        if(CollectionUtils.isEmpty(managerList)){
+            return null;
+        }
+        List<EmployeeDTO> managerDtoList = new ArrayList<EmployeeDTO>(managerList.size());
+        for(EmployeePO po : managerList){
+            EmployeeDTO dto = new EmployeeDTO();
+            BeanUtils.copyProperties(po,dto);
+            managerDtoList.add(dto);
+        }
+        return managerDtoList;
     }
 
 }
