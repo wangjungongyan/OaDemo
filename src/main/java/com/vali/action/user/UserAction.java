@@ -1,7 +1,6 @@
 package com.vali.action.user;
 
 import com.leya.idal.model.PageModel;
-import com.sun.javafx.sg.PGShape;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.user.DepartmentEnum;
 import com.vali.enums.user.EmployeeStatusEnum;
@@ -10,7 +9,6 @@ import com.vali.service.user.remote.EmployeeService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;

@@ -3,7 +3,6 @@
 <head>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
-
     <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <style>
         .form-horizontal .control-label {
@@ -31,15 +30,16 @@
 </head>
 <body>
 <div class="container">
+
     <form class="form-inline" id="queryForm" action="/leave/myLeaveApply" method="post">
         <div class="form-group">
 
             <label>申请类型</label>
             <select id="leaveType" name="leaveType">
-                <#list employeeHolidays as holiday>
-                    <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
-                            selected="selected" </#if>>${holiday.name}</option>
-                </#list>
+            <#list employeeHolidays as holiday>
+                <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
+                        selected="selected" </#if>>${holiday.name}</option>
+            </#list>
             </select>
 
             &nbsp;&nbsp;&nbsp;
@@ -54,6 +54,7 @@
 
         </div>
     </form>
+
     <table class="table  table-striped table-bordered table-hover ">
         <thead>
         <tr style="background-color: #eee">
@@ -75,68 +76,46 @@
                 <#else>
                 <tr class="warning">
                 </#if>
-                    <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
-                    <td>${myApply.leaveName}</td>
-                    <td>
-                        <#if myApply.audit??>
-                            <#assign audit = myApply.audit/>
-                            <#assign manager = audit.manager/>
-                        ${manager.chineseName}
-                            <#if audit.managerAuditStatus == 1>
+                <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                <td>${myApply.leaveName}</td>
+                <td>
+                    <#if myApply.audit??>
+                        <#assign audit = myApply.audit/>
+                        <#assign manager = audit.manager/>
+                    ${manager.chineseName}
+                        <#if audit.managerAuditStatus == 1>
+                            审核通过
+                        <#elseif audit.managerAuditStatus == 2 >
+                            审核不通过
+                        <#else>
+                            未审核
+                        </#if>
+                        ->
+                        <#if audit.hr??>
+                            <#assign hr = audit.hr/>
+                        ${hr.chineseName}(HR)
+                            <#if audit.hrAuditStatus == 1>
                                 审核通过
-                            <#elseif audit.managerAuditStatus == 2 >
+                            <#elseif audit.hrAuditStatus == 2 >
                                 审核不通过
                             <#else>
                                 未审核
                             </#if>
-                            ->
-                            <#if audit.hr??>
-                                <#assign hr = audit.hr/>
-                            ${hr.chineseName}(HR)
-                                <#if audit.hrAuditStatus == 1>
-                                    审核通过
-                                <#elseif audit.hrAuditStatus == 2 >
-                                    审核不通过
-                                <#else>
-                                    未审核
-                                </#if>
-                            </#if>
-                        <#else>
-                            暂未审批
                         </#if>
-                    </td>
+                    <#else>
+                        暂未审批
+                    </#if>
+                </td>
                 <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
                     至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
                 <td>${myApply.statusName}</td>
                 <td><a href="javascript:void(0)" name="showApplyDetail" onclick="setWith4Modal()" data-toggle="modal"
-                       data-target="#editModal">查看详情</a></a></td>
+                       data-target="#editModal">查看详情</a></td>
             </tr>
             </#list>
         </#if>
         </tbody>
     </table>
-</div>
-<div>
-    <nav>
-        <ul class="pager">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
 
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true" >
@@ -248,6 +227,28 @@
             </div>
         </div>
 
+    </div>
+</div>
+<div>
+    <nav>
+        <ul class="pager">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 
@@ -259,7 +260,7 @@
 <script type="text/javascript">
 
     $("input[name='startTime']").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii',
+        format: 'yyyy-mm-dd hh:ii:ss',
         minView: 0,
         todayHighlight: true,
         todayBtn: true,
@@ -267,25 +268,14 @@
     });
 
     $("input[name='endTime']").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii',
+        format: 'yyyy-mm-dd hh:ii:ss',
         minView: 0,
         todayHighlight: true,
         todayBtn: true,
         autoclose: true
     });
 
-    function setWith4Modal(){
-
-    }
-
     $(document).ready(function () {
-
-//        $('#editModal').modal().css({
-//            width: 'auto',
-//            'margin-left': function () {
-//                return -($(this).width() / 2);
-//            }
-//        });
 
 //        $("button[name='queryButton']").click(function () {
 //
