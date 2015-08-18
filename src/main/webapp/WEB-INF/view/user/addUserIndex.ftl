@@ -33,13 +33,13 @@
                     <td><label class="col-sm-8 control-label">FirstName</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="firstName" value="${user.firstName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="FirstName">
+                            <input name="firstName" required="" value="${user.firstName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="FirstName">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">MiddleName</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="middleName"  value="${user.middleName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="MiddleName">
+                            <input name="middleName" required="" value="${user.middleName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="MiddleName">
                         </div>
                     </td>
                 </tr>
@@ -47,13 +47,13 @@
                     <td><label class="col-sm-8 control-label">LastName</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="lastName" value="${user.lastName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="LastName">
+                            <input name="lastName" required="" value="${user.lastName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="LastName">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">email</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="email"  value="${user.email}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="email">
+                            <input name="email" required="" value="${user.email}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="email">
                         </div>
                     </td>
                 </tr>
@@ -61,13 +61,13 @@
                     <td><label class="col-sm-8 control-label">中文名</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="chineseName" value="${user.chineseName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="请输入员工中文名">
+                            <input name="chineseName" required="" value="${user.chineseName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="请输入员工中文名">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">初始密码</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="password" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="请设置初始密码">
+                            <input name="password" required="" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="请设置初始密码">
                         </div>
                     </td>
                 </tr>
@@ -76,13 +76,24 @@
                     <td><label class="col-sm-8 control-label">汇报对象</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="manager.id"  value="${user.manager.id}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="">
+                            <select name="manager.id">
+                                <option value="0">
+                                    无
+                                </option>
+                                <#list manageList as manage>
+                                    <option value="${manage.id}"
+                                            <#if manage.id == user.manager.id> selected </#if>
+                                            >
+                                        ${manage.chineseName}
+                                    </option>
+                                </#list>
+                            </select>
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">入职日期</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="joinDate" value="${user.joinDate?string('yyyy-MM-dd')}" size="10" id="joinDate" type="text"  readonly class="form_datetime" style="width: 100px;">
+                            <input name="joinDate" required="" value="${user.joinDate?string('yyyy-MM-dd')}" size="10" id="joinDate" type="text"   class="form_datetime" style="width: 100px;">
                         </div>
                     </td>
                 </tr>
@@ -122,7 +133,7 @@
                     <td><label class="col-sm-8 control-label">手机号</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="phone" value="${user.phone}" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="请输入员工手机号">
+                            <input name="phone" required="" value="${user.phone}" type="gongzuorijiaotongfeitime" class="form-control icon-mobile-phone" id="inputgongzuorijiaotongfeitime" placeholder="请输入员工手机号">
                         </div>
                     </td>
                     <td>

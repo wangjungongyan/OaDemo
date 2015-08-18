@@ -30,6 +30,7 @@ public class UserAction {
         Map model = new HashMap();
         model.put("departments", DepartmentEnum.values());
         model.put("roles", RoleEnum.values());
+        model.put("manageList",employeeService.queryAllManager());
         return new ModelAndView("user/addUserIndex",model);
     }
 
@@ -84,6 +85,7 @@ public class UserAction {
         model.put("user",employeeDTO);
         model.put("departments", DepartmentEnum.values());
         model.put("roles", RoleEnum.values());
+        model.put("manageList",employeeService.queryAllManager());
         return new ModelAndView( "user/updateUserIndex",model);
     }
 

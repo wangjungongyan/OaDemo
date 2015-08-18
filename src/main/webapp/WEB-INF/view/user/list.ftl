@@ -35,6 +35,8 @@
                 <th>ID</th>
                 <th>中文名</th>
                 <th>英文名</th>
+                <th>邮箱</th>
+                <th>手机号</th>
                 <th>入职时间</th>
                 <th>状态</th>
                 <th>操作</th>
@@ -54,9 +56,16 @@
                     <td>${employee.chineseName}</td>
                     <td>${employee.firstName}.${employee.middleName}.${employee.lastName}</td>
                     <td>
+                    ${employee.email}
+                    </td>
+                    <td>
+                    ${employee.phone}
+                    </td>
+                    <td>
                         ${employee.joinDate?string('yyyy-MM-dd')}
 
                     </td>
+
                     <td>
                         <#if employee.status == 1>
                             离职

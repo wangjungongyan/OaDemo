@@ -39,4 +39,6 @@ public interface EmployeeDao {
                                        @ParamName("pageNo") int pageNo,
                                        @ParamName("pageSize") int pageSize);
 
+    @Action(action = ActionType.QUERY_LIST)
+    List<EmployeePO> queryAllManager(@ParamName("roleList")List<Integer> roleList);
 }
