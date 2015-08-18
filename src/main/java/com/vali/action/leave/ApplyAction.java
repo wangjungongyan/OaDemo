@@ -1,8 +1,10 @@
 package com.vali.action.leave;
 
+import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
 import com.vali.dto.leave.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
+import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditDTO;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.leave.AuditStatusEnum;
@@ -40,6 +42,7 @@ public class ApplyAction {
     public ModelAndView leaveIndex() {
 
         EmployeeDTO employee = LoginBO.getLoginUser();
+        employee.setHr(employeeService.getHr());
         List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(employee.getId());
 
         Map model = new HashMap();
@@ -48,7 +51,7 @@ public class ApplyAction {
         return new ModelAndView("leave/apply", model);
     }
 
-    @RequestMapping(value = "/leaveApply")
+    @RequestMapping(value = "/leave/apply")
     public String apply(LeaveApplyDTO applyDTO) {
 
         EmployeeDTO employeeDTO = LoginBO.getLoginUser();
@@ -63,7 +66,38 @@ public class ApplyAction {
             leaveAuditService.saveAudit(getLeaveAuditDTO(applyDTO));
         }
 
-        return "redirect:/myLeaveApply";
+        return "redirect:/leave/myLeaveApply";
+    }
+
+
+    @RequestMapping(value = "/leave/myLeaveApply")
+    public ModelAndView myApplyWithConditions(LeaveApplyQueryDTO dto, Integer pageNo, Integer pageSize) {
+
+        int applicantID = LoginBO.getLoginUser().getId();
+        dto.setApplicantID(applicantID);
+
+        PageModel pageModel = leaveApplyService.getApplyRecords(dto, initPageNo(pageNo), initPageSize(pageSize));
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
+
+        Map model = new HashMap();
+        model.put("queryDTO", dto);
+        model.put("pageModel", pageModel);
+        model.put("employeeHolidays", employeeHolidays);
+
+        return new ModelAndView("leave/applyList", model);
+    }
+
+    private int initPageNo(Integer pageNo) {
+        return (pageNo == null) ? 1 : pageNo;
+    }
+
+    private int initPageSize(Integer pageSize) {
+        return (pageSize == null) ? 10 : pageSize;
+    }
+
+    @RequestMapping(value = "/leaveApplyDetail")
+    public String details() {
+        return "leave/details";
     }
 
     private LeaveAuditDTO getLeaveAuditDTO(LeaveApplyDTO applyDTO) {
@@ -78,25 +112,6 @@ public class ApplyAction {
         leaveAuditDTO.setManagerAuditStatus(AuditStatusEnum.AUDITING.getAuditStatus());
 
         return leaveAuditDTO;
-    }
-
-    @RequestMapping(value = "/myLeaveApply")
-    public ModelAndView myApply() {
-
-        int applicantID = LoginBO.getLoginUser().getId();
-        List<LeaveApplyDTO> myLeaveApplys = leaveApplyService.getApplyRecords(applicantID);
-        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
-
-        Map model = new HashMap();
-        model.put("myApplys", myLeaveApplys);
-        model.put("employeeHolidays", employeeHolidays);
-
-        return new ModelAndView("leave/applyList", model);
-    }
-
-    @RequestMapping(value = "/leaveApplyDetail")
-    public String details() {
-        return "leave/details";
     }
 
 }

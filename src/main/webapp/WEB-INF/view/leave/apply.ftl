@@ -28,7 +28,7 @@
 <body>
 
 <div style="margin-top:10px;margin-left:10px;visibility:visible">
-    <form class="form-horizontal form-inline" action="/leaveApply" method="post">
+    <form class="form-horizontal form-inline" action="/leave/apply" method="post">
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
                 <tr>
@@ -113,7 +113,7 @@
                 <tr>
                     <td colspan="4">
                         <p style="margin-left: 450px;">
-                            <a href="applyList">
+                            <a href="/leave/apply">
                             <button type="submit" class="btn btn-info">
                                 提 交 请 假 申 请
                             </button>

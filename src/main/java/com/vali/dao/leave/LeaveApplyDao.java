@@ -4,7 +4,9 @@ import com.leya.idal.annotation.Action;
 import com.leya.idal.annotation.NameSpace;
 import com.leya.idal.annotation.ParamName;
 import com.leya.idal.enums.ActionType;
+import com.leya.idal.model.PageModel;
 import com.vali.po.leave.LeaveApplyPO;
+import com.vali.po.leave.LeaveApplyQueryPO;
 
 import java.util.List;
 
@@ -23,4 +25,8 @@ public interface LeaveApplyDao {
 
     @Action(action = ActionType.QUERY_LIST)
     public List<LeaveApplyPO> getLeaveApplyRecords(@ParamName("applicantID") int applicantID);
+
+    @Action(action = ActionType.PAGE)
+    public PageModel pageLeaveApplyRecords(@ParamName("po") LeaveApplyQueryPO po, @ParamName("pageNo") int pageNo,
+                                           @ParamName("pageSize") int pageSize);
 }
