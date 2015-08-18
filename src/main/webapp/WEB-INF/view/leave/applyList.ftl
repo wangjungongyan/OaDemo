@@ -27,7 +27,62 @@
 
     </style>
 </head>
+<#include "/WEB-INF/view/empty.ftl">
 <body>
+
+<#function cutString str,len>
+    <#if str?length &gt; len>
+        <#return str?substring(0,len?int) + "...">
+    <#else>
+        <#return str>
+    </#if>
+</#function>
+
+<#macro pageNavigation pageModel args>
+
+<#--
+    TODO:第一页不需要传递参数pageno，后台处理的时候pageno默认为1
+-->
+    <#if pageModel?exists && (pageModel.totalCount > 1)>
+        <#assign curPage = pageModel.currentPage>
+        <#assign pageCount = pageModel.totalCount>
+        <#assign endPage = pageCount/pageModel.pageSize + 1>
+    </#if>
+
+    <#if (curPage-2 >0)>
+        <#assign headPage = (curPage-2) >
+    <#else>
+        <#assign headPage = 1 >
+    </#if>
+
+    <#if (curPage+2 <=endPage)>
+        <#assign head2Page = (curPage+2) >
+    <#else>
+        <#assign head2Page = endPage >
+    </#if>
+
+<#--curPage:${curPage}-->
+<#--headPage:${headPage}-->
+<#--headPage2:${headPage2}-->
+<#--endPage:${endPage}-->
+
+    <#if (curPage > 1) >
+    <li><a href="?pageNo=${curPage - 1}${args!}" class="page-prev" title="上一页"><i class="p-prev"></i>上一页</a></li>
+    </#if>
+
+    <#list headPage..head2Page as page>
+        <#if curPage == page>
+        <span>${page}</span>
+        <#else>
+        <li><a href="?pageNo=${page}${args!}" title="${page}">${page}</a></li>
+        </#if>
+    </#list>
+
+    <#if (curPage < endPage)>
+    <li><a href="?pageNo=${curPage + 1}${args!}" class="page-next" title="下一页">下一页<i class="p-next"></a></li>
+    </#if>
+</#macro>
+
 <div class="container">
 
     <form class="form-inline" id="queryForm" action="/leave/myLeaveApply" method="post">
@@ -122,28 +177,6 @@
         </#if>
         </tbody>
     </table>
-</div>
-
-<div>
-    <nav>
-        <ul class="pager">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
 </div>
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -245,6 +278,15 @@
         </div>
     </div>
 </div>
+
+<div>
+    <nav>
+        <ul class="pager">
+        <@pageNavigation pageModel "" />
+        </ul>
+    </nav>
+</div>
+
 
 </body>
 
