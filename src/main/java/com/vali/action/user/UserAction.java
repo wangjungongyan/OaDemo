@@ -1,13 +1,20 @@
 package com.vali.action.user;
 
+import com.leya.idal.model.PageModel;
+import com.sun.javafx.sg.PGShape;
 import com.vali.dto.user.EmployeeDTO;
+import com.vali.enums.user.DepartmentEnum;
 import com.vali.enums.user.EmployeeStatusEnum;
+import com.vali.enums.user.RoleEnum;
 import com.vali.service.user.remote.EmployeeService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +29,10 @@ public class UserAction {
 
     @RequestMapping("/user/addUserIndex")
     public ModelAndView addUserIndex(EmployeeDTO userDTO) {
-
-        return new ModelAndView("user/addUserIndex");
+        Map model = new HashMap();
+        model.put("departments", DepartmentEnum.values());
+        model.put("roles", RoleEnum.values());
+        return new ModelAndView("user/addUserIndex",model);
     }
 
     @RequestMapping("/user/addUser")
@@ -48,9 +57,21 @@ public class UserAction {
     }
 
     @RequestMapping("/user/list")
-    public String userList(EmployeeDTO userDTO){
-
-        return "user/list";
+    public ModelAndView userList(EmployeeDTO userDTO,@DateTimeFormat(pattern = "yyyy-MM-dd")Date startTime,@DateTimeFormat(pattern = "yyyy-MM-dd")Date endTime,Integer pageNum){
+        if(pageNum==null){
+            pageNum=1;
+        }
+        if(pageNum<1){
+            pageNum=1;
+        }
+        PageModel pageModel = employeeService.queryEmployee(userDTO,startTime,endTime,pageNum,20);
+        //employeeService.
+        Map model = new HashMap();
+        model.put("pageModel",pageModel);
+        model.put("userDTO",userDTO);
+        model.put("startTime",startTime);
+        model.put("endTime",endTime);
+        return new ModelAndView("user/list",model);
     }
 
     @RequestMapping("/user/detail")
@@ -59,19 +80,18 @@ public class UserAction {
     }
 
     @RequestMapping("/user/updateUserIndex")
-    public String updateUserIndex(EmployeeDTO userDTO){
-        return "user/updateUserIndex";
+    public ModelAndView updateUserIndex(EmployeeDTO userDTO){
+        EmployeeDTO employeeDTO = employeeService.loadEmployee(userDTO.getId());
+        Map model = new HashMap();
+        model.put("user",employeeDTO);
+        model.put("departments", DepartmentEnum.values());
+        model.put("roles", RoleEnum.values());
+        return new ModelAndView( "user/updateUserIndex",model);
     }
 
-    @RequestMapping("/user/updateUser")
+    @RequestMapping("/user/update")
     public String updateUser(EmployeeDTO userDTO){
-        return "user/updateUser";
+        employeeService.updateEmployee(userDTO);
+        return "redirect:/user/list";
     }
-
-
-
-
-
-
-
 }

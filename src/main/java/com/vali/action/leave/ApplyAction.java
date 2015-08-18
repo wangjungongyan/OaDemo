@@ -69,6 +69,7 @@ public class ApplyAction {
         return "redirect:/leave/myLeaveApply";
     }
 
+
     @RequestMapping(value = "/leave/myLeaveApply")
     public ModelAndView myApplyWithConditions(LeaveApplyQueryDTO dto, Integer pageNo, Integer pageSize) {
 
@@ -107,7 +108,7 @@ public class ApplyAction {
         leaveAuditDTO.setApplyId(applyDTO.getId());
         leaveAuditDTO.setHrAuditStatus(AuditStatusEnum.AUDITING.getAuditStatus());
         leaveAuditDTO.setHrId(employeeService.getHr().getId());
-        leaveAuditDTO.setManagerId(employee.getManger().getId());
+        leaveAuditDTO.setManagerId(employee.getManager().getId());
         leaveAuditDTO.setManagerAuditStatus(AuditStatusEnum.AUDITING.getAuditStatus());
 
         return leaveAuditDTO;

@@ -19,7 +19,7 @@
 <body>
 
 <div style="margin-top:10px;margin-left:10px;visibility:visible">
-    <form action="/user/addUser" class="form-horizontal form-inline" method="post">
+    <form action="/user/update" class="form-horizontal form-inline" method="post">
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
                 <tr>
@@ -33,6 +33,7 @@
                     <td><label class="col-sm-8 control-label">FirstName</label></td>
                     <td>
                         <div class="col-sm-3">
+                            <input type="hidden" name="id" value="${user.id}">
                             <input name="firstName" value="${user.firstName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="FirstName">
                         </div>
                     </td>
@@ -91,15 +92,15 @@
                     <td>
                         <div class="col-sm-3">
                             <select name="departMent" class="form-control">
-                                <#list departments as depart>
+                            <#list departments as depart>
                                 <option value="${depart.type}"
-                                        <#if depart.type == user.departMent>
-                                            selected
-                                        </#if>
+                                    <#if depart.type == user.departMent>
+                                        selected
+                                    </#if>
                                         >
-                                    ${depart.departmentName}
+                                ${depart.departmentName}
                                 </option>
-                                </#list>
+                            </#list>
                             </select>
                         </div>
                     </td>
@@ -107,13 +108,13 @@
                     <td>
                         <div class="col-sm-3">
                             <select name="role">
-                                <#list roles as role>
-                                    <option  value="${role.type}"
-                                            <#if role.type == user.role >
-                                                selected
-                                            </#if>
-                                            >${role.roleName}</option>
-                                </#list>
+                            <#list roles as role>
+                                <option  value="${role.type}"
+                                    <#if role.type == user.role >
+                                         selected
+                                    </#if>
+                                        >${role.roleName}</option>
+                            </#list>
                             </select>
                         </div>
                     </td>
@@ -138,7 +139,7 @@
                         <p>
                             <a href="applyList">
                                 <button type="submit" class="btn btn-info">
-                                    确认添加员工
+                                    修改
                                 </button>
                             </a>
                         </p>

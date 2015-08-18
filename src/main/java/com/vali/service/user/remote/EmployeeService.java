@@ -1,9 +1,11 @@
 package com.vali.service.user.remote;
 
+import com.leya.idal.model.PageModel;
 import com.vali.dto.login.LoginVerifyDTO;
 import com.vali.dto.menu.FirstMenuDTO;
 import com.vali.dto.user.EmployeeDTO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,5 +40,9 @@ public interface EmployeeService {
      * @return
      */
     public boolean hasSameEmployee(EmployeeDTO userDTO);
+
+
+    public PageModel queryEmployee(EmployeeDTO userDto,Date startDate,Date endDate,int pageNum,int pageSize);
+
 
 }

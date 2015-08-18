@@ -59,18 +59,18 @@ public enum DepartmentEnum {
 
     private int type;
 
-    private String name;
+    private String departmentName;
 
     DepartmentEnum(int type, String name) {
         this.type = type;
-        this.name = name;
+        this.departmentName = name;
     }
 
     public int getType() {
         return type;
     }
 
-    public String getName() {
-        return name;
+    public String getDepartmentName() {
+        return departmentName;
     }
 }
