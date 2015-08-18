@@ -1,4 +1,3 @@
-
 <#function cutString str,len>
     <#if str?length &gt; len>
         <#return str?substring(0,len?int) + "...">
@@ -9,9 +8,6 @@
 
 <#macro pageNavigation pageModel args>
 
-<#--
-    TODO:第一页不需要传递参数pageno，后台处理的时候pageno默认为1
--->
     <#if pageModel?exists && (pageModel.totalCount > 1)>
         <#assign curPage = pageModel.currentPage>
         <#assign pageCount = pageModel.totalCount>
@@ -25,9 +21,9 @@
     </#if>
 
     <#if (curPage+2 <=endPage)>
-        <#assign head2Page = (curPage+2) >
+        <#assign tailPage = (curPage+2) >
     <#else>
-        <#assign head2Page = endPage >
+        <#assign tailPage = endPage >
     </#if>
 
 <#--curPage:${curPage}-->
@@ -39,7 +35,7 @@
     <li><a href="?pageNo=${curPage - 1}${args!}" class="page-prev" title="上一页"><i class="p-prev"></i>上一页</a></li>
     </#if>
 
-    <#list headPage..head2Page as page>
+    <#list headPage..tailPage as page>
         <#if curPage == page>
         <span>${page}</span>
         <#else>
@@ -50,5 +46,4 @@
     <#if (curPage < endPage)>
     <li><a href="?pageNo=${curPage + 1}${args!}" class="page-next" title="下一页">下一页<i class="p-next"></a></li>
     </#if>
-
 </#macro>
