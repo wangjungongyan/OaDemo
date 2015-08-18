@@ -180,7 +180,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" name="closeButton" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">请假详情</h4>
             </div>
@@ -269,7 +269,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="closeEditButton" data-dismiss="modal">关闭</button>
+                <button type="button" name="closeButton" class="btn btn-default" id="closeEditButton"
+                        data-dismiss="modal">关闭
+                </button>
             </div>
         </div>
     </div>
@@ -390,6 +392,14 @@
                     alert("出错咯，稍后再试吧.");
                 }
             });
+        });
+
+        $("button[name='closeButton']").click(function () {
+            var removeSize = 0;
+            while (removeSize < 2) {
+                ++removeSize;
+                $("#auditChainTable tr:last").remove();
+            }
         });
     });
 
