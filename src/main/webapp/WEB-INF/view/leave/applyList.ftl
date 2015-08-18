@@ -31,29 +31,33 @@
 <div class="container">
 
     <form class="form-inline" id="queryForm" action="/leave/myLeaveApply" method="post">
-        <div class="form-group">
+        <table>
+            <tr>
+                <div class="form-group">
 
-            <label>申请类型</label>
-            <select id="leaveType" name="leaveType">
-            <#list employeeHolidays as holiday>
-                <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
-                        selected="selected" </#if>>${holiday.name}</option>
-            </#list>
-            </select>
+                    <label>申请类型</label>
+                    <select id="leaveType" name="leaveType">
+                    <#list employeeHolidays as holiday>
+                        <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
+                                selected="selected" </#if>>${holiday.name}</option>
+                    </#list>
+                    </select>
 
-            &nbsp;&nbsp;&nbsp;
-            <label>申请时间从</label>
-            <input name="startTime" type="text" class="form_datetime" style="width: 150px;"
-                   value="<#if queryDTO??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+                    &nbsp;&nbsp;&nbsp;
+                    <label>申请时间从</label>
+                    <input name="startTime" type="text" class="form_datetime" style="width: 150px;"
+                           value="<#if queryDTO??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 
-            <label>到</label>
-            <input name="endTime" type="text" class="form_datetime" style="width: 150px;"
-                   value="<#if queryDTO??>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+                    <label>到</label>
+                    <input name="endTime" type="text" class="form_datetime" style="width: 150px;"
+                           value="<#if queryDTO??>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 
-            &nbsp;&nbsp;&nbsp;
-            <button name="queryButton" type="submit" class="btn btn-default">查询</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button name="queryButton" type="submit" class="btn btn-default">查询</button>
 
-        </div>
+                </div>
+            </tr>
+        </table>
     </form>
 
     <table class="table  table-striped table-bordered table-hover ">
@@ -118,108 +122,8 @@
         </#if>
         </tbody>
     </table>
-
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">请假详情</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <table class="table .table-condensed table-striped ">
-                            <tr>
-                                <td><label class="col-sm-8 control-label">申请人</label></td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" readonly name="applyUser"/>
-                                    </div>
-                                </td>
-                                <td><label class="col-sm-8 control-label">申请时间</label></td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" readonly name="applyTime"/>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label class="col-sm-8 control-label">
-                                        请假类型
-                                    </label>
-                                </td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" readonly name="selectedType">
-                                    </div>
-                                </td>
-                                <td><label class="col-sm-8 control-label">审批结果</label></td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" readonly name="auditResult"/>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label class="col-sm-8 control-label">
-                                        开始时间
-                                    </label>
-                                </td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" readonly name="leaveStartTime"/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <label class="col-sm-8 control-label">
-                                        结束时间
-                                    </label>
-                                </td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" readonly name="leaveEndTime"/>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label class="col-sm-8 control-label">
-                                        请假事由
-                                    </label>
-                                </td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        <textarea class="form-control" rows="3" cols="40" readonly
-                                                  id="leaveReason"></textarea>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-
-                    <div class="panel panel-default">
-                        <table class="table" id="auditChainTable">
-                            <tr>
-                                <th>审批人</th>
-                                <th>审批时间</th>
-                                <th>审批意见</th>
-                                <th>审批结果</th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="closeEditButton" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
 </div>
+
 <div>
     <nav>
         <ul class="pager">
@@ -242,8 +146,108 @@
     </nav>
 </div>
 
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" style="display: none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">请假详情</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <table class="table .table-condensed table-striped ">
+                        <tr>
+                            <td><label class="col-sm-8 control-label">申请人</label></td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <input class="form-control" readonly name="applyUser"/>
+                                </div>
+                            </td>
+                            <td><label class="col-sm-8 control-label">申请时间</label></td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <input class="form-control" readonly name="applyTime"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="col-sm-8 control-label">
+                                    请假类型
+                                </label>
+                            </td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <input class="form-control" readonly name="selectedType">
+                                </div>
+                            </td>
+                            <td><label class="col-sm-8 control-label">审批结果</label></td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <input class="form-control" readonly name="auditResult"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="col-sm-8 control-label">
+                                    开始时间
+                                </label>
+                            </td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <input class="form-control" readonly name="leaveStartTime"/>
+                                </div>
+                            </td>
+                            <td>
+                                <label class="col-sm-8 control-label">
+                                    结束时间
+                                </label>
+                            </td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <input class="form-control" readonly name="leaveEndTime"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="col-sm-8 control-label">
+                                    请假事由
+                                </label>
+                            </td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" rows="3" cols="40" readonly
+                                              id="leaveReason"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <div class="panel panel-default">
+                    <table class="table" id="auditChainTable">
+                        <tr>
+                            <th>审批人</th>
+                            <th>审批时间</th>
+                            <th>审批意见</th>
+                            <th>审批结果</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeEditButton" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
+
 <script src="/js/jquery-1.8.2.min.js"></script>
 <script src="/js/jquery.json.js"></script>
 <script src="/js/bootstrap.min.js"></script>
