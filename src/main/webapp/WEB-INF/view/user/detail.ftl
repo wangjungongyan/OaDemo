@@ -27,7 +27,7 @@
     text-align: left;
     font-weight: bold;
     font-size: 16px;
-    color: red;" class="col-sm-40 control-label">添加新员工</label></td>
+    color: red;" class="col-sm-40 control-label">员工详情</label></td>
                 </tr>
                 <tr>
                     <td><label class="col-sm-8 control-label">FirstName</label></td>
@@ -76,13 +76,13 @@
                     <td><label class="col-sm-8 control-label">汇报对象</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="manager.id"  value="${user.manager.id}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="">
+                            <input name="manger.id"  value="${user.manager.id}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">入职日期</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="joinDate" value="${user.joinDate?string('yyyy-MM-dd')}" size="10" id="joinDate" type="text"  readonly class="form_datetime" style="width: 100px;">
+                            <input name="joinDate" size="10" id="joinDate" type="text"  readonly class="form_datetime" style="width: 100px;">
                         </div>
                     </td>
                 </tr>
@@ -90,31 +90,13 @@
                     <td><label class="col-sm-8 control-label">部门</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <select name="departMent" class="form-control">
-                                <#list departments as depart>
-                                <option value="${depart.type}"
-                                        <#if depart.type == user.departMent>
-                                            selected
-                                        </#if>
-                                        >
-                                    ${depart.departmentName}
-                                </option>
-                                </#list>
-                            </select>
+                            <input name="departMent"  value="${user.departMent}" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">角色</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <select name="role">
-                                <#list roles as role>
-                                    <option  value="${role.type}"
-                                            <#if role.type == user.role >
-                                                selected
-                                            </#if>
-                                            >${role.roleName}</option>
-                                </#list>
-                            </select>
+                            <input name="role" value="${user.role}" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="">
                         </div>
                     </td>
                 </tr>
@@ -125,28 +107,7 @@
                             <input name="phone" value="${user.phone}" type="gongzuorijiaotongfeitime" class="form-control" id="inputgongzuorijiaotongfeitime" placeholder="请输入员工手机号">
                         </div>
                     </td>
-                    <td>
-
-                    </td>
-                    <td></td>
                 </tr>
-                <tr>
-                    <td ></td>
-                    <td>
-                    </td>
-                    <td>
-                        <p>
-                            <a href="applyList">
-                                <button type="submit" class="btn btn-info">
-                                    确认添加员工
-                                </button>
-                            </a>
-                        </p>
-                    </td>
-                    <td></td>
-                </tr>
-                </p>
-
             </table>
         </div>
     </form>

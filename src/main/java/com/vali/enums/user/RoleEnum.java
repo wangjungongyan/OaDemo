@@ -13,18 +13,18 @@ public enum RoleEnum {
 
     private int type;
 
-    private String name;
+    private String roleName;
 
     RoleEnum(int type, String name) {
         this.type = type;
-        this.name = name;
+        this.roleName = name;
     }
 
     public int getType() {
         return type;
     }
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 }

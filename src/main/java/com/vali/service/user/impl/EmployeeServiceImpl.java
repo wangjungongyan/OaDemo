@@ -1,5 +1,6 @@
 package com.vali.service.user.impl;
 
+import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
 import com.vali.bo.MenuBO;
 import com.vali.dao.user.EmployeeDao;
@@ -17,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeePO po = new EmployeePO();
         BeanUtils.copyProperties(userDTO, po);
         po.setPassword(LoginBO.encryptPassword(po.getPassword()));
-        po.setMangerId(userDTO.getManger().getId());
+        po.setMangerId(userDTO.getManager().getId());
         return employeeDao.saveEmployee(po);
     }
 
@@ -84,8 +86,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         String password = userDTO.getPassword();
         EmployeePO po = employeeDao.getEmployeeByID(userDTO.getId());
         BeanUtilsA.copyPropertiesWithSourcePropertiesNullNotCopy(userDTO, po);
-        po.setMangerId(userDTO.getManger().getId());
-        if(password!=null){
+        po.setMangerId(userDTO.getManager().getId());
+        if(StringUtils.isNotBlank(password)){
             po.setPassword(LoginBO.encryptPassword(password));
         }
         return employeeDao.updateEmployee(po);
@@ -104,7 +106,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(managerPo!=null) {
             EmployeeDTO managerDto = new EmployeeDTO();
             BeanUtils.copyProperties(managerPo, managerDto);
-            dto.setManger(managerDto);
+            dto.setManager(managerDto);
         }
         return dto;
     }
@@ -123,7 +125,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(managerPo!=null){
             EmployeeDTO managerDto = new EmployeeDTO();
             BeanUtils.copyProperties(managerPo,managerDto);
-            dto.setManger(managerDto);
+            dto.setManager(managerDto);
         }
         return dto;
     }
@@ -154,6 +156,11 @@ public class EmployeeServiceImpl implements EmployeeService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public PageModel queryEmployee(EmployeeDTO userDto,Date startDate,Date endDate,int pageNum,int pageSize) {
+       return employeeDao.pageQueryEmployee(userDto,startDate,endDate,pageNum,pageSize);
     }
 
 }

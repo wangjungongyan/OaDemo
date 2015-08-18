@@ -86,38 +86,13 @@ public class EmployeeDTO {
     /**
      * 直接上级
      */
-    private EmployeeDTO manger;
+    private EmployeeDTO manager;
 
     /**
      * HR
      */
     private EmployeeDTO hr;
 
-    public static EmployeeDTO getVali() {
-        EmployeeDTO userDTO = new EmployeeDTO();
-        userDTO.setId(1);
-        userDTO.setChineseName("王俊");
-        userDTO.setEmail("vali@ll.com");
-        userDTO.setPassword("123456");
-        userDTO.setPhone("18521352927");
-        userDTO.setDepartMent(DepartmentEnum.DEV.getType());
-        userDTO.setRole(RoleEnum.MANAGE.getType());
-        userDTO.setManger(getKerith());
-        return userDTO;
-    }
 
-
-    public static EmployeeDTO getKerith() {
-        EmployeeDTO userDTO = new EmployeeDTO();
-        userDTO.setId(2);
-        userDTO.setChineseName("樊帅");
-        userDTO.setEmail("kerith@ll.com");
-        userDTO.setPassword("123456");
-        userDTO.setPhone("18521352927");
-        userDTO.setDepartMent(DepartmentEnum.DEV.getType());
-        userDTO.setRole(RoleEnum.BOSS.getType());
-        userDTO.setManger(null);
-        return userDTO;
-    }
 
 }

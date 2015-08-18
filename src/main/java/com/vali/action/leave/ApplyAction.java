@@ -74,7 +74,7 @@ public class ApplyAction {
         leaveAuditDTO.setApplyId(applyDTO.getId());
         leaveAuditDTO.setHrAuditStatus(AuditStatusEnum.AUDITING.getAuditStatus());
         leaveAuditDTO.setHrId(employeeService.getHr().getId());
-        leaveAuditDTO.setManagerId(employee.getManger().getId());
+        leaveAuditDTO.setManagerId(employee.getManager().getId());
         leaveAuditDTO.setManagerAuditStatus(AuditStatusEnum.AUDITING.getAuditStatus());
 
         return leaveAuditDTO;
