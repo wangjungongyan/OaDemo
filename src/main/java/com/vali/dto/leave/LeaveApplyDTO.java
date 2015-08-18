@@ -1,5 +1,6 @@
 package com.vali.dto.leave;
 
+import com.vali.dto.user.EmployeeDTO;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,6 +19,11 @@ public class LeaveApplyDTO {
      * 员工id
      */
     private Integer applicantID;
+
+    /**
+     * 员工详情
+     */
+    private EmployeeDTO applicant;
 
     /**
      * 请假类型

@@ -15,6 +15,7 @@ import com.vali.service.user.remote.EmployeeService;
 import com.vali.util.TimeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -69,7 +70,6 @@ public class ApplyAction {
         return "redirect:/leave/myLeaveApply";
     }
 
-
     @RequestMapping(value = "/leave/myLeaveApply")
     public ModelAndView myApplyWithConditions(LeaveApplyQueryDTO dto, Integer pageNo, Integer pageSize) {
 
@@ -85,6 +85,14 @@ public class ApplyAction {
         model.put("employeeHolidays", employeeHolidays);
 
         return new ModelAndView("leave/applyList", model);
+    }
+
+    @RequestMapping(value = "/leave/ajaxGetApplyDetail")
+    @ResponseBody
+    public LeaveApplyDTO ajaxGetApplyDetail(Integer applyId) {
+        LeaveApplyDTO leaveApplyDTO =leaveApplyService.getApplyDetailByApplyId(applyId);
+        leaveApplyDTO.setApplicant(LoginBO.getLoginUser());
+        return leaveApplyDTO;
     }
 
     private int initPageNo(Integer pageNo) {

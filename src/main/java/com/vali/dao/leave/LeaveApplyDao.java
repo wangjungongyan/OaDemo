@@ -26,6 +26,9 @@ public interface LeaveApplyDao {
     @Action(action = ActionType.QUERY_LIST)
     public List<LeaveApplyPO> getLeaveApplyRecords(@ParamName("applicantID") int applicantID);
 
+    @Action(action = ActionType.QUERY_OBJECT)
+    public LeaveApplyPO getApplyDetailByApplyId(@ParamName("applyId") int applyId);
+
     @Action(action = ActionType.PAGE)
     public PageModel pageLeaveApplyRecords(@ParamName("po") LeaveApplyQueryPO po, @ParamName("pageNo") int pageNo,
                                            @ParamName("pageSize") int pageSize);

@@ -40,7 +40,8 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
 
     private BeanCopier PAGECopier = BeanCopier.create(PageModel.class, PageModel.class, false);
 
-    private BeanCopier DTO2ENTITY4LeaveApplyQuery = BeanCopier.create(LeaveApplyQueryDTO.class, LeaveApplyQueryPO.class, false);
+    private BeanCopier DTO2ENTITY4LeaveApplyQuery = BeanCopier.create(LeaveApplyQueryDTO.class, LeaveApplyQueryPO.class,
+                                                                      false);
 
     private BeanCopier ENTITY2DTO4LeaveApply = BeanCopier.create(LeaveApplyPO.class, LeaveApplyDTO.class, false);
 
@@ -94,31 +95,31 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         return dtos;
     }
 
-    @Override public PageModel getApplyRecords(LeaveApplyQueryDTO queryDTO,int pageNo,int pageSize) {
+    @Override public PageModel getApplyRecords(LeaveApplyQueryDTO queryDTO, int pageNo, int pageSize) {
 
         LeaveApplyQueryPO queryPO = new LeaveApplyQueryPO();
-        DTO2ENTITY4LeaveApplyQuery.copy(queryDTO,queryPO,null);
-        PageModel queryModel = leaveApplyDao.pageLeaveApplyRecords(queryPO,pageNo,pageSize);
+        DTO2ENTITY4LeaveApplyQuery.copy(queryDTO, queryPO, null);
+        PageModel queryModel = leaveApplyDao.pageLeaveApplyRecords(queryPO, pageNo, pageSize);
 
         PageModel result = new PageModel();
-        PAGECopier.copy(queryModel,result,null);
+        PAGECopier.copy(queryModel, result, null);
 
-        if (queryModel == null || CollectionUtils.isEmpty(queryModel.getRecords())){
+        if (queryModel == null || CollectionUtils.isEmpty(queryModel.getRecords())) {
             return result;
         }
 
-        List<LeaveApplyDTO> resultDTOS= new ArrayList<LeaveApplyDTO>(10);
+        List<LeaveApplyDTO> resultDTOS = new ArrayList<LeaveApplyDTO>(10);
 
-        for(LeaveApplyPO record : (List<LeaveApplyPO>)queryModel.getRecords()){
+        for (LeaveApplyPO record : (List<LeaveApplyPO>) queryModel.getRecords()) {
             LeaveApplyDTO dto = new LeaveApplyDTO();
-            ENTITY2DTO4LeaveApply.copy(record,dto,null);
+            ENTITY2DTO4LeaveApply.copy(record, dto, null);
 
             int leaveType = record.getLeaveType();
             LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(leaveType);
             dto.setLeaveName(leaveTypeEnum.getName());
 
-            int status =record.getStatus();
-            AuditStatusEnum auditStatusEnum =AuditStatusEnum.getAuditStatus(status);
+            int status = record.getStatus();
+            AuditStatusEnum auditStatusEnum = AuditStatusEnum.getAuditStatus(status);
             dto.setStatusName(auditStatusEnum.getAuditStatusName());
 
             resultDTOS.add(dto);
@@ -135,8 +136,27 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
     }
 
     @Override
-    public LeaveApplyDTO applyDetail(Integer applyId) {
-        return null;
+    public LeaveApplyDTO getApplyDetailByApplyId(Integer applyId) {
+
+        LeaveApplyPO po = leaveApplyDao.getApplyDetailByApplyId(applyId);
+
+        if (po == null) {
+            return null;
+        }
+
+        LeaveApplyDTO dto = new LeaveApplyDTO();
+        ENTITY2DTO4LeaveApply.copy(po, dto, null);
+
+        LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(dto.getLeaveType());
+        dto.setLeaveName(leaveTypeEnum.getName());
+
+        AuditStatusEnum auditStatusEnum =AuditStatusEnum.getAuditStatus(dto.getStatus());
+        dto.setStatusName(auditStatusEnum.getAuditStatusName());
+
+        LeaveAuditDTO auditDTO = leaveAuditService.getAuidtChain(po.getId());
+        dto.setAudit(auditDTO);
+
+        return dto;
     }
 
 }

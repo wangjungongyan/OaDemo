@@ -53,6 +53,22 @@
         order by AddTime desc
     </select>
 
+    <select id="getApplyDetailByApplyId" resultMap="LeaveApplyResult">
+        select ID,
+        ApplicantID,
+        LeaveType,
+        LeaveStartTime,
+        LeaveEndTime,
+        LeaveDays,
+        LeaveReason,
+        ApplyTime,
+        Status,
+        AddTime,
+        UpdateTime
+        from LL_LeaveApply
+        where ID = #applyId#
+    </select>
+
     <select id="pageLeaveApplyRecords" resultMap="LeaveApplyResult">
         select ID,
         ApplicantID,

@@ -38,6 +38,6 @@ public interface LeaveApplyService {
      * @param applyId
      * @return
      */
-    LeaveApplyDTO applyDetail(Integer applyId);
+    LeaveApplyDTO getApplyDetailByApplyId(Integer applyId);
 
 }

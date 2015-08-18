@@ -275,13 +275,37 @@
     $(document).ready(function () {
 
         $("a[name='showApplyDetail']").click(function(){
-            $("input[name='applyUser']").val("王俊");
-            $("input[name='applyTime']").val("王俊");
-            $("input[name='selectedType']").val("王俊");
-            $("input[name='auditResult']").val("王俊");
-            $("input[name='leaveStartTime']").val("王俊");
-            $("input[name='leaveEndTime']").val("王俊");
-            $("#leaveReason").attr("value","王俊");
+
+            var applyId = 34;
+            var url ="/leave/ajaxGetApplyDetail?applyId=" + applyId;
+
+            $.ajax(url, {
+                dataType: "json",
+                contentType: "application/xml",
+                method: "get",
+                success: function (result) {
+                    var applyUser = result.applicant.chineseName;
+                    var applyTime = result.applyTime;
+                    var selectedType = result.leaveName;
+                    var auditResult = result.statusName;
+                    var leaveStartTime = result.leaveStartTime;
+                    var leaveEndTime = result.leaveEndTime;
+                    var leaveReason = result.leaveReason;
+
+
+
+                    $("input[name='applyUser']").val(applyUser);
+                    $("input[name='applyTime']").val(applyTime);
+                    $("input[name='selectedType']").val(selectedType);
+                    $("input[name='auditResult']").val(auditResult);
+                    $("input[name='leaveStartTime']").val(leaveStartTime);
+                    $("input[name='leaveEndTime']").val(leaveEndTime);
+                    $("#leaveReason").attr("value",leaveReason);
+                },
+                error:function(){
+                    alert("出错咯，稍后再试吧.");
+                }
+            });
         });
 
 //        $("button[name='queryButton']").click(function () {
