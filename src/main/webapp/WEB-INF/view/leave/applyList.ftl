@@ -110,7 +110,8 @@
                 <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
                     至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
                 <td>${myApply.statusName}</td>
-                <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})" data-toggle="modal" data-target="#editModal">查看详情</a>
+                <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})"
+                       data-toggle="modal" data-target="#editModal">查看详情</a>
                 </td>
             </tr>
             </#list>
@@ -248,7 +249,7 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
-    var selectedApplyId =0;
+    var selectedApplyId = 0;
 
     $("input[name='startTime']").datetimepicker({
         format: 'yyyy-mm-dd hh:ii:ss',
@@ -266,28 +267,36 @@
         autoclose: true
     });
 
-    function getSelectedApplyId(id){
+    function getSelectedApplyId(id) {
         selectedApplyId = id;
     }
 
-    function getStatusName(status){
-        if(status == 0){
+    function getNullValue(value) {
+        if (value == null || value == "") {
+            return "/";
+        }
+        return value;
+    }
+
+    function getStatusName(status) {
+        if (status == 0) {
             return "审核中";
         }
-        if(status == 1){
+        if (status == 1) {
             return "通过";
         }
-        if(status == 2){
+        if (status == 2) {
             return "不通过";
         }
     }
 
-    function formatDate(originDate){
-        if(originDate == null){
+    function formatDate(originDate) {
+        if (originDate == null) {
             return "/";
         }
 
-        return new Date(parseInt(originDate)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");;
+        return new Date(parseInt(originDate)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+        ;
     }
 
     $(document).ready(function () {
@@ -307,7 +316,7 @@
                     var auditResult = result.statusName;
                     var leaveStartTime = formatDate(result.leaveStartTime);
                     var leaveEndTime = formatDate(result.leaveEndTime);
-                    var leaveReason = result.leaveReason;
+                    var leaveReason = getNullValue(result.leaveReason);
 
                     $("input[name='applyUser']").val(applyUser);
                     $("input[name='applyTime']").val(applyTime);
@@ -321,18 +330,18 @@
                     var manager = audit.manager;
                     var hr = audit.hr;
 
-                    var auditChain="<tr>"
-                                       +"<td>" + manager.chineseName +"</td>"
-                                       +"<td>" + formatDate(audit.managerAuditTime) +"</td>"
-                                       +"<td>" + audit.managerAuditSuggest +"</td>"
-                                       +"<td>" + getStatusName(audit.managerAuditStatus) +"</td>"
-                                   +"</tr>"
-                                   +"<tr>"
-                                       +"<td>" + hr.chineseName +"</td>"
-                                       +"<td>" + formatDate(audit.hrAuditTime) +"</td>"
-                                       +"<td>" + audit.hrAuditSuggest +"</td>"
-                                       +"<td>" + getStatusName(audit.hrAuditStatus) +"</td>"
-                                    +"</tr>";
+                    var auditChain = "<tr>"
+                            + "<td>" + getNullValue(manager.chineseName) + "</td>"
+                            + "<td>" + formatDate(audit.managerAuditTime) + "</td>"
+                            + "<td>" + getNullValue(audit.managerAuditSuggest) + "</td>"
+                            + "<td>" + getStatusName(audit.managerAuditStatus) + "</td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>" + getNullValue(hr.chineseName) + "</td>"
+                            + "<td>" + formatDate(audit.hrAuditTime) + "</td>"
+                            + "<td>" + getNullValue(audit.hrAuditSuggest) + "</td>"
+                            + "<td>" + getStatusName(audit.hrAuditStatus) + "</td>"
+                            + "</tr>";
                     $("#auditChainTable").append(auditChain);
                 },
                 error: function () {
