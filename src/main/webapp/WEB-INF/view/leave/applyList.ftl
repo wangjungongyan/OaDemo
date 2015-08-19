@@ -34,21 +34,13 @@
 </head>
 <body>
 
-<#function cutString str,len>
-    <#if str?length &gt; len>
-        <#return str?substring(0,len?int) + "...">
-    <#else>
-        <#return str>
-    </#if>
-</#function>
-
 <#macro pageNavigation pageModel args>
 
     <#if pageModel?exists && (pageModel.totalCount > 1)>
         <#assign curPage = pageModel.currentPage>
         <#assign pageCount = pageModel.totalCount>
-        <#if pageCount/pageModel.pageSize < 1>
-            <#assign endPage = 1>
+        <#if (pageCount%pageModel.pageSize > 0)>
+            <#assign endPage = (pageCount/pageModel.pageSize + 1)>
         <#else>
             <#assign endPage = (pageCount/pageModel.pageSize)>
         </#if>
@@ -292,11 +284,10 @@
 <div>
     <nav>
         <ul class="pager">
-        <@pageNavigation pageModel "&leaveType=${queryDTO.leaveType}&startTime=${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}&endTime=${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}" />
+        <@pageNavigation pageModel "${queryDTO.queryCondition}" />
         </ul>
     </nav>
 </div>
-
 
 </body>
 

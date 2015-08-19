@@ -1,5 +1,6 @@
 package com.vali.dto.leave;
 
+import com.vali.dto.common.QueryBaseDTO;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,7 +11,7 @@ import java.util.Date;
  */
 
 @Data
-public class LeaveApplyQueryDTO {
+public class LeaveApplyQueryDTO extends QueryBaseDTO {
 
     private int applicantID;
 
@@ -22,6 +23,24 @@ public class LeaveApplyQueryDTO {
 
     private int leaveType;
 
-    public LeaveApplyQueryDTO() {}
+    public LeaveApplyQueryDTO() {
+    }
+
+    @Override protected void setCondition() {
+
+        StringBuffer query = new StringBuffer("&");
+
+        if (startTime != null) {
+            query.append("startTime=" + startTime + "&");
+        }
+
+        if (endTime != null) {
+            query.append("endTime=" + endTime + "&");
+        }
+
+        query.append("leaveType=" + leaveType);
+
+        this.queryCondition = query.toString();
+    }
 
 }
