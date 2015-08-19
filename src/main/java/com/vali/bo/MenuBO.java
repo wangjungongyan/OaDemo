@@ -41,7 +41,7 @@ public class MenuBO {
 
         FirstMenuDTO firstMenuDTO1 = new FirstMenuDTO();
         firstMenuDTO1.setHref("oneMenuId_001");
-        firstMenuDTO1.setName("我的请假");
+        firstMenuDTO1.setName("请假管理");
 
         SecondMenuDTO secondMenuDTO1 = new SecondMenuDTO();
         secondMenuDTO1.setName("我要申请");

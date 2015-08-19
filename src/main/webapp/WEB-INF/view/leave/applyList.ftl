@@ -47,7 +47,12 @@
     <#if pageModel?exists && (pageModel.totalCount > 1)>
         <#assign curPage = pageModel.currentPage>
         <#assign pageCount = pageModel.totalCount>
-        <#assign endPage = pageCount/pageModel.pageSize + 1>
+        <#if pageCount/pageModel.pageSize < 1>
+            <#assign endPage = 1>
+        <#else>
+            <#assign endPage = (pageCount/pageModel.pageSize)>
+        </#if>
+
     </#if>
 
     <#if (curPage-2 >0)>
@@ -64,20 +69,22 @@
 
 <#--curPage:${curPage}-->
 <#--headPage:${headPage}-->
-<#--headPage2:${headPage2}-->
+<#--tailPage:${tailPage}-->
 <#--endPage:${endPage}-->
 
     <#if (curPage > 1) >
     <li><a href="?pageNo=${curPage - 1}${args!}" class="page-prev" title="上一页"><i class="p-prev"></i>上一页</a></li>
     </#if>
 
-    <#list headPage..tailPage as page>
-        <#if curPage == page>
-        <span>${page}</span>
-        <#else>
-        <li><a href="?pageNo=${page}${args!}" title="${page}">${page}</a></li>
-        </#if>
-    </#list>
+    <#if (tailPage > headPage)>
+        <#list headPage..tailPage as page>
+            <#if curPage == page>
+            <span>${page}</span>
+            <#else>
+            <li><a href="?pageNo=${page}${args!}" title="${page}">${page}</a></li>
+            </#if>
+        </#list>
+    </#if>
 
     <#if (curPage < endPage)>
     <li><a href="?pageNo=${curPage + 1}${args!}" class="page-next" title="下一页">下一页<i class="p-next"></a></li>
@@ -285,7 +292,7 @@
 <div>
     <nav>
         <ul class="pager">
-        <@pageNavigation pageModel "" />
+        <@pageNavigation pageModel "&leaveType=${queryDTO.leaveType}&startTime=${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}&endTime=${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}" />
         </ul>
     </nav>
 </div>
