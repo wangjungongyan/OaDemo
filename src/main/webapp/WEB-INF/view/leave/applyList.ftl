@@ -343,7 +343,6 @@
         }
 
         return new Date(parseInt(originDate)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
-        ;
     }
 
     $(document).ready(function () {

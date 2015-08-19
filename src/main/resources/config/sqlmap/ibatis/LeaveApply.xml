@@ -118,4 +118,65 @@
         </isGreaterThan>
     </select>
 
+    <select id="pageAuditsByRoleAndAuditId" resultMap="LeaveApplyResult">
+        select ID,
+        ApplicantID,
+        LeaveType,
+        LeaveStartTime,
+        LeaveEndTime,
+        LeaveDays,
+        LeaveReason,
+        ApplyTime,
+        Status,
+        AddTime,
+        UpdateTime
+        from LL_LeaveApply
+        where ID in(
+        SELECT
+        ApplyId
+        FROM
+        LL_LeaveAudit
+        <dynamic prepend="WHERE">
+            <isEqual property="role" compareValue="1">
+                HrId = #auditId#
+                and HrAuditStatus = #auditStatus#
+            </isEqual>
+            <isEqual property="role" compareValue="2">
+                ManagerId = #auditId#
+                and ManagerAuditStatus = #auditStatus#
+            </isEqual>
+        </dynamic>
+        )
+        and status = #applyStatus#
+        order by AddTime desc
+    </select>
+
+    <select id="pageAuditsByRoleAndAuditId_count" resultClass="int">
+        select count(1)
+        from LL_LeaveApply
+        where ID in(
+        SELECT
+        ApplyId
+        FROM
+        LL_LeaveAudit
+        <dynamic prepend="WHERE">
+            <isEqual property="role" compareValue="1">
+                HrId = #auditId#
+                and HrAuditStatus = #auditStatus#
+            </isEqual>
+            <isEqual property="role" compareValue="2">
+                ManagerId = #auditId#
+                and ManagerAuditStatus = #auditStatus#
+            </isEqual>
+        </dynamic>
+        )
+        and status = #applyStatus#
+    </select>
+
+    <update id="updateApplyStatus">
+        update LL_LeaveApply
+        set Status = #auditStatus#,UpdateTime = NOW()
+        where ID = #applyId#
+    </update>
+
 </sqlMap>

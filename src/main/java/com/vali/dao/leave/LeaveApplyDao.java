@@ -32,4 +32,16 @@ public interface LeaveApplyDao {
     @Action(action = ActionType.PAGE)
     public PageModel pageLeaveApplyRecords(@ParamName("po") LeaveApplyQueryPO po, @ParamName("pageNo") int pageNo,
                                            @ParamName("pageSize") int pageSize);
+
+    @Action(action = ActionType.PAGE)
+    public PageModel pageAuditsByRoleAndAuditId(@ParamName("auditId") int auditId,
+                                                @ParamName("role") int role,
+                                                @ParamName("auditStatus") int auditStatus,
+                                                @ParamName("applyStatus") int applyStatus,
+                                                @ParamName("pageNo") int pageNo,
+                                                @ParamName("pageSize") int pageSize);
+
+    @Action(action = ActionType.UPDATE)
+    public int updateApplyStatus(@ParamName("applyId") int applyId, @ParamName("auditStatus") int auditStatus);
+
 }

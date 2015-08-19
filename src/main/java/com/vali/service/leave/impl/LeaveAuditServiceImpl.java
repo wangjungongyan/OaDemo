@@ -3,7 +3,6 @@ package com.vali.service.leave.impl;
 import com.vali.dao.leave.LeaveAuditDao;
 import com.vali.dto.leave.LeaveAuditDTO;
 import com.vali.dto.user.EmployeeDTO;
-import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.po.leave.LeaveAuditPO;
 import com.vali.service.leave.remote.LeaveAuditService;
 import com.vali.service.user.remote.EmployeeService;
@@ -31,15 +30,17 @@ public class LeaveAuditServiceImpl implements LeaveAuditService {
 
     private BeanCopier DTO2ENTITY4LeaveAudit = BeanCopier.create(LeaveAuditDTO.class, LeaveAuditPO.class, false);
 
-    @Override public boolean manageAudit(int manageId, String managerAuditSuggest, AuditStatusEnum auditStatus) {
-        return false;
+    @Override public boolean manageAudit(int applyId, String managerAuditSuggest, int auditStatus) {
+        int updated = leaveAuditDao.updateStatusAndSuggest4Manager(applyId, managerAuditSuggest, auditStatus);
+        return (updated >= 1);
     }
 
-    @Override public boolean hrAudit(int hrId, String hrAuditSuggest, AuditStatusEnum auditStatus) {
-        return false;
+    @Override public boolean hrAudit(int applyId, String hrAuditSuggest, int auditStatus) {
+        int updated = leaveAuditDao.updateStatusAndSuggest4Hr(applyId, hrAuditSuggest, auditStatus);
+        return (updated >= 1);
     }
 
-    @Override public LeaveAuditDTO getAuidtChain(int applyId) {
+    @Override public LeaveAuditDTO getAuditChain(int applyId) {
 
         LeaveAuditPO po = leaveAuditDao.getAuidtByApplyId(applyId);
 

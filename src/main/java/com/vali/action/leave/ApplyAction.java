@@ -91,7 +91,7 @@ public class ApplyAction {
     @ResponseBody
     public LeaveApplyDTO ajaxGetApplyDetail(Integer applyId) {
         LeaveApplyDTO leaveApplyDTO =leaveApplyService.getApplyDetailByApplyId(applyId);
-        leaveApplyDTO.setApplicant(LoginBO.getLoginUser());
+        //leaveApplyDTO.setApplicant(LoginBO.getLoginUser());
         return leaveApplyDTO;
     }
 

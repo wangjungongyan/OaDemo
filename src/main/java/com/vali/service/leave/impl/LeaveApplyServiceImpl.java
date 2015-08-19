@@ -5,12 +5,15 @@ import com.vali.dao.leave.LeaveApplyDao;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditDTO;
+import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.enums.leave.LeaveTypeEnum;
+import com.vali.enums.user.RoleEnum;
 import com.vali.po.leave.LeaveApplyPO;
 import com.vali.po.leave.LeaveApplyQueryPO;
 import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
+import com.vali.service.user.remote.EmployeeService;
 import lombok.Setter;
 import net.sf.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
@@ -36,6 +39,10 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
     @Resource(name = "leaveAuditService")
     private LeaveAuditService leaveAuditService;
 
+    @Setter
+    @Resource(name = "employeeService")
+    private EmployeeService employeeService;
+
     private BeanCopier DTO2ENTITY4LeaveApply = BeanCopier.create(LeaveApplyDTO.class, LeaveApplyPO.class, false);
 
     private BeanCopier PAGECopier = BeanCopier.create(PageModel.class, PageModel.class, false);
@@ -53,8 +60,9 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
     }
 
     @Override
-    public boolean updateApplyDetail(LeaveApplyDTO applyDetail) {
-        return false;
+    public boolean updateApplyStatus(int applyId, int auditStatus) {
+        int updated = leaveApplyDao.updateApplyStatus(applyId, auditStatus);
+        return (updated >= 1);
     }
 
     @Override public List<LeaveApplyDTO> getApplyRecords(Integer applicantID, Integer leaveType, Date applyTime_begin,
@@ -86,7 +94,7 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
                 dto.setStatusName(auditStatus.getAuditStatusName());
             }
 
-            LeaveAuditDTO auditDTO = leaveAuditService.getAuidtChain(po.getId());
+            LeaveAuditDTO auditDTO = leaveAuditService.getAuditChain(po.getId());
             dto.setAudit(auditDTO);
 
             dtos.add(dto);
@@ -150,13 +158,50 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(dto.getLeaveType());
         dto.setLeaveName(leaveTypeEnum.getName());
 
-        AuditStatusEnum auditStatusEnum =AuditStatusEnum.getAuditStatus(dto.getStatus());
+        AuditStatusEnum auditStatusEnum = AuditStatusEnum.getAuditStatus(dto.getStatus());
         dto.setStatusName(auditStatusEnum.getAuditStatusName());
 
-        LeaveAuditDTO auditDTO = leaveAuditService.getAuidtChain(po.getId());
+        LeaveAuditDTO auditDTO = leaveAuditService.getAuditChain(po.getId());
         dto.setAudit(auditDTO);
 
+        EmployeeDTO applicant = employeeService.loadEmployee(dto.getApplicantID());
+        dto.setApplicant(applicant);
+
         return dto;
+    }
+
+    @Override public PageModel getApplysByRoleAndAuditId(int auditId, AuditStatusEnum auditStatus,
+                                                         AuditStatusEnum applyStatus, int pageNo,
+                                                         int pageSize) {
+        RoleEnum role = RoleEnum.MANAGE;
+        if (employeeService.isHr(auditId)) {
+            role = RoleEnum.HR;
+        }
+
+        PageModel pageModel = leaveApplyDao.pageAuditsByRoleAndAuditId(auditId, role.getType(),
+                                                                       auditStatus.getAuditStatus(),
+                                                                       applyStatus.getAuditStatus(), pageNo, pageSize);
+
+        PageModel result = new PageModel();
+        PAGECopier.copy(pageModel, result, null);
+
+        List<LeaveApplyPO> pos = (List<LeaveApplyPO>) pageModel.getRecords();
+
+        if (pos == null || pos.size() == 0) {
+            return result;
+        }
+
+        List<LeaveApplyDTO> dtos = new ArrayList<LeaveApplyDTO>(pos.size());
+
+        for (LeaveApplyPO po : pos) {
+            LeaveApplyDTO dto = new LeaveApplyDTO();
+            ENTITY2DTO4LeaveApply.copy(po, dto, null);
+            dtos.add(dto);
+        }
+
+        result.setRecords(dtos);
+
+        return pageModel;
     }
 
 }

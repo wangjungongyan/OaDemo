@@ -21,53 +21,69 @@
 
 
     <select id="getAuidtByApplyId" resultMap="LeaveAuditResult">
-		SELECT
-		ID,
-		ApplyId,
-		ManagerId,
-		ManagerAuditStatus,
-		ManagerAuditTime,
-		ManagerAuditSuggest,
-		HrId,
-		HrAuditStatus,
-		HrAuditTime,
-		HrAuditSuggest,
-		AddTime,
-		UpdateTime
-		FROM
-		LL_LeaveAudit
-		where ApplyId = #applyId#
-	</select>
+        SELECT
+        ID,
+        ApplyId,
+        ManagerId,
+        ManagerAuditStatus,
+        ManagerAuditTime,
+        ManagerAuditSuggest,
+        HrId,
+        HrAuditStatus,
+        HrAuditTime,
+        HrAuditSuggest,
+        AddTime,
+        UpdateTime
+        FROM
+        LL_LeaveAudit
+        where ApplyId = #applyId#
+    </select>
 
     <insert id="saveAudit">
         insert into LL_LeaveAudit(
         ApplyId,
-		ManagerId,
-		ManagerAuditStatus,
-		ManagerAuditTime,
-		ManagerAuditSuggest,
-		HrId,
-		HrAuditStatus,
-		HrAuditTime,
-		HrAuditSuggest,
-		AddTime,
-		UpdateTime)values(
-		#po.applyId#,
-		#po.managerId#,
-		#po.managerAuditStatus#,
-		#po.managerAuditTime#,
-		#po.managerAuditSuggest#,
-		#po.hrId#,
-		#po.hrAuditStatus#,
-		#po.hrAuditTime#,
-		#po.hrAuditSuggest#,
-		NOW(),
-		NOW())
+        ManagerId,
+        ManagerAuditStatus,
+        ManagerAuditTime,
+        ManagerAuditSuggest,
+        HrId,
+        HrAuditStatus,
+        HrAuditTime,
+        HrAuditSuggest,
+        AddTime,
+        UpdateTime)values(
+        #po.applyId#,
+        #po.managerId#,
+        #po.managerAuditStatus#,
+        #po.managerAuditTime#,
+        #po.managerAuditSuggest#,
+        #po.hrId#,
+        #po.hrAuditStatus#,
+        #po.hrAuditTime#,
+        #po.hrAuditSuggest#,
+        NOW(),
+        NOW())
         <selectKey resultClass="java.lang.Integer" keyProperty="id">
             SELECT @@IDENTITY AS ff
         </selectKey>
     </insert>
 
+    <update id="updateStatusAndSuggest4Manager">
+        update LL_LeaveAudit
+        set ManagerAuditStatus = #auditStatus#,
+        ManagerAuditSuggest = #managerAuditSuggest#,
+        ManagerAuditTime = NOW(),
+        UpdateTime = NOW()
+        where ApplyId = #applyId#
+    </update>
 
+    <update id="updateStatusAndSuggest4Hr">
+        update LL_LeaveAudit
+        set HrAuditStatus = #auditStatus#,
+        HrAuditSuggest = #hrAuditSuggest#,
+        HrAuditTime = NOW(),
+        UpdateTime = NOW()
+        where ApplyId = #applyId#
+    </update>
 
 </sqlMap>

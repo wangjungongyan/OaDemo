@@ -89,7 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeePO po = employeeDao.getEmployeeByID(userDTO.getId());
         BeanUtilsA.copyPropertiesWithSourcePropertiesNullNotCopy(userDTO, po);
         po.setMangerId(userDTO.getManager().getId());
-        if(StringUtils.isNotBlank(password)){
+        if (StringUtils.isNotBlank(password)) {
             po.setPassword(LoginBO.encryptPassword(password));
         }
         return employeeDao.updateEmployee(po);
@@ -98,14 +98,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO loadEmployee(int userId) {
         EmployeePO po = employeeDao.getEmployeeByID(userId);
-        if(po==null){
+        if (po == null) {
             return null;
         }
         EmployeeDTO dto = new EmployeeDTO();
-        BeanUtils.copyProperties(po,dto);
+        BeanUtils.copyProperties(po, dto);
         //setManager
         EmployeePO managerPo = employeeDao.getEmployeeByID(po.getMangerId());
-        if(managerPo!=null) {
+        if (managerPo != null) {
             EmployeeDTO managerDto = new EmployeeDTO();
             BeanUtils.copyProperties(managerPo, managerDto);
             dto.setManager(managerDto);
@@ -117,24 +117,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO loadEmployee(String email) {
 
         EmployeePO po = employeeDao.getEmployeeByEmail(email);
-        if(po==null){
+        if (po == null) {
             return null;
         }
         EmployeeDTO dto = new EmployeeDTO();
         BeanUtils.copyProperties(po, dto);
         //setManager
         EmployeePO managerPo = employeeDao.getEmployeeByID(po.getMangerId());
-        if(managerPo!=null){
+        if (managerPo != null) {
             EmployeeDTO managerDto = new EmployeeDTO();
-            BeanUtils.copyProperties(managerPo,managerDto);
+            BeanUtils.copyProperties(managerPo, managerDto);
             dto.setManager(managerDto);
         }
         return dto;
     }
 
-    private EmployeeDTO getManger(int mangerId){
+    private EmployeeDTO getManger(int mangerId) {
 
-        EmployeePO mangerPO =employeeDao.getEmployeeByID(mangerId);
+        EmployeePO mangerPO = employeeDao.getEmployeeByID(mangerId);
 
         EmployeeDTO mangerDTO = new EmployeeDTO();
         ENTITY_2_DTO.copy(mangerPO, mangerDTO, null);
@@ -142,14 +142,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         return mangerDTO;
     }
 
-    public EmployeeDTO getHr(){
+    public EmployeeDTO getHr() {
 
-        List<EmployeePO> hrs =employeeDao.getEmployeeByRole(RoleEnum.HR.getType());
+        List<EmployeePO> hrs = employeeDao.getEmployeeByRole(RoleEnum.HR.getType());
 
         EmployeeDTO hrrDTO = new EmployeeDTO();
         ENTITY_2_DTO.copy(hrs.get(0), hrrDTO, null);
 
         return hrrDTO;
+    }
+
+    @Override public boolean isHr(int id) {
+        return getHr().getId() == id;
     }
 
     @Override
@@ -161,29 +165,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public PageModel queryEmployee(EmployeeDTO userDto,Date startDate,Date endDate,int pageNum,int pageSize) {
-       return employeeDao.pageQueryEmployee(userDto,startDate,endDate,pageNum,pageSize);
+    public PageModel queryEmployee(EmployeeDTO userDto, Date startDate, Date endDate, int pageNum, int pageSize) {
+        return employeeDao.pageQueryEmployee(userDto, startDate, endDate, pageNum, pageSize);
     }
 
     @Override
     public List<EmployeeDTO> queryAllManager() {
         RoleEnum[] roleEnums = RoleEnum.values();
         List<Integer> managerRoleList = new ArrayList<Integer>();
-        for (RoleEnum roleEnum:roleEnums){
-            if(roleEnum.getType()==RoleEnum.NOMALR.getType() || roleEnum.getType() == RoleEnum.HR.getType()){
+        for (RoleEnum roleEnum : roleEnums) {
+            if (roleEnum.getType() == RoleEnum.NOMALR.getType() || roleEnum.getType() == RoleEnum.HR.getType()) {
 
-            }else {
+            } else {
                 managerRoleList.add(roleEnum.getType());
             }
         }
         List<EmployeePO> managerList = employeeDao.queryAllManager(managerRoleList);
-        if(CollectionUtils.isEmpty(managerList)){
+        if (CollectionUtils.isEmpty(managerList)) {
             return null;
         }
         List<EmployeeDTO> managerDtoList = new ArrayList<EmployeeDTO>(managerList.size());
-        for(EmployeePO po : managerList){
+        for (EmployeePO po : managerList) {
             EmployeeDTO dto = new EmployeeDTO();
-            BeanUtils.copyProperties(po,dto);
+            BeanUtils.copyProperties(po, dto);
             managerDtoList.add(dto);
         }
         return managerDtoList;

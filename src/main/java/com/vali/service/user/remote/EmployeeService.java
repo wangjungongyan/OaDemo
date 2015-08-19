@@ -33,6 +33,8 @@ public interface EmployeeService {
 
     public EmployeeDTO getHr();
 
+    public boolean isHr(int id);
+
     /**
      * 判断是否已经存在相同用户，根据邮箱判断
      *
