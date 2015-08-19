@@ -2,6 +2,7 @@ package com.vali.dto.leave;
 
 import com.vali.dto.common.QueryBaseDTO;
 import lombok.Data;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -31,11 +32,11 @@ public class LeaveApplyQueryDTO extends QueryBaseDTO {
         StringBuffer query = new StringBuffer("&");
 
         if (startTime != null) {
-            query.append("startTime=" + startTime + "&");
+            query.append("startTime=" + DateFormatUtils.format(startTime, "yyyy-MM-dd HH:mm:ss") + "&");
         }
 
         if (endTime != null) {
-            query.append("endTime=" + endTime + "&");
+            query.append("endTime=" + DateFormatUtils.format(endTime, "yyyy-MM-dd HH:mm:ss") + "&");
         }
 
         query.append("leaveType=" + leaveType);
