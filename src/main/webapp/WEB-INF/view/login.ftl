@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <script>
+        if (self.frameElement && self.frameElement.tagName == "IFRAME") {
+            window.parent.document.location.href="/login";
+        }
+    </script>
 </head>
 <body style="margin: 0px">
 <div style="background-color:mintcream;height: 90px;border-bottom: 1px solid #ccc">
