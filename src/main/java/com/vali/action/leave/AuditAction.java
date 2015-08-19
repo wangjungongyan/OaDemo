@@ -6,14 +6,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AuditAction {
 
-    @RequestMapping(value = "/leave/audit")
-    public String approval(){
-        return "leave/approval";
+    @RequestMapping(value = "/leave/auditIndex")
+    public String auditIndex() {
+        return "leave/audit";
     }
 
-    @RequestMapping(value = "/leave/myAudit")
-    public String myApproval(){
-        return "leave/myApproval";
+    @RequestMapping(value = "/leave/ajaxAudit")
+    public boolean ajaxAudit() {
+        return true;
+    }
+
+    @RequestMapping(value = "/leave/myAudits")
+    public String getMyAudit() {
+        return "leave/getMyAudit";
     }
 
 }

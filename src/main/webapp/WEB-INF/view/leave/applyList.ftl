@@ -47,14 +47,14 @@
 
     </#if>
 
-    <#if (curPage-2 >0)>
-        <#assign headPage = (curPage-2) >
+    <#if (curPage-4 >0)>
+        <#assign headPage = (curPage-4) >
     <#else>
         <#assign headPage = 1 >
     </#if>
 
-    <#if (curPage+2 <=endPage)>
-        <#assign tailPage = (curPage+2) >
+    <#if (curPage+4 <=endPage)>
+        <#assign tailPage = (curPage+4) >
     <#else>
         <#assign tailPage = endPage >
     </#if>
