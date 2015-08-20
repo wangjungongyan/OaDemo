@@ -2,6 +2,7 @@ package com.vali.action.leave;
 
 import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
+import com.vali.bo.PageBO;
 import com.vali.dto.leave.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
@@ -76,7 +77,8 @@ public class ApplyAction {
         int applicantID = LoginBO.getLoginUser().getId();
         dto.setApplicantID(applicantID);
 
-        PageModel pageModel = leaveApplyService.getApplyRecords(dto, initPageNo(pageNo), initPageSize(pageSize));
+        PageModel pageModel = leaveApplyService.getApplyRecords(dto, PageBO.getPageNo(pageNo), PageBO.getPageSize(
+                pageSize));
         List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
 
         Map model = new HashMap();
@@ -90,17 +92,8 @@ public class ApplyAction {
     @RequestMapping(value = "/leave/ajaxGetApplyDetail")
     @ResponseBody
     public LeaveApplyDTO ajaxGetApplyDetail(Integer applyId) {
-        LeaveApplyDTO leaveApplyDTO =leaveApplyService.getApplyDetailByApplyId(applyId);
-        //leaveApplyDTO.setApplicant(LoginBO.getLoginUser());
+        LeaveApplyDTO leaveApplyDTO = leaveApplyService.getApplyDetailByApplyId(applyId);
         return leaveApplyDTO;
-    }
-
-    private int initPageNo(Integer pageNo) {
-        return (pageNo == null) ? 1 : pageNo;
-    }
-
-    private int initPageSize(Integer pageSize) {
-        return (pageSize == null) ? 10 : pageSize;
     }
 
     @RequestMapping(value = "/leaveApplyDetail")

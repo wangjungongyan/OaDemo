@@ -83,19 +83,19 @@
         UpdateTime
         from LL_LeaveApply
         where ApplicantID = #po.applicantID#
-         <isNotEmpty property="po.startTime" prepend="and">
-             <![CDATA[
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
              ApplyTime >=#po.startTime#
              ]]>
-         </isNotEmpty>
-         <isNotEmpty property="po.endTime" prepend="and">
-             <![CDATA[
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
                  ApplyTime <=#po.endTime#
              ]]>
-         </isNotEmpty>
-         <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
-             LeaveType =#po.leaveType#
-         </isGreaterThan>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
+            LeaveType =#po.leaveType#
+        </isGreaterThan>
         order by ApplyTime desc
     </select>
 
@@ -118,7 +118,7 @@
         </isGreaterThan>
     </select>
 
-    <select id="pageAuditsByRoleAndAuditId" resultMap="LeaveApplyResult">
+    <select id="pageWait4AduitApplys" resultMap="LeaveApplyResult">
         select ID,
         ApplicantID,
         LeaveType,
@@ -137,21 +137,36 @@
         FROM
         LL_LeaveAudit
         <dynamic prepend="WHERE">
-            <isEqual property="role" compareValue="1">
-                HrId = #auditId#
-                and HrAuditStatus = #auditStatus#
+            <isEqual property="po.role" compareValue="1">
+                HrId = #po.auditUserId#
+                and HrAuditTime is null
+                and HrAuditStatus = 0
             </isEqual>
-            <isEqual property="role" compareValue="2">
-                ManagerId = #auditId#
-                and ManagerAuditStatus = #auditStatus#
+            <isEqual property="po.role" compareValue="2">
+                ManagerId = #po.auditUserId#
+                and ManagerAuditTime is null
+                and ManagerAuditStatus = 0
             </isEqual>
         </dynamic>
         )
-        and status = #applyStatus#
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >= #po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <= #po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
+            LeaveType = #po.leaveType#
+        </isGreaterThan>
+        and Status = 0
         order by AddTime desc
     </select>
 
-    <select id="pageAuditsByRoleAndAuditId_count" resultClass="int">
+    <select id="pageWait4AduitApplys_count" resultClass="int">
         select count(1)
         from LL_LeaveApply
         where ID in(
@@ -160,17 +175,32 @@
         FROM
         LL_LeaveAudit
         <dynamic prepend="WHERE">
-            <isEqual property="role" compareValue="1">
-                HrId = #auditId#
-                and HrAuditStatus = #auditStatus#
+            <isEqual property="po.role" compareValue="1">
+                HrId = #po.auditUserId#
+                and HrAuditTime is null
+                and HrAuditStatus = 0
             </isEqual>
-            <isEqual property="role" compareValue="2">
-                ManagerId = #auditId#
-                and ManagerAuditStatus = #auditStatus#
+            <isEqual property="po.role" compareValue="2">
+                ManagerId = #po.auditUserId#
+                and ManagerAuditTime is null
+                and ManagerAuditStatus = 0
             </isEqual>
         </dynamic>
         )
-        and status = #applyStatus#
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >= #po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <= #po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
+            LeaveType = #po.leaveType#
+        </isGreaterThan>
+        and Status = 0
     </select>
 
     <update id="updateApplyStatus">

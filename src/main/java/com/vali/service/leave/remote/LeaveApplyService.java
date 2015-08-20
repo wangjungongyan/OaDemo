@@ -3,7 +3,7 @@ package com.vali.service.leave.remote;
 import com.leya.idal.model.PageModel;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
-import com.vali.enums.leave.AuditStatusEnum;
+import com.vali.dto.leave.LeaveAuditQueryDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -45,8 +45,28 @@ public interface LeaveApplyService {
      */
     LeaveApplyDTO getApplyDetailByApplyId(Integer applyId);
 
-    PageModel getApplysByRoleAndAuditId(int auditId, AuditStatusEnum auditStatus, AuditStatusEnum applyStatus,
-                                        int pageNo,
-                                        int pageSize);
+    /**
+     * 分页获取待审核的请假申请
+     *
+     * @param leaveAuditQueryDTO
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageModel pageWait4AduitApplys(LeaveAuditQueryDTO leaveAuditQueryDTO,
+                                   int pageNo,
+                                   int pageSize);
+
+    /**
+     * 分页获取已审核的请假申请
+     *
+     * @param leaveAuditQueryDTO
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageModel pageAduitedApplys(LeaveAuditQueryDTO leaveAuditQueryDTO,
+                                int pageNo,
+                                int pageSize);
 
 }

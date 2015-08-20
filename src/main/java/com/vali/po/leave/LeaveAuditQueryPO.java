@@ -9,9 +9,9 @@ import java.util.Date;
  */
 
 @Data
-public class LeaveApplyQueryPO {
+public class LeaveAuditQueryPO {
 
-    private int applicantID;
+    private int auditUserId;
 
     private Date startTime;
 
@@ -19,4 +19,5 @@ public class LeaveApplyQueryPO {
 
     private int leaveType;
 
+    private int role;
 }

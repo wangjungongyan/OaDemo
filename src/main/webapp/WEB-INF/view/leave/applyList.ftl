@@ -101,11 +101,11 @@
                     &nbsp;&nbsp;&nbsp;
                     <label>申请时间从</label>
                     <input name="startTime" type="text" class="form_datetime" style="width: 150px;"
-                           value="<#if queryDTO??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+                           value="<#if (queryDTO??) && queryDTO.startTime ??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 
                     <label>到</label>
                     <input name="endTime" type="text" class="form_datetime" style="width: 150px;"
-                           value="<#if queryDTO??>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+                           value="<#if (queryDTO??) && queryDTO.endTime>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 
                     &nbsp;&nbsp;&nbsp;
                     <button name="queryButton" type="submit" class="btn btn-default">查询</button>

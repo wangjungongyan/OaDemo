@@ -55,7 +55,7 @@ public class MenuBO {
 
         SecondMenuDTO secondMenuDTO3 = new SecondMenuDTO();
         secondMenuDTO3.setName("我要审核");
-        secondMenuDTO3.setHref("/leave/auditIndex");
+        secondMenuDTO3.setHref("/leave/wait2Audit");
         secondMenuDTO3.setIndex(1007);
 
         SecondMenuDTO secondMenuDTO4 = new SecondMenuDTO();
