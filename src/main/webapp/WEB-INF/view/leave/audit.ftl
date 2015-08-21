@@ -171,16 +171,18 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align:center">
-                                <button type="button" id="passButton" class="btn btn-info" value="1">审批通过</button>
+                                <button type="button" name="auditButton" class="btn btn-info" value="1">审批通过</button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="button" id="notPassButton" class="btn btn-danger" value="2">审批不通过</button>
+                                <button type="button" name="auditButton" class="btn btn-danger" value="2">审批不通过</button>
                             </td>
                         </tr>
                     </table>
                 </form>
             </div>
 
-            <div class="modal-footer"></div>
+            <div class="modal-footer">
+                <div id="alertSucess" class='alert alert-sucess' role='alert' style='text-align: center;'></div>
+            </div>
 
         </div>
     </div>
@@ -223,12 +225,29 @@
         selectedApplyId = id;
     }
 
+    //TODO 返回false，显示？
+    function getNotice(auditStatus, processFlag) {
+
+        var notice = "";
+
+        if (auditStatus == 1) {
+            notice = "操作成功【审批通过】";
+        } else {
+            notice = "操作成功【审批不通过】";
+        }
+
+        return notice;
+    }
+
     $(document).ready(function () {
 
-        $("#passButton").click(function () {
-            var auditStatus = $("#passButton").val();
+        $("#alertSucess").hide();
+
+        $("button[name='auditButton']").click(function () {
+            var auditStatus = $(this).val();
             var suggest = $("#suggest").val();
             var url = "/leave/ajaxAudit";
+            var alertSucess = $("#alertSucess");
 
             $.ajax(url, {
                 dataType: "text",
@@ -240,14 +259,10 @@
                     "auditSuggest": suggest
                 },
                 success: function (result) {
-                    if ("true" == result) {
-                        $(".modal-footer").append("<div class='alert alert-sucess' role='alert' style='text-align: center;'>处理成功，已审核通过</div>");
-                    } else {
-                        $(".modal-footer").append("<div class='alert alert-danger' role='alert' style='text-align: center;'>处理失败，稍后再试.</div>");
-                    }
+                    alertSucess.text(getNotice(auditStatus, result)).show().delay(2000).hide(0);
                 },
                 error: function () {
-                    $(".modal-footer").append("<div class='alert alert-danger' role='alert' style='text-align: center;'>处理失败，稍后再试吧.</div>");
+                    alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
                 }
             });
 

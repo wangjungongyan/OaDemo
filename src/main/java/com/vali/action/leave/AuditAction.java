@@ -48,6 +48,9 @@ public class AuditAction {
     @RequestMapping(value = "/leave/ajaxAudit")
     @ResponseBody
     public boolean ajaxAudit(Integer applyId, Integer auditStatus, String auditSuggest) {
+        //修改LL_LeaveAudit表状态和时间
+        //修改LL_LeaveApply表状态，如果是经理审批并且审核不通过，直接修改状态为2，如果是HR审批，则根据审核通过、不通过，修改状态
+        //扣除假期
         return true;
     }
 
