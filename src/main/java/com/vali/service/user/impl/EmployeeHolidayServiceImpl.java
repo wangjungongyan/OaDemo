@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,5 +48,18 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
         }
 
         return dtos;
+    }
+
+    //TODO
+    @Override public BigDecimal caculateLevaeDays(Date beginTime, Date endTime) {
+        return new BigDecimal(1.5);
+    }
+
+    @Override public boolean decreaseHolidayDay(EmployeeHolidayDTO dto) {
+        return true;
+    }
+
+    @Override public boolean increaseHolidayDay(EmployeeHolidayDTO dto) {
+        return true;
     }
 }

@@ -225,20 +225,6 @@
         selectedApplyId = id;
     }
 
-    //TODO 返回false，显示？
-    function getNotice(auditStatus, processFlag) {
-
-        var notice = "";
-
-        if (auditStatus == 1) {
-            notice = "操作成功【审批通过】";
-        } else {
-            notice = "操作成功【审批不通过】";
-        }
-
-        return notice;
-    }
-
     $(document).ready(function () {
 
         $("#alertSucess").hide();
@@ -250,7 +236,7 @@
             var alertSucess = $("#alertSucess");
 
             $.ajax(url, {
-                dataType: "text",
+                dataType: "json",
                 contentType: "application/x-www-form-urlencoded;charset=utf-8",
                 type: "post",
                 data: {
@@ -259,7 +245,7 @@
                     "auditSuggest": suggest
                 },
                 success: function (result) {
-                    alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
+                    alertSucess.text(result.msg).show().delay(2000).hide(0);
                     var selelctedTr = "#apply" + selectedApplyId;
                     $(selelctedTr).remove();
                 },
@@ -270,9 +256,6 @@
 
         });
 
-        $("button[name='closeButton']").click(function () {
-            $(".modal-footer").children().remove();
-        });
     });
 
 </script>
