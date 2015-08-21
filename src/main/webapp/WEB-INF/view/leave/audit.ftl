@@ -127,7 +127,7 @@
         <tbody>
         <#if pageModel?? && pageModel.records?? && (pageModel.records?size>0)>
             <#list pageModel.records as apply>
-            <tr class="info">
+            <tr class="info" id="apply${apply.id}">
                 <td>${apply.applicant.chineseName}</td>
                 <td>${apply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
                 <td>${apply.leaveName}</td>
@@ -259,7 +259,9 @@
                     "auditSuggest": suggest
                 },
                 success: function (result) {
-                    alertSucess.text(getNotice(auditStatus, result)).show().delay(2000).hide(0);
+                    alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
+                    var selelctedTr = "#apply" + selectedApplyId;
+                    $(selelctedTr).remove();
                 },
                 error: function () {
                     alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
