@@ -5,12 +5,14 @@ import com.vali.dao.leave.LeaveApplyDao;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditDTO;
+import com.vali.dto.leave.LeaveAuditQueryDTO;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.enums.leave.LeaveTypeEnum;
 import com.vali.enums.user.RoleEnum;
 import com.vali.po.leave.LeaveApplyPO;
 import com.vali.po.leave.LeaveApplyQueryPO;
+import com.vali.po.leave.LeaveAuditQueryPO;
 import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
 import com.vali.service.user.remote.EmployeeService;
@@ -50,6 +52,9 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
     private BeanCopier DTO2ENTITY4LeaveApplyQuery = BeanCopier.create(LeaveApplyQueryDTO.class, LeaveApplyQueryPO.class,
                                                                       false);
 
+    private BeanCopier DTO2ENTITY4LeaveAuditQuery = BeanCopier.create(LeaveAuditQueryDTO.class, LeaveAuditQueryPO.class,
+                                                                      false);
+
     private BeanCopier ENTITY2DTO4LeaveApply = BeanCopier.create(LeaveApplyPO.class, LeaveApplyDTO.class, false);
 
     @Override
@@ -83,20 +88,9 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         for (LeaveApplyPO po : pos) {
             LeaveApplyDTO dto = new LeaveApplyDTO();
             ENTITY2DTO4LeaveApply.copy(po, dto, null);
-
-            LeaveTypeEnum typeEnum = LeaveTypeEnum.getLeaveType(po.getLeaveType());
-            if (typeEnum != null) {
-                dto.setLeaveName(typeEnum.getName());
-            }
-
-            AuditStatusEnum auditStatus = AuditStatusEnum.getAuditStatus(po.getStatus());
-            if (auditStatus != null) {
-                dto.setStatusName(auditStatus.getAuditStatusName());
-            }
-
-            LeaveAuditDTO auditDTO = leaveAuditService.getAuditChain(po.getId());
-            dto.setAudit(auditDTO);
-
+            fillLeaveName(dto);
+            fillAuditStatusName(dto);
+            fillAuditChain(dto);
             dtos.add(dto);
         }
 
@@ -121,15 +115,8 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         for (LeaveApplyPO record : (List<LeaveApplyPO>) queryModel.getRecords()) {
             LeaveApplyDTO dto = new LeaveApplyDTO();
             ENTITY2DTO4LeaveApply.copy(record, dto, null);
-
-            int leaveType = record.getLeaveType();
-            LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(leaveType);
-            dto.setLeaveName(leaveTypeEnum.getName());
-
-            int status = record.getStatus();
-            AuditStatusEnum auditStatusEnum = AuditStatusEnum.getAuditStatus(status);
-            dto.setStatusName(auditStatusEnum.getAuditStatusName());
-
+            this.fillLeaveName(dto);
+            this.fillAuditStatusName(dto);
             resultDTOS.add(dto);
         }
 
@@ -154,33 +141,23 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
 
         LeaveApplyDTO dto = new LeaveApplyDTO();
         ENTITY2DTO4LeaveApply.copy(po, dto, null);
-
-        LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(dto.getLeaveType());
-        dto.setLeaveName(leaveTypeEnum.getName());
-
-        AuditStatusEnum auditStatusEnum = AuditStatusEnum.getAuditStatus(dto.getStatus());
-        dto.setStatusName(auditStatusEnum.getAuditStatusName());
-
-        LeaveAuditDTO auditDTO = leaveAuditService.getAuditChain(po.getId());
-        dto.setAudit(auditDTO);
-
-        EmployeeDTO applicant = employeeService.loadEmployee(dto.getApplicantID());
-        dto.setApplicant(applicant);
+        this.fillLeaveName(dto);
+        this.fillAuditStatusName(dto);
+        this.fillAuditChain(dto);
+        this.fillApplyUser(dto);
 
         return dto;
     }
 
-    @Override public PageModel getApplysByRoleAndAuditId(int auditId, AuditStatusEnum auditStatus,
-                                                         AuditStatusEnum applyStatus, int pageNo,
-                                                         int pageSize) {
-        RoleEnum role = RoleEnum.MANAGE;
-        if (employeeService.isHr(auditId)) {
-            role = RoleEnum.HR;
-        }
+    @Override public PageModel pageWait4AduitApplys(LeaveAuditQueryDTO leaveAuditQueryDTO, int pageNo,
+                                                    int pageSize) {
 
-        PageModel pageModel = leaveApplyDao.pageAuditsByRoleAndAuditId(auditId, role.getType(),
-                                                                       auditStatus.getAuditStatus(),
-                                                                       applyStatus.getAuditStatus(), pageNo, pageSize);
+        LeaveAuditQueryPO queryPO = new LeaveAuditQueryPO();
+        DTO2ENTITY4LeaveAuditQuery.copy(leaveAuditQueryDTO,queryPO,null);
+        queryPO.setRole(getRoleByApplicantID(leaveAuditQueryDTO.getAuditUserId()).getType());
+
+        PageModel pageModel = leaveApplyDao.pageWait4AduitApplys(queryPO,
+                                                                 pageNo, pageSize);
 
         PageModel result = new PageModel();
         PAGECopier.copy(pageModel, result, null);
@@ -196,12 +173,53 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         for (LeaveApplyPO po : pos) {
             LeaveApplyDTO dto = new LeaveApplyDTO();
             ENTITY2DTO4LeaveApply.copy(po, dto, null);
+            this.fillLeaveName(dto);
+            this.fillApplyUser(dto);
             dtos.add(dto);
         }
 
         result.setRecords(dtos);
 
-        return pageModel;
+        return result;
+    }
+
+    private RoleEnum getRoleByApplicantID(int applicantID) {
+
+        RoleEnum role = RoleEnum.MANAGE;
+
+        if (employeeService.isHr(applicantID)) {
+            role = RoleEnum.HR;
+        }
+
+        return role;
+    }
+
+    @Override public PageModel pageAduitedApplys(LeaveAuditQueryDTO leaveAuditQueryDTO, int pageNo, int pageSize) {
+        return null;
+    }
+
+    private void fillLeaveName(LeaveApplyDTO dto) {
+        int leaveType = dto.getLeaveType();
+        LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(leaveType);
+        dto.setLeaveName(leaveTypeEnum.getName());
+    }
+
+    private void fillAuditStatusName(LeaveApplyDTO dto) {
+
+        AuditStatusEnum auditStatus = AuditStatusEnum.getAuditStatus(dto.getStatus());
+        if (auditStatus != null) {
+            dto.setStatusName(auditStatus.getAuditStatusName());
+        }
+    }
+
+    private void fillApplyUser(LeaveApplyDTO dto) {
+        EmployeeDTO applicant = employeeService.loadEmployee(dto.getApplicantID());
+        dto.setApplicant(applicant);
+    }
+
+    private void fillAuditChain(LeaveApplyDTO dto) {
+        LeaveAuditDTO auditDTO = leaveAuditService.getAuditChain(dto.getId());
+        dto.setAudit(auditDTO);
     }
 
 }
