@@ -193,4 +193,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         return managerDtoList;
     }
 
+    @Override public RoleEnum getRoleByApplicantID(int applicantID) {
+        RoleEnum role = RoleEnum.MANAGE;
+
+        if (isHr(applicantID)) {
+            role = RoleEnum.HR;
+        }
+
+        return role;
+    }
+
 }

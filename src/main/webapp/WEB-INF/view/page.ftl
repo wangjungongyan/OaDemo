@@ -43,7 +43,7 @@
         </#if>
     </#list>
 
-    <#if (curPage < endPage)>
+    <#if (curPage lt endPage)>
     <li><a href="?pageNo=${curPage + 1}${args!}" class="page-next" title="下一页">下一页<i class="p-next"></a></li>
     </#if>
 </#macro>

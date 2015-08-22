@@ -1,9 +1,16 @@
 package com.vali.service.leave.impl;
 
+import com.leya.idal.model.PageModel;
 import com.vali.dao.leave.LeaveAuditDao;
+import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveAuditDTO;
+import com.vali.dto.leave.LeaveAuditQueryDTO;
 import com.vali.dto.user.EmployeeDTO;
+import com.vali.enums.leave.AuditStatusEnum;
+import com.vali.enums.leave.LeaveTypeEnum;
+import com.vali.po.leave.LeaveApplyPO;
 import com.vali.po.leave.LeaveAuditPO;
+import com.vali.po.leave.LeaveAuditQueryPO;
 import com.vali.service.leave.remote.LeaveAuditService;
 import com.vali.service.user.remote.EmployeeService;
 import lombok.Setter;
@@ -11,6 +18,8 @@ import net.sf.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vali on 15-8-16.
@@ -29,6 +38,13 @@ public class LeaveAuditServiceImpl implements LeaveAuditService {
     private BeanCopier ENTITY2DTO4LeaveAudit = BeanCopier.create(LeaveAuditPO.class, LeaveAuditDTO.class, false);
 
     private BeanCopier DTO2ENTITY4LeaveAudit = BeanCopier.create(LeaveAuditDTO.class, LeaveAuditPO.class, false);
+
+    private BeanCopier DTO2ENTITY4LeaveAuditQuery = BeanCopier.create(LeaveAuditQueryDTO.class, LeaveAuditQueryPO.class,
+                                                                      false);
+
+    private BeanCopier PAGECopier = BeanCopier.create(PageModel.class, PageModel.class, false);
+
+    private BeanCopier ENTITY2DTO4LeaveApply = BeanCopier.create(LeaveApplyPO.class, LeaveApplyDTO.class, false);
 
     @Override public boolean manageAudit(int applyId, String managerAuditSuggest, int auditStatus) {
         int updated = leaveAuditDao.updateStatusAndSuggest4Manager(applyId, managerAuditSuggest, auditStatus);
@@ -77,5 +93,40 @@ public class LeaveAuditServiceImpl implements LeaveAuditService {
 
     @Override public boolean revoke(int hrId, int applyId) {
         return false;
+    }
+
+    @Override public PageModel pageAduitedApplys(LeaveAuditQueryDTO leaveAuditQueryDTO, int pageNo, int pageSize) {
+
+        LeaveAuditQueryPO queryPO = new LeaveAuditQueryPO();
+        DTO2ENTITY4LeaveAuditQuery.copy(leaveAuditQueryDTO, queryPO, null);
+
+        queryPO.setRole(employeeService.getRoleByApplicantID(leaveAuditQueryDTO.getAuditUserId()).getType());
+
+        PageModel pageModel = leaveAuditDao.pageAduitedApplys(queryPO, pageNo, pageSize);
+
+        PageModel result = new PageModel();
+        PAGECopier.copy(pageModel, result, null);
+
+        List<LeaveApplyPO> pos = (List<LeaveApplyPO>) pageModel.getRecords();
+
+        if (pos == null || pos.size() == 0) {
+            return result;
+        }
+
+        List<LeaveApplyDTO> dtos = new ArrayList<LeaveApplyDTO>(pos.size());
+
+        for (LeaveApplyPO po : pos) {
+            LeaveApplyDTO dto = new LeaveApplyDTO();
+            ENTITY2DTO4LeaveApply.copy(po, dto, null);
+            dto.setLeaveName(LeaveTypeEnum.getLeaveType(dto.getLeaveType()).getName());
+            dto.setApplicant(employeeService.loadEmployee(dto.getApplicantID()));
+            dto.setStatusName(AuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
+            dtos.add(dto);
+        }
+
+        result.setRecords(dtos);
+
+        return result;
+
     }
 }

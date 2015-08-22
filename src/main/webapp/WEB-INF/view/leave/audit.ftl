@@ -74,7 +74,7 @@
         </#list>
     </#if>
 
-    <#if (curPage < endPage)>
+    <#if (curPage lt endPage)>
     <li><a href="?pageNo=${curPage + 1}${args!}" class="page-next" title="下一页">下一页<i class="p-next"></a></li>
     </#if>
 </#macro>
@@ -171,7 +171,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align:center">
-                                <button type="button" name="auditButton" class="btn btn-info" value="1">审批通过</button>
+                                <button type="button" name="auditButton" class="btn btn-success" value="1">审批通过</button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button type="button" name="auditButton" class="btn btn-danger" value="2">审批不通过</button>
                             </td>
@@ -225,6 +225,10 @@
         selectedApplyId = id;
     }
 
+    function hideModal() {
+        $('#editModal').modal('hide');
+    }
+
     $(document).ready(function () {
 
         $("#alertSucess").hide();
@@ -236,7 +240,7 @@
             var alertSucess = $("#alertSucess");
 
             $.ajax(url, {
-                dataType: "json",
+                dataType: "text",
                 contentType: "application/x-www-form-urlencoded;charset=utf-8",
                 type: "post",
                 data: {
@@ -244,13 +248,15 @@
                     "auditStatus": auditStatus,
                     "auditSuggest": suggest
                 },
-                success: function (result) {
-                    alertSucess.text(result.msg).show().delay(2000).hide(0);
+                success: function (msg) {
+                    alertSucess.text(msg).show().delay(2000).hide(0);
                     var selelctedTr = "#apply" + selectedApplyId;
                     $(selelctedTr).remove();
+                    setInterval(hideModal, 2500);
                 },
-                error: function () {
+                error: function (msg) {
                     alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
+                    setInterval(hideModal, 2500);
                 }
             });
 

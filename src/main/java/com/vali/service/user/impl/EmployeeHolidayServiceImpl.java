@@ -34,6 +34,8 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
 
     private BeanCopier ENTITY2DTO4Holiday = BeanCopier.create(EmployeeHolidayPO.class, EmployeeHolidayDTO.class, false);
 
+    private BeanCopier DTO2ENTITY4Holiday = BeanCopier.create(EmployeeHolidayDTO.class, EmployeeHolidayPO.class, false);
+
     @Override public List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId) {
 
         List<EmployeeHolidayPO> pos = employeeHolidayDao.getEmployeeHoliday(employeeId);
@@ -154,10 +156,19 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
     }
 
     @Override public boolean decreaseHolidayDay(EmployeeHolidayDTO dto) {
-        return true;
+
+        EmployeeHolidayPO po = new EmployeeHolidayPO();
+
+        DTO2ENTITY4Holiday.copy(dto, po, null);
+
+        return (employeeHolidayDao.decreaseHolidayDay(po) > 0);
     }
 
     @Override public boolean increaseHolidayDay(EmployeeHolidayDTO dto) {
-        return true;
+        EmployeeHolidayPO po = new EmployeeHolidayPO();
+
+        DTO2ENTITY4Holiday.copy(dto, po, null);
+
+        return (employeeHolidayDao.increaseHolidayDay(po) > 0);
     }
 }

@@ -32,4 +32,25 @@
 		where EmployeeId = #employeeId#
 	</select>
 
+    <update id="decreaseHolidayDay">
+        update LL_EmployeeHoliday
+        set Used = Used + #po.used#,
+            UpdateTime = NOW()
+        where EmployeeId = #po.employeeId#
+        and Year = #po.year#
+        and Type = #po.type#
+         <![CDATA[
+            and (Own - Used) >= #po.used#
+        ]]>
+    </update>
+
+    <update id="increaseHolidayDay">
+        update LL_EmployeeHoliday
+        set Used = Used - #po.used#,
+            UpdateTime = NOW()
+        where EmployeeId = #po.employeeId#
+        and Year = #po.year#
+        and Type = #po.type#
+    </update>
+
 </sqlMap>

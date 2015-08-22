@@ -5,7 +5,6 @@ import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditQueryDTO;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,9 +29,6 @@ public interface LeaveApplyService {
      */
     boolean updateApplyStatus(int applyId, int auditStatus);
 
-    List<LeaveApplyDTO> getApplyRecords(Integer applicantID, Integer leaveType, Date applyTime_begin,
-                                        Date applyTime_end);
-
     List<LeaveApplyDTO> getApplyRecords(Integer applicantID);
 
     public PageModel getApplyRecords(LeaveApplyQueryDTO dto, int pageNo, int pageSize);
@@ -56,17 +52,4 @@ public interface LeaveApplyService {
     PageModel pageWait4AduitApplys(LeaveAuditQueryDTO leaveAuditQueryDTO,
                                    int pageNo,
                                    int pageSize);
-
-    /**
-     * 分页获取已审核的请假申请
-     *
-     * @param leaveAuditQueryDTO
-     * @param pageNo
-     * @param pageSize
-     * @return
-     */
-    PageModel pageAduitedApplys(LeaveAuditQueryDTO leaveAuditQueryDTO,
-                                int pageNo,
-                                int pageSize);
-
 }

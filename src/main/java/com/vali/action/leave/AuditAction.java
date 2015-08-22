@@ -6,12 +6,12 @@ import com.vali.bo.PageBO;
 import com.vali.dto.leave.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveAuditQueryDTO;
-import com.vali.dto.leave.LeaveAuditResultDTO;
 import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
 import com.vali.service.user.remote.EmployeeHolidayService;
 import com.vali.service.user.remote.EmployeeService;
+import com.vali.util.TimeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -56,9 +56,9 @@ public class AuditAction {
         return new ModelAndView("leave/audit", model);
     }
 
-    @RequestMapping(value = "/leave/ajaxAudit")
+    @RequestMapping(value = "/leave/ajaxAudit", produces = { "text/javascript;charset=UTF-8" })
     @ResponseBody
-    public LeaveAuditResultDTO ajaxAudit(Integer applyId, Integer auditStatus, String auditSuggest) {
+    public String ajaxAudit(Integer applyId, Integer auditStatus, String auditSuggest) {
 
         boolean isHr = employeeService.isHr(LoginBO.getLoginUser().getId());
 
@@ -66,13 +66,15 @@ public class AuditAction {
 
         if (isHr) {
             leaveAuditService.hrAudit(applyId, auditSuggest, auditStatusEnum.getAuditStatus());
+            leaveApplyService.updateApplyStatus(applyId, auditStatusEnum.getAuditStatus());
         } else {
             leaveAuditService.manageAudit(applyId, auditSuggest, auditStatusEnum.getAuditStatus());
+            if (auditStatusEnum == AuditStatusEnum.REJECT) {
+                leaveApplyService.updateApplyStatus(applyId, auditStatusEnum.getAuditStatus());
+            }
         }
 
-        leaveApplyService.updateApplyStatus(applyId, auditStatusEnum.getAuditStatus());
-
-        return prepareLeaveAuditResultDTO();
+        return prepareAuditResult(auditStatusEnum, auditStatus, isHr);
     }
 
     private AuditStatusEnum prepareAuditStatus(boolean isHr, Integer applyId, Integer auditStatus) {
@@ -86,13 +88,13 @@ public class AuditAction {
         }
 
         EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
-        dto.setEmployeeId(LoginBO.getLoginUser().getId());
 
-        LeaveApplyDTO leaveApplyDTO =leaveApplyService.getApplyDetailByApplyId(applyId);
+        LeaveApplyDTO leaveApplyDTO = leaveApplyService.getApplyDetailByApplyId(applyId);
         dto.setType(leaveApplyDTO.getLeaveType());
         dto.setUsed(leaveApplyDTO.getLeaveDays());
-        dto.setYear("1");
-        //TODO
+
+        dto.setYear(TimeUtil.getCurrentYear());
+        dto.setEmployeeId(leaveApplyDTO.getApplicantID());
         boolean sucessDecreaseHoliday = employeeHolidayService.decreaseHolidayDay(dto);
 
         if (sucessDecreaseHoliday) {
@@ -103,13 +105,32 @@ public class AuditAction {
     }
 
     //TODO
-    private LeaveAuditResultDTO prepareLeaveAuditResultDTO() {
-        return null;
+    private String prepareAuditResult(AuditStatusEnum caculatedAuditStatusEnum,
+                                      Integer originAuditStatus, boolean isHr) {
+
+        if (isHr && originAuditStatus != caculatedAuditStatusEnum.getAuditStatus()) {
+            return "由于剩余假期天数不够,审核不通过.";
+        }
+
+        return "已操作成功.";
     }
 
     @RequestMapping(value = "/leave/myAudits")
-    public String getMyAudit() {
-        return "leave/getMyAudit";
+    public ModelAndView getMyAudit(LeaveAuditQueryDTO leaveAuditQueryDTO, Integer pageNo, Integer pageSize) {
+
+        int applicantID = LoginBO.getLoginUser().getId();
+        leaveAuditQueryDTO.setAuditUserId(applicantID);
+
+        PageModel pageModel = leaveAuditService.pageAduitedApplys(leaveAuditQueryDTO, PageBO.getPageNo(pageNo),
+                                                                  PageBO.getPageSize(pageSize));
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
+
+        Map model = new HashMap();
+        model.put("queryDTO", leaveAuditQueryDTO);
+        model.put("pageModel", pageModel);
+        model.put("employeeHolidays", employeeHolidays);
+
+        return new ModelAndView("leave/myAudits", model);
     }
 
 }

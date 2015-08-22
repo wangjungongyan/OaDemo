@@ -141,6 +141,7 @@
                 HrId = #po.auditUserId#
                 and HrAuditTime is null
                 and HrAuditStatus = 0
+                and ManagerAuditStatus = 1
             </isEqual>
             <isEqual property="po.role" compareValue="2">
                 ManagerId = #po.auditUserId#
@@ -179,6 +180,7 @@
                 HrId = #po.auditUserId#
                 and HrAuditTime is null
                 and HrAuditStatus = 0
+                and ManagerAuditStatus = 1
             </isEqual>
             <isEqual property="po.role" compareValue="2">
                 ManagerId = #po.auditUserId#

@@ -26,9 +26,10 @@ public class TimeUtil {
         }
     }
 
-    public static String getCurrentYear(){
-        //TODO
-        return null;
+
+    public static String getCurrentYear() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        return sdf.format(new Date());
     }
 
 }

@@ -22,10 +22,10 @@ public class MenuBO {
     }
 
     private static void initMenu4Roles() {
-        if (roleMenu.size() == 0){
-            synchronized(MenuBO.class){
+        if (roleMenu.size() == 0) {
+            synchronized (MenuBO.class) {
 
-                if (roleMenu.size() > 0){
+                if (roleMenu.size() > 0) {
                     return;
                 }
 
@@ -37,7 +37,7 @@ public class MenuBO {
 
     }
 
-    private static void initMenu4Normal() {
+    private static List<FirstMenuDTO> initMenu() {
 
         FirstMenuDTO firstMenuDTO1 = new FirstMenuDTO();
         firstMenuDTO1.setHref("oneMenuId_001");
@@ -94,20 +94,27 @@ public class MenuBO {
         List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(5);
         menus.add(firstMenuDTO1);
         menus.add(firstMenuDTO22);
+
         FirstMenuDTO sysManageFirstMenu = getFirstMenuDTO("sysManage","系统管理");
         sysManageFirstMenu.addSecondMenuDTO(getSecondMenuDTO(3001, "法定假日", "/sys/holidaySettingIndex"));
+
         menus.add(sysManageFirstMenu);
-        roleMenu.put(RoleEnum.NOMALR.getType(), menus);
+
+        return menus;
     }
 
-    public static FirstMenuDTO getFirstMenuDTO(String id,String name){
+    private static void initMenu4Normal() {
+        roleMenu.put(RoleEnum.NOMALR.getType(), initMenu());
+    }
+
+    public static FirstMenuDTO getFirstMenuDTO(String id, String name) {
         FirstMenuDTO firstMenuDTO22 = new FirstMenuDTO();
         firstMenuDTO22.setHref(id);
         firstMenuDTO22.setName(name);
         return firstMenuDTO22;
     }
 
-    public static SecondMenuDTO getSecondMenuDTO(int id,String name,String href){
+    public static SecondMenuDTO getSecondMenuDTO(int id, String name, String href) {
         SecondMenuDTO secondMenuDTO22 = new SecondMenuDTO();
         secondMenuDTO22.setName(name);
         secondMenuDTO22.setHref(href);
@@ -116,11 +123,11 @@ public class MenuBO {
     }
 
     private static void initMenu4Manage() {
-        initMenu4Normal();
+        roleMenu.put(RoleEnum.MANAGE.getType(), initMenu());
     }
 
     private static void initMenu4Hr() {
-        initMenu4Normal();
+        roleMenu.put(RoleEnum.HR.getType(), initMenu());
     }
 
 }

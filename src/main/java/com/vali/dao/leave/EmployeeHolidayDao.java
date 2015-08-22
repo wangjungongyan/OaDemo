@@ -4,7 +4,6 @@ import com.leya.idal.annotation.Action;
 import com.leya.idal.annotation.NameSpace;
 import com.leya.idal.annotation.ParamName;
 import com.leya.idal.enums.ActionType;
-import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.po.leave.EmployeeHolidayPO;
 
 import java.util.List;
@@ -17,6 +16,12 @@ import java.util.List;
 public interface EmployeeHolidayDao {
 
     @Action(action = ActionType.QUERY_LIST)
-    public List<EmployeeHolidayPO> getEmployeeHoliday(@ParamName("employeeId")int employeeId);
+    public List<EmployeeHolidayPO> getEmployeeHoliday(@ParamName("employeeId") int employeeId);
+
+    @Action(action = ActionType.UPDATE)
+    public int decreaseHolidayDay(@ParamName("po") EmployeeHolidayPO po);
+
+    @Action(action = ActionType.UPDATE)
+    public int increaseHolidayDay(@ParamName("po") EmployeeHolidayPO po);
 
 }

@@ -19,6 +19,21 @@
         <result column="UpdateTime" property="updateTime"/>
     </resultMap>
 
+    <typeAlias alias="LeaveApplyPO" type="com.vali.po.leave.LeaveApplyPO"/>
+
+    <resultMap id="LeaveApplyResult" class="LeaveApplyPO">
+        <result column="ID" property="id"/>
+        <result column="ApplicantID" property="applicantID"/>
+        <result column="LeaveType" property="leaveType"/>
+        <result column="LeaveStartTime" property="leaveStartTime"/>
+        <result column="LeaveEndTime" property="leaveEndTime"/>
+        <result column="LeaveDays" property="leaveDays"/>
+        <result column="LeaveReason" property="leaveReason"/>
+        <result column="ApplyTime" property="applyTime"/>
+        <result column="Status" property="status"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
 
     <select id="getAuidtByApplyId" resultMap="LeaveAuditResult">
         SELECT
@@ -85,5 +100,84 @@
         UpdateTime = NOW()
         where ApplyId = #applyId#
     </update>
+
+    <select id="pageAduitedApplys" resultMap="LeaveApplyResult">
+        select ID,
+        ApplicantID,
+        LeaveType,
+        LeaveStartTime,
+        LeaveEndTime,
+        LeaveDays,
+        LeaveReason,
+        ApplyTime,
+        Status,
+        AddTime,
+        UpdateTime
+        from LL_LeaveApply
+        where ID in(
+        SELECT
+        ApplyId
+        FROM
+        LL_LeaveAudit
+        <dynamic prepend="WHERE">
+            <isEqual property="po.role" compareValue="1">
+                HrId = #po.auditUserId#
+                and HrAuditTime is not null
+            </isEqual>
+            <isEqual property="po.role" compareValue="2">
+                ManagerId = #po.auditUserId#
+                and ManagerAuditTime is not null
+            </isEqual>
+        </dynamic>
+        )
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >= #po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <= #po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
+            LeaveType = #po.leaveType#
+        </isGreaterThan>
+        order by AddTime desc
+    </select>
+
+    <select id="pageAduitedApplys_count" resultClass="int">
+        select count(1)
+        from LL_LeaveApply
+        where ID in(
+        SELECT
+        ApplyId
+        FROM
+        LL_LeaveAudit
+        <dynamic prepend="WHERE">
+            <isEqual property="po.role" compareValue="1">
+                HrId = #po.auditUserId#
+                and HrAuditTime is not null
+            </isEqual>
+            <isEqual property="po.role" compareValue="2">
+                ManagerId = #po.auditUserId#
+                and ManagerAuditTime is not null
+            </isEqual>
+        </dynamic>
+        )
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >= #po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <= #po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
+            LeaveType = #po.leaveType#
+        </isGreaterThan>
+    </select>
 
 </sqlMap>
