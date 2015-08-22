@@ -2,9 +2,7 @@
 <html lang="zh-CN">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv=”content-type” content=”text/html; charset=UTF-8″/>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
@@ -44,7 +42,7 @@
                     <td><label class="col-sm-8 control-label">经 理</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input class="form-control" readonly placeholder="${employee.manger.chineseName}">
+                            <input class="form-control" readonly placeholder="${employee.manager.chineseName}">
                         </div>
                     </td>
                 </tr>
@@ -100,7 +98,7 @@
                     </td>
                     <td>
                         <div class="col-sm-3">
-                                <textarea class="form-control" rows="3" cols="20" name="leaveReason" required="required" maxlength="100"></textarea>
+                                <textarea class="form-control" rows="3" cols="20" name="leaveReason" required="required"></textarea>
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">请假类型描述</label></td>
@@ -113,7 +111,6 @@
                 <tr>
                     <td colspan="4">
                         <p style="margin-left: 450px;">
-                            <a href="/leave/apply">
                             <button type="submit" class="btn btn-info">
                                 提 交 请 假 申 请
                             </button>

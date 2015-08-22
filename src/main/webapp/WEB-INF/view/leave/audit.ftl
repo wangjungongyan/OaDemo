@@ -74,7 +74,7 @@
         </#list>
     </#if>
 
-    <#if (curPage < endPage)>
+    <#if (curPage lt endPage)>
     <li><a href="?pageNo=${curPage + 1}${args!}" class="page-next" title="下一页">下一页<i class="p-next"></a></li>
     </#if>
 </#macro>
@@ -236,7 +236,7 @@
             var alertSucess = $("#alertSucess");
 
             $.ajax(url, {
-                dataType: "json",
+                dataType: "text",
                 contentType: "application/x-www-form-urlencoded;charset=utf-8",
                 type: "post",
                 data: {
@@ -245,13 +245,11 @@
                     "auditSuggest": suggest
                 },
                 success: function (msg) {
-                    alert(msg);
                     alertSucess.text(msg).show().delay(2000).hide(0);
                     var selelctedTr = "#apply" + selectedApplyId;
                     $(selelctedTr).remove();
                 },
                 error: function (msg) {
-                    alert(msg);
                     alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
                 }
             });

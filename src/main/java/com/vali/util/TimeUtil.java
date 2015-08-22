@@ -27,7 +27,7 @@ public class TimeUtil {
     }
 
     public static String getCurrentYear() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         return sdf.format(new Date());
     }
 

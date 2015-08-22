@@ -59,11 +59,6 @@
         <#assign tailPage = endPage >
     </#if>
 
-<#--curPage:${curPage}-->
-<#--headPage:${headPage}-->
-<#--tailPage:${tailPage}-->
-<#--endPage:${endPage}-->
-
     <#if (curPage > 1) >
     <li><a href="?pageNo=${curPage - 1}${args!}" class="page-prev" title="上一页"><i class="p-prev"></i>上一页</a></li>
     </#if>
@@ -120,7 +115,6 @@
         <tr style="background-color: #eee">
             <th>申请时间</th>
             <th>请假类型</th>
-            <th>审批流</th>
             <th>请假时间段</th>
             <th>状态</th>
             <th>查看详情</th>
@@ -128,48 +122,15 @@
         </thead>
         <tbody>
         <#if pageModel?? && pageModel.records?? && (pageModel.records?size>0)>
-            <#list pageModel.records as myApply>
-                <#if myApply.status == 0>
-                <tr class="info">
-                <#elseif myApply.status == 1>
-                <tr class="success">
-                <#else>
-                <tr class="warning">
-                </#if>
-                <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
-                <td>${myApply.leaveName}</td>
-                <td>
-                    <#if myApply.audit??>
-                        <#assign audit = myApply.audit/>
-                        <#assign manager = audit.manager/>
-                    ${manager.chineseName}
-                        <#if audit.managerAuditStatus == 1>
-                            审核通过
-                        <#elseif audit.managerAuditStatus == 2 >
-                            审核不通过
-                        <#else>
-                            未审核
-                        </#if>
-                        ->
-                        <#if audit.hr??>
-                            <#assign hr = audit.hr/>
-                        ${hr.chineseName}(HR)
-                            <#if audit.hrAuditStatus == 1>
-                                审核通过
-                            <#elseif audit.hrAuditStatus == 2 >
-                                审核不通过
-                            <#else>
-                                未审核
-                            </#if>
-                        </#if>
-                    <#else>
-                        暂未审批
-                    </#if>
-                </td>
-                <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
-                    至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
-                <td>${myApply.statusName}</td>
-                <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})"
+            <#list pageModel.records as myAuditedApply>
+            <tr class="info">
+                <td>${myAuditedApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                <td>${myAuditedApply.leaveName}</td>
+                <td>${myAuditedApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
+                    至 ${myAuditedApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
+                <td>${myAuditedApply.statusName}</td>
+                <td><a href="javascript:void(0)" name="showApplyDetail"
+                       onclick="getSelectedApplyId(${myAuditedApply.id})"
                        data-toggle="modal" data-target="#editModal">查看详情</a>
                 </td>
             </tr>

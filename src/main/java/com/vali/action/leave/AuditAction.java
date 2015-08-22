@@ -56,7 +56,7 @@ public class AuditAction {
         return new ModelAndView("leave/audit", model);
     }
 
-    @RequestMapping(value = "/leave/ajaxAudit")
+    @RequestMapping(value = "/leave/ajaxAudit", produces = { "text/javascript;charset=UTF-8" })
     @ResponseBody
     public String ajaxAudit(Integer applyId, Integer auditStatus, String auditSuggest) {
 
@@ -88,12 +88,12 @@ public class AuditAction {
         }
 
         EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
-        dto.setEmployeeId(LoginBO.getLoginUser().getId());
 
         LeaveApplyDTO leaveApplyDTO = leaveApplyService.getApplyDetailByApplyId(applyId);
         dto.setType(leaveApplyDTO.getLeaveType());
         dto.setUsed(leaveApplyDTO.getLeaveDays());
         dto.setYear(TimeUtil.getCurrentYear());
+        dto.setEmployeeId(leaveApplyDTO.getApplicantID());
         boolean sucessDecreaseHoliday = employeeHolidayService.decreaseHolidayDay(dto);
 
         if (sucessDecreaseHoliday) {
@@ -115,8 +115,21 @@ public class AuditAction {
     }
 
     @RequestMapping(value = "/leave/myAudits")
-    public String getMyAudit() {
-        return "leave/getMyAudit";
+    public ModelAndView getMyAudit(LeaveAuditQueryDTO leaveAuditQueryDTO, Integer pageNo, Integer pageSize) {
+
+        int applicantID = LoginBO.getLoginUser().getId();
+        leaveAuditQueryDTO.setAuditUserId(applicantID);
+
+        PageModel pageModel = leaveAuditService.pageAduitedApplys(leaveAuditQueryDTO, PageBO.getPageNo(pageNo),
+                                                                  PageBO.getPageSize(pageSize));
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
+
+        Map model = new HashMap();
+        model.put("queryDTO", leaveAuditQueryDTO);
+        model.put("pageModel", pageModel);
+        model.put("employeeHolidays", employeeHolidays);
+
+        return new ModelAndView("leave/myAudits", model);
     }
 
 }

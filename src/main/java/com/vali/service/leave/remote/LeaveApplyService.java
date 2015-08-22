@@ -56,17 +56,4 @@ public interface LeaveApplyService {
     PageModel pageWait4AduitApplys(LeaveAuditQueryDTO leaveAuditQueryDTO,
                                    int pageNo,
                                    int pageSize);
-
-    /**
-     * 分页获取已审核的请假申请
-     *
-     * @param leaveAuditQueryDTO
-     * @param pageNo
-     * @param pageSize
-     * @return
-     */
-    PageModel pageAduitedApplys(LeaveAuditQueryDTO leaveAuditQueryDTO,
-                                int pageNo,
-                                int pageSize);
-
 }

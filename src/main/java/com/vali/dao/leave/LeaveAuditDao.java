@@ -4,7 +4,9 @@ import com.leya.idal.annotation.Action;
 import com.leya.idal.annotation.NameSpace;
 import com.leya.idal.annotation.ParamName;
 import com.leya.idal.enums.ActionType;
+import com.leya.idal.model.PageModel;
 import com.vali.po.leave.LeaveAuditPO;
+import com.vali.po.leave.LeaveAuditQueryPO;
 
 /**
  * Created by vali on 15-8-15.
@@ -28,5 +30,10 @@ public interface LeaveAuditDao {
     public int updateStatusAndSuggest4Manager(@ParamName("applyId") int applyId,
                                          @ParamName("managerAuditSuggest") String managerAuditSuggest,
                                          @ParamName("auditStatus") int auditStatus);
+
+    @Action(action = ActionType.PAGE)
+    public PageModel pageAduitedApplys(@ParamName("po") LeaveAuditQueryPO queryPO,
+                                          @ParamName("pageNo") int pageNo,
+                                          @ParamName("pageSize") int pageSize);
 
 }
