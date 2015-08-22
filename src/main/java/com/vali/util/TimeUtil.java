@@ -27,7 +27,8 @@ public class TimeUtil {
     }
 
     public static String getCurrentYear(){
-        return new Date().
+        //TODO
+        return null;
     }
 
 }

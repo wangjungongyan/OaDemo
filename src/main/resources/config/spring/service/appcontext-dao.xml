@@ -6,7 +6,7 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url"
-                  value="jdbc:mysql://172.16.238.128/lloa"/>
+                  value="jdbc:mysql://192.168.120.130/ll-oa"/>
         <property name="username" value="utest"/>
         <property name="password" value="ptest"/>
     </bean>
@@ -49,6 +49,13 @@
 
     <bean id="leaveAuditDao" parent="parentDao">
         <property name="proxyInterfaces" value="com.vali.dao.leave.LeaveAuditDao"/>
+        <property name="target">
+            <ref local="iBatisGenericDao"/>
+        </property>
+    </bean>
+
+    <bean id="holidaySettingDao" parent="parentDao">
+        <property name="proxyInterfaces" value="com.vali.dao.setting.HolidaySettingDAO"/>
         <property name="target">
             <ref local="iBatisGenericDao"/>
         </property>

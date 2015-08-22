@@ -91,7 +91,7 @@ public class AuditAction {
         LeaveApplyDTO leaveApplyDTO =leaveApplyService.getApplyDetailByApplyId(applyId);
         dto.setType(leaveApplyDTO.getLeaveType());
         dto.setUsed(leaveApplyDTO.getLeaveDays());
-        dto.setYear(1);
+        dto.setYear("1");
         //TODO
         boolean sucessDecreaseHoliday = employeeHolidayService.decreaseHolidayDay(dto);
 

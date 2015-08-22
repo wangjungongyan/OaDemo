@@ -10,5 +10,5 @@
     <sqlMap resource="config/sqlmap/ibatis/Employee.xml" />
     <sqlMap resource="config/sqlmap/ibatis/EmployeeHoliday.xml" />
     <sqlMap resource="config/sqlmap/ibatis/LeaveAudit.xml" />
-
+	<sqlMap resource="config/sqlmap/ibatis/HolidaySetting.xml" />
 </sqlMapConfig>

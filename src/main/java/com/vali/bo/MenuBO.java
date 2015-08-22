@@ -95,7 +95,7 @@ public class MenuBO {
         menus.add(firstMenuDTO1);
         menus.add(firstMenuDTO22);
         FirstMenuDTO sysManageFirstMenu = getFirstMenuDTO("sysManage","系统管理");
-        sysManageFirstMenu.addSecondMenuDTO(getSecondMenuDTO(3001, "法定假日", "/sys/fadingjiari"));
+        sysManageFirstMenu.addSecondMenuDTO(getSecondMenuDTO(3001, "法定假日", "/sys/holidaySettingIndex"));
         menus.add(sysManageFirstMenu);
         roleMenu.put(RoleEnum.NOMALR.getType(), menus);
     }

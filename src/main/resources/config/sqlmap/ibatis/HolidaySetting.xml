@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HolidaySetting">
+
+    <typeAlias alias="HolidaySettingPO" type="com.vali.po.setting.HolidaySettingPO"/>
+
+    <select id="queryYearSettings" resultClass="HolidaySettingPO" parameterClass="map">
+      SELECT id,
+            year,
+            day,
+            holiday,
+            mark,
+            isWorkDay
+      FROM ll_holidaysetting
+      where year = #year#
+    </select>
+
+    <select id="queryDaySettings" parameterClass="map" resultClass="HolidaySettingPO">
+         SELECT id,
+            year,
+            day,
+            holiday,
+            mark,
+            isWorkDay
+      FROM ll_holidaysetting
+      where day = #day#
+    </select>
+
+    <insert id="saveHolidaySetting" parameterClass="map">
+        INSERT INTO
+        ll_holidaysetting (year,
+            day,
+            holiday,
+            mark,
+            isWorkDay)
+            VALUES (
+              #po.year#,
+              #po.day#,
+              #po.holiday#,
+              #po.mark#,
+              #po.isWorkDay#
+            )
+        <selectKey resultClass="java.lang.Integer" keyProperty="po.id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+    </insert>
+
+    <delete id="deleteHolidaySetting" parameterClass="map">
+        DELETE FROM ll_holidaysetting where id = #id#
+    </delete>
+
+
+</sqlMap>
