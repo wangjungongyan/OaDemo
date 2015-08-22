@@ -171,7 +171,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align:center">
-                                <button type="button" name="auditButton" class="btn btn-info" value="1">审批通过</button>
+                                <button type="button" name="auditButton" class="btn btn-success" value="1">审批通过</button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button type="button" name="auditButton" class="btn btn-danger" value="2">审批不通过</button>
                             </td>
@@ -244,12 +244,14 @@
                     "auditStatus": auditStatus,
                     "auditSuggest": suggest
                 },
-                success: function (result) {
-                    alertSucess.text(result.msg).show().delay(2000).hide(0);
+                success: function (msg) {
+                    alert(msg);
+                    alertSucess.text(msg).show().delay(2000).hide(0);
                     var selelctedTr = "#apply" + selectedApplyId;
                     $(selelctedTr).remove();
                 },
-                error: function () {
+                error: function (msg) {
+                    alert(msg);
                     alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
                 }
             });
