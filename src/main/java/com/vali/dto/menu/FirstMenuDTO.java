@@ -2,6 +2,7 @@ package com.vali.dto.menu;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,4 +25,11 @@ public class FirstMenuDTO {
      * 对应的二级菜单
      */
     private List<SecondMenuDTO> secondMenus;
+
+    public void addSecondMenuDTO(SecondMenuDTO secondMenuDTO){
+        if(secondMenus==null){
+            secondMenus = new ArrayList<SecondMenuDTO>();
+        }
+        secondMenus.add(secondMenuDTO);
+    }
 }

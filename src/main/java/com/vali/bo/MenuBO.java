@@ -94,8 +94,25 @@ public class MenuBO {
         List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(5);
         menus.add(firstMenuDTO1);
         menus.add(firstMenuDTO22);
-
+        FirstMenuDTO sysManageFirstMenu = getFirstMenuDTO("sysManage","系统管理");
+        sysManageFirstMenu.addSecondMenuDTO(getSecondMenuDTO(3001, "法定假日", "/sys/fadingjiari"));
+        menus.add(sysManageFirstMenu);
         roleMenu.put(RoleEnum.NOMALR.getType(), menus);
+    }
+
+    public static FirstMenuDTO getFirstMenuDTO(String id,String name){
+        FirstMenuDTO firstMenuDTO22 = new FirstMenuDTO();
+        firstMenuDTO22.setHref(id);
+        firstMenuDTO22.setName(name);
+        return firstMenuDTO22;
+    }
+
+    public static SecondMenuDTO getSecondMenuDTO(int id,String name,String href){
+        SecondMenuDTO secondMenuDTO22 = new SecondMenuDTO();
+        secondMenuDTO22.setName(name);
+        secondMenuDTO22.setHref(href);
+        secondMenuDTO22.setIndex(id);
+        return secondMenuDTO22;
     }
 
     private static void initMenu4Manage() {
