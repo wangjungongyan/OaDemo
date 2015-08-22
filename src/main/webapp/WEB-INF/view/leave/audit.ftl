@@ -225,6 +225,10 @@
         selectedApplyId = id;
     }
 
+    function hideModal(){
+        $('#editModal').modal('hide');
+    }
+
     $(document).ready(function () {
 
         $("#alertSucess").hide();
@@ -248,6 +252,7 @@
                     alertSucess.text(msg).show().delay(2000).hide(0);
                     var selelctedTr = "#apply" + selectedApplyId;
                     $(selelctedTr).remove();
+                    setInterval(hideModal,3000);
                 },
                 error: function (msg) {
                     alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);

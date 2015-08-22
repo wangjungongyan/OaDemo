@@ -96,11 +96,6 @@ public class ApplyAction {
         return leaveApplyDTO;
     }
 
-    @RequestMapping(value = "/leaveApplyDetail")
-    public String details() {
-        return "leave/details";
-    }
-
     private LeaveAuditDTO getLeaveAuditDTO(LeaveApplyDTO applyDTO) {
 
         LeaveAuditDTO leaveAuditDTO = new LeaveAuditDTO();

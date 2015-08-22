@@ -5,7 +5,6 @@ import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditQueryDTO;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,9 +28,6 @@ public interface LeaveApplyService {
      * @return
      */
     boolean updateApplyStatus(int applyId, int auditStatus);
-
-    List<LeaveApplyDTO> getApplyRecords(Integer applicantID, Integer leaveType, Date applyTime_begin,
-                                        Date applyTime_end);
 
     List<LeaveApplyDTO> getApplyRecords(Integer applicantID);
 

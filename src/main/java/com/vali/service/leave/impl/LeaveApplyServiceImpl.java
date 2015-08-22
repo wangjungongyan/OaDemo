@@ -20,7 +20,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,11 +64,6 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
     public boolean updateApplyStatus(int applyId, int auditStatus) {
         int updated = leaveApplyDao.updateApplyStatus(applyId, auditStatus);
         return (updated >= 1);
-    }
-
-    @Override public List<LeaveApplyDTO> getApplyRecords(Integer applicantID, Integer leaveType, Date applyTime_begin,
-                                                         Date applyTime_end) {
-        return null;
     }
 
     @Override public List<LeaveApplyDTO> getApplyRecords(Integer applicantID) {
