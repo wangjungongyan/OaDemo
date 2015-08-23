@@ -79,7 +79,7 @@ public class ApplyAction {
 
         PageModel pageModel = leaveApplyService.getApplyRecords(dto, PageBO.getPageNo(pageNo), PageBO.getPageSize(
                 pageSize));
-        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getHolidayTypes();
 
         Map model = new HashMap();
         model.put("queryDTO", dto);

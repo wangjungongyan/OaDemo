@@ -20,6 +20,13 @@ public interface EmployeeHolidayService {
     public List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId);
 
     /**
+     * 获取各种类型假期
+     *
+     * @return
+     */
+    public List<EmployeeHolidayDTO> getHolidayTypes();
+
+    /**
      * 根据请假区间计算出请假天数
      *
      * @param beginTime

@@ -9,7 +9,9 @@ public enum AuditStatusEnum {
 
     PASS(1, "通过"),
 
-    REJECT(2, "不通过");
+    REJECT(2, "不通过"),
+
+    REOVKE(3, "销假");
 
     private int auditStatus;
 

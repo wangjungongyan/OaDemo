@@ -11,7 +11,6 @@ import lombok.Setter;
 import net.sf.cglib.beans.BeanCopier;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -30,7 +29,7 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
     private HolidaySettingService holidaySettingService;
     @Setter
     @Resource(name = "employeeHolidayDao")
-    private EmployeeHolidayDao employeeHolidayDao;
+    private EmployeeHolidayDao    employeeHolidayDao;
 
     private BeanCopier ENTITY2DTO4Holiday = BeanCopier.create(EmployeeHolidayPO.class, EmployeeHolidayDTO.class, false);
 
@@ -40,11 +39,8 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
 
         List<EmployeeHolidayPO> pos = employeeHolidayDao.getEmployeeHoliday(employeeId);
 
-        if (CollectionUtils.isEmpty(pos)) {
-            return new ArrayList<EmployeeHolidayDTO>(1);
-        }
-
         List<EmployeeHolidayDTO> dtos = new ArrayList<EmployeeHolidayDTO>(pos.size());
+        List<Integer> types = new ArrayList<Integer>(10);
 
         for (EmployeeHolidayPO po : pos) {
             EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
@@ -53,95 +49,127 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
             dto.setName(leaveTypeEnum.getName());
             dto.setDesc(leaveTypeEnum.getDesc());
             dtos.add(dto);
+            types.add(po.getType());
+        }
+
+        LeaveTypeEnum[] leaveTypeEnums = LeaveTypeEnum.values();
+
+        for (LeaveTypeEnum leaveTypeEnum : leaveTypeEnums) {
+            if (!types.contains(leaveTypeEnum.getType())) {
+                EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
+                dto.setName(leaveTypeEnum.getName());
+                dto.setDesc(leaveTypeEnum.getDesc());
+                dto.setType(leaveTypeEnum.getType());
+                dto.setUsed(new BigDecimal(0));
+                dto.setOwn(new BigDecimal(0));
+                dto.setSurplus(new BigDecimal(0));
+                dtos.add(dto);
+            }
         }
 
         return dtos;
     }
 
+    @Override public List<EmployeeHolidayDTO> getHolidayTypes() {
 
+        List<EmployeeHolidayDTO> dtos = new ArrayList<EmployeeHolidayDTO>(12);
 
+        LeaveTypeEnum[] leaveTypeEnums = LeaveTypeEnum.values();
+
+        for (LeaveTypeEnum leaveTypeEnum : leaveTypeEnums) {
+            EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
+            dto.setName(leaveTypeEnum.getName());
+            dto.setDesc(leaveTypeEnum.getDesc());
+            dto.setType(leaveTypeEnum.getType());
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
 
     @Override
     public BigDecimal caculateLevaeDays(Date beginTime, Date endTime) {
         BigDecimal dayNum = new BigDecimal("0");
-        if(isOneDay(beginTime,endTime)){
-            return sameDayLeaveTime(beginTime,endTime);
+        if (isOneDay(beginTime, endTime)) {
+            return sameDayLeaveTime(beginTime, endTime);
         }
         DateTime oneDayEndTime = new DateTime(beginTime).withTime(18, 0, 0, 0);
-        dayNum=dayNum.add(sameDayLeaveTime(beginTime, oneDayEndTime.toDate()));
-//            DateTime oneDayBeginTime = new DateTime(beginTime);
-//
-//            int secondNum=oneDayEndTime.secondOfDay().get()-oneDayBeginTime.secondOfDay().get();
-//            if(secondNum>4*60*60){//多于4小时1天
-//                dayNum.add(new BigDecimal("1"));
-//            }else if(secondNum>0){//少于4大于 0小时0.5天
-//                dayNum.add(new BigDecimal("0.5"));
-//            }
-        for (int i = 1;;i++){
-            DateTime nextDayBegin = new DateTime(beginTime).withTime(8,0,0,0).plusDays(i);
-            if(isOneDay(nextDayBegin.toDate(), endTime)){
-                dayNum=dayNum.add(sameDayLeaveTime(nextDayBegin.toDate(), endTime));
+        dayNum = dayNum.add(sameDayLeaveTime(beginTime, oneDayEndTime.toDate()));
+        //            DateTime oneDayBeginTime = new DateTime(beginTime);
+        //
+        //            int secondNum=oneDayEndTime.secondOfDay().get()-oneDayBeginTime.secondOfDay().get();
+        //            if(secondNum>4*60*60){//多于4小时1天
+        //                dayNum.add(new BigDecimal("1"));
+        //            }else if(secondNum>0){//少于4大于 0小时0.5天
+        //                dayNum.add(new BigDecimal("0.5"));
+        //            }
+        for (int i = 1; ; i++) {
+            DateTime nextDayBegin = new DateTime(beginTime).withTime(8, 0, 0, 0).plusDays(i);
+            if (isOneDay(nextDayBegin.toDate(), endTime)) {
+                dayNum = dayNum.add(sameDayLeaveTime(nextDayBegin.toDate(), endTime));
                 break;
             }
-            DateTime nextDayEnd = new DateTime(beginTime).withTime(18,0,0,0).plusDays(i);
-            dayNum=dayNum.add(sameDayLeaveTime(nextDayBegin.toDate(), nextDayEnd.toDate()));
+            DateTime nextDayEnd = new DateTime(beginTime).withTime(18, 0, 0, 0).plusDays(i);
+            dayNum = dayNum.add(sameDayLeaveTime(nextDayBegin.toDate(), nextDayEnd.toDate()));
         }
         return dayNum;
     }
-    private BigDecimal sameDayLeaveTime(Date begin,Date end){
+
+    private BigDecimal sameDayLeaveTime(Date begin, Date end) {
         BigDecimal dayNum = new BigDecimal("0");
-        if(end.before(begin)){
+        if (end.before(begin)) {
             return dayNum;
         }
-        if(!dayIsWorkDay(begin)){
+        if (!dayIsWorkDay(begin)) {
             return dayNum;
         }
 
         //是工作日且时间有间隔
-        DateTime time9 = new DateTime(begin).withTime(9,0,0,0);
-        DateTime time12 = new DateTime(begin).withTime(12,0,0,0);
-        DateTime time13 = new DateTime(begin).withTime(13,0,0,0);
-        DateTime time18 = new DateTime(begin).withTime(18,0,0,0);
+        DateTime time9 = new DateTime(begin).withTime(9, 0, 0, 0);
+        DateTime time12 = new DateTime(begin).withTime(12, 0, 0, 0);
+        DateTime time13 = new DateTime(begin).withTime(13, 0, 0, 0);
+        DateTime time18 = new DateTime(begin).withTime(18, 0, 0, 0);
 
         DateTime beginTime = new DateTime(begin);
         DateTime endTime = new DateTime(end);
-        if(beginTime.isBefore(time9)){
+        if (beginTime.isBefore(time9)) {
             //请假时间早于8点，按从8点开始
-            beginTime = new DateTime(begin).withTime(9,0,0,0);
+            beginTime = new DateTime(begin).withTime(9, 0, 0, 0);
         }
-        if(endTime.isAfter(time18)){
-            endTime = new DateTime(begin).withTime(18,0,0,0);
+        if (endTime.isAfter(time18)) {
+            endTime = new DateTime(begin).withTime(18, 0, 0, 0);
         }
 
-        int secondNum = endTime.secondOfDay().get()-beginTime.secondOfDay().get();
+        int secondNum = endTime.secondOfDay().get() - beginTime.secondOfDay().get();
         //是否排除中午休息时间
-        if(secondNum>4*60*60){
+        if (secondNum > 4 * 60 * 60) {
             dayNum = new BigDecimal("1");
-        }else if(secondNum>0){
+        } else if (secondNum > 0) {
             dayNum = new BigDecimal("0.5");
         }
         return dayNum;
     }
 
-    private boolean isOneDay(Date beginTime, Date endTime){
+    private boolean isOneDay(Date beginTime, Date endTime) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         return f.format(beginTime).equals(f.format(endTime));
     }
-    private boolean dayIsWorkDay(Date day){
+
+    private boolean dayIsWorkDay(Date day) {
         HolidaySettingDTO holidaySetting = holidaySettingService.queryDaySetting(day);
-        if(holidaySetting!=null){
+        if (holidaySetting != null) {
             return holidaySetting.isWorkDay();
         }
         //看是否是周六或周日
         DateTime d = new DateTime(day);
         int dayOfWeek = d.dayOfWeek().get();
-        if(dayOfWeek==6||dayOfWeek==7){
+        if (dayOfWeek == 6 || dayOfWeek == 7) {
             return false;
         }
         return true;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try {
             EmployeeHolidayServiceImpl a = new EmployeeHolidayServiceImpl();
             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -149,7 +177,7 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
             DateTime d = new DateTime(f.parse("2015-08-22 9:0:03"));
             int dayOfWeek = d.dayOfWeek().get();
             System.out.println(dayOfWeek);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

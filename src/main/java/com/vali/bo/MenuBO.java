@@ -137,7 +137,17 @@ public class MenuBO {
     private static void initMenu4Hr() {
 
         List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(3);
-        menus.add(prepareLeaveManage());
+
+        FirstMenuDTO leaveManage = prepareLeaveManage();
+        List<SecondMenuDTO> leaveSecondMenus = leaveManage.getSecondMenus();
+
+        SecondMenuDTO secondMenuDTO5 = new SecondMenuDTO();
+        secondMenuDTO5.setName("我要销假");
+        secondMenuDTO5.setHref("/leave/revoke");
+
+        leaveSecondMenus.add(secondMenuDTO5);
+
+        menus.add(leaveManage);
         menus.add(prepareUserManage());
         menus.add(prepareSyetemManage());
 

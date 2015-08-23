@@ -56,7 +56,7 @@
                         <div class="col-sm-3">
                             <select name ="leaveType" id="leaveType">
                                 <#list employeeHolidays as holiday>
-                                    <option value ="${holiday.type}">【${holiday.name}】 已用${holiday.used}天 剩余${holiday.surplus}天</option>
+                                    <option value ="${holiday.type}">【${holiday.name}】 本拥${holiday.own}天 剩余${holiday.surplus}天</option>
                                 </#list>
                             </select>
                         </div>
@@ -137,7 +137,7 @@
 <script type="text/javascript">
 
     $("#leaveStartTime").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii',
+        format: 'yyyy-mm-dd hh',
         minView:0,
         todayHighlight:true,
         todayBtn:true,
@@ -145,7 +145,7 @@
     });
 
     $("#leaveEndTime").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii',
+        format: 'yyyy-mm-dd hh',
         minView:0,
         todayHighlight:true,
         todayBtn:true,

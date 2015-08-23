@@ -211,4 +211,70 @@
         where ID = #applyId#
     </update>
 
+    <select id="pageCanRevokeApplys" resultMap="LeaveApplyResult">
+        select ID,
+        ApplicantID,
+        LeaveType,
+        LeaveStartTime,
+        LeaveEndTime,
+        LeaveDays,
+        LeaveReason,
+        ApplyTime,
+        Status,
+        AddTime,
+        UpdateTime
+        from LL_LeaveApply
+        where ID in(
+        SELECT
+        ApplyId
+        FROM
+        LL_LeaveAudit
+        where
+        HrAuditStatus = 1
+        and HrAuditTime is not null
+        and HrId = #po.auditUserId#
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >= #po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <= #po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
+            LeaveType = #po.leaveType#
+        </isGreaterThan>
+        )order by AddTime desc
+    </select>
+
+    <select id="pageCanRevokeApplys_count" resultClass="int">
+        select count(1)
+        from LL_LeaveApply
+        where ID in(
+        SELECT
+        ApplyId
+        FROM
+        LL_LeaveAudit
+        where
+        HrAuditStatus = 1
+        and HrAuditTime is not null
+        and HrId = #po.auditUserId#
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >= #po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <= #po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
+            LeaveType = #po.leaveType#
+        </isGreaterThan>
+        )order by AddTime desc
+    </select>
+
 </sqlMap>

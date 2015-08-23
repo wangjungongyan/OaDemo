@@ -8,6 +8,7 @@ import com.leya.idal.model.PageModel;
 import com.vali.po.leave.LeaveApplyPO;
 import com.vali.po.leave.LeaveApplyQueryPO;
 import com.vali.po.leave.LeaveAuditQueryPO;
+import com.vali.po.leave.LeaveRevokeQueryPO;
 
 import java.util.List;
 
@@ -43,5 +44,11 @@ public interface LeaveApplyDao {
     @Action(action = ActionType.UPDATE)
     public int updateApplyStatus(@ParamName("applyId") int applyId,
                                  @ParamName("auditStatus") int auditStatus);
+
+    @Action(action = ActionType.PAGE)
+    public PageModel pageCanRevokeApplys(@ParamName("po") LeaveRevokeQueryPO queryPO,
+                                         @ParamName("pageNo") int pageNo,
+                                         @ParamName("pageSize") int pageSize);
+
 
 }

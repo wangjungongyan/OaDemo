@@ -81,7 +81,7 @@
 
 <div class="container">
 
-    <form class="form-inline" id="queryForm" action="/leave/wait2Audit" method="post">
+    <form class="form-inline" id="queryForm" action="/leave/revoke" method="post">
         <table>
             <tr>
                 <div class="form-group">
@@ -152,7 +152,7 @@
             <div class="modal-header">
                 <button type="button" name="closeButton" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">开始审批</h4>
+                <h4 class="modal-title">开始销假</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
@@ -160,7 +160,7 @@
                         <tr>
                             <td>
                                 <label class="col-sm-8 control-label">
-                                    审批意见
+                                    销假意见
                                 </label>
                             </td>
                             <td>
@@ -171,9 +171,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align:center">
-                                <button type="button" name="auditButton" class="btn btn-success" value="1">审批通过</button>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="button" name="auditButton" class="btn btn-danger" value="2">审批不通过</button>
+                                <button type="button" name="auditButton" class="btn btn-success" value="1">销假</button>
                             </td>
                         </tr>
                     </table>
@@ -236,7 +234,7 @@
         $("button[name='auditButton']").click(function () {
             var auditStatus = $(this).val();
             var suggest = $("#suggest").val();
-            var url = "/leave/ajaxAudit";
+            var url = "/leave/ajaxRevoke";
             var alertSucess = $("#alertSucess");
 
             $.ajax(url, {
@@ -245,8 +243,7 @@
                 type: "post",
                 data: {
                     "applyId": selectedApplyId,
-                    "auditStatus": auditStatus,
-                    "auditSuggest": suggest
+                    "revokeSuggest": suggest
                 },
                 success: function (msg) {
                     alertSucess.text(msg).show().delay(2000).hide(0);

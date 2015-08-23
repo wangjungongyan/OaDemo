@@ -46,7 +46,7 @@ public class AuditAction {
         PageModel pageModel = leaveApplyService.pageWait4AduitApplys(leaveAuditQueryDTO, PageBO.getPageNo(pageNo),
                                                                      PageBO.getPageSize(pageSize));
 
-        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getHolidayTypes();
 
         Map model = new HashMap();
         model.put("queryDTO", leaveAuditQueryDTO);
@@ -104,7 +104,6 @@ public class AuditAction {
         return AuditStatusEnum.REJECT;
     }
 
-    //TODO
     private String prepareAuditResult(AuditStatusEnum caculatedAuditStatusEnum,
                                       Integer originAuditStatus, boolean isHr) {
 
@@ -123,7 +122,7 @@ public class AuditAction {
 
         PageModel pageModel = leaveAuditService.pageAduitedApplys(leaveAuditQueryDTO, PageBO.getPageNo(pageNo),
                                                                   PageBO.getPageSize(pageSize));
-        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(applicantID);
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getHolidayTypes();
 
         Map model = new HashMap();
         model.put("queryDTO", leaveAuditQueryDTO);
