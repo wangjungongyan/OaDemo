@@ -121,7 +121,7 @@
             <th>结束时间</th>
             <th>天数(天)</th>
             <th>请假事由</th>
-            <th>审批</th>
+            <th>销假</th>
         </tr>
         </thead>
         <tbody>
@@ -136,7 +136,7 @@
                 <td>${apply.leaveDays}</td>
                 <td>${apply.leaveReason}</td>
                 <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${apply.id})"
-                       data-toggle="modal" data-target="#editModal">审批</a>
+                       data-toggle="modal" data-target="#editModal">销假</a>
                 </td>
             </tr>
             </#list>
