@@ -13,7 +13,6 @@ import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
 import com.vali.service.user.remote.EmployeeHolidayService;
 import com.vali.service.user.remote.EmployeeService;
-import com.vali.util.TimeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,7 +58,8 @@ public class ApplyAction {
         EmployeeDTO employeeDTO = LoginBO.getLoginUser();
         applyDTO.setApplicantID(employeeDTO.getId());
         applyDTO.setApplyTime(new Date());
-        applyDTO.setLeaveDays(TimeUtil.caculateLeaveDays(applyDTO.getLeaveStartTime(), applyDTO.getLeaveEndTime()));
+        applyDTO.setLeaveDays(
+                employeeHolidayService.caculateLevaeDays(applyDTO.getLeaveStartTime(), applyDTO.getLeaveEndTime()));
 
         int applyId = leaveApplyService.saveApplyDetail(applyDTO);
         applyDTO.setId(applyId);

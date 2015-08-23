@@ -37,7 +37,8 @@ public class MenuBO {
 
     }
 
-    private static List<FirstMenuDTO> initMenu() {
+    //请假管理
+    private static FirstMenuDTO prepareLeaveManage() {
 
         FirstMenuDTO firstMenuDTO1 = new FirstMenuDTO();
         firstMenuDTO1.setHref("oneMenuId_001");
@@ -71,6 +72,12 @@ public class MenuBO {
 
         firstMenuDTO1.setSecondMenus(secondMenus1);
 
+        return firstMenuDTO1;
+    }
+
+    //用户管理
+    private static FirstMenuDTO prepareUserManage() {
+
         FirstMenuDTO firstMenuDTO22 = new FirstMenuDTO();
         firstMenuDTO22.setHref("oneMenuId_002");
         firstMenuDTO22.setName("用户管理");
@@ -91,43 +98,50 @@ public class MenuBO {
 
         firstMenuDTO22.setSecondMenus(secondMenus22);
 
-        List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(5);
-        menus.add(firstMenuDTO1);
-        menus.add(firstMenuDTO22);
-
-        FirstMenuDTO sysManageFirstMenu = getFirstMenuDTO("sysManage","系统管理");
-        sysManageFirstMenu.addSecondMenuDTO(getSecondMenuDTO(3001, "法定假日", "/sys/holidaySettingIndex"));
-
-        menus.add(sysManageFirstMenu);
-
-        return menus;
-    }
-
-    private static void initMenu4Normal() {
-        roleMenu.put(RoleEnum.NOMALR.getType(), initMenu());
-    }
-
-    public static FirstMenuDTO getFirstMenuDTO(String id, String name) {
-        FirstMenuDTO firstMenuDTO22 = new FirstMenuDTO();
-        firstMenuDTO22.setHref(id);
-        firstMenuDTO22.setName(name);
         return firstMenuDTO22;
     }
 
-    public static SecondMenuDTO getSecondMenuDTO(int id, String name, String href) {
+    //系统管理
+    private static FirstMenuDTO prepareSyetemManage() {
+
+        FirstMenuDTO firstMenuDTO22 = new FirstMenuDTO();
+        firstMenuDTO22.setHref("sysManage");
+        firstMenuDTO22.setName("系统管理");
+
         SecondMenuDTO secondMenuDTO22 = new SecondMenuDTO();
-        secondMenuDTO22.setName(name);
-        secondMenuDTO22.setHref(href);
-        secondMenuDTO22.setIndex(id);
-        return secondMenuDTO22;
+        secondMenuDTO22.setName("法定假日");
+        secondMenuDTO22.setHref("/sys/holidaySettingIndex");
+        secondMenuDTO22.setIndex(3001);
+
+        firstMenuDTO22.addSecondMenuDTO(secondMenuDTO22);
+
+        return firstMenuDTO22;
+    }
+
+    private static void initMenu4Normal() {
+
+        List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(3);
+        menus.add(prepareLeaveManage());
+
+        roleMenu.put(RoleEnum.NOMALR.getType(), menus);
     }
 
     private static void initMenu4Manage() {
-        roleMenu.put(RoleEnum.MANAGE.getType(), initMenu());
+
+        List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(3);
+        menus.add(prepareLeaveManage());
+
+        roleMenu.put(RoleEnum.MANAGE.getType(), menus);
     }
 
     private static void initMenu4Hr() {
-        roleMenu.put(RoleEnum.HR.getType(), initMenu());
+
+        List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(3);
+        menus.add(prepareLeaveManage());
+        menus.add(prepareUserManage());
+        menus.add(prepareSyetemManage());
+
+        roleMenu.put(RoleEnum.HR.getType(), menus);
     }
 
 }

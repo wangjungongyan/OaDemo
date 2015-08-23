@@ -120,7 +120,6 @@
         <tr style="background-color: #eee">
             <th>申请时间</th>
             <th>请假类型</th>
-            <th>审批流</th>
             <th>请假时间段</th>
             <th>状态</th>
             <th>查看详情</th>
@@ -138,34 +137,6 @@
                 </#if>
                 <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
                 <td>${myApply.leaveName}</td>
-                <td>
-                    <#if myApply.audit??>
-                        <#assign audit = myApply.audit/>
-                        <#assign manager = audit.manager/>
-                    ${manager.chineseName}
-                        <#if audit.managerAuditStatus == 1>
-                            审核通过
-                        <#elseif audit.managerAuditStatus == 2 >
-                            审核不通过
-                        <#else>
-                            未审核
-                        </#if>
-                        ->
-                        <#if audit.hr??>
-                            <#assign hr = audit.hr/>
-                        ${hr.chineseName}(HR)
-                            <#if audit.hrAuditStatus == 1>
-                                审核通过
-                            <#elseif audit.hrAuditStatus == 2 >
-                                审核不通过
-                            <#else>
-                                未审核
-                            </#if>
-                        </#if>
-                    <#else>
-                        暂未审批
-                    </#if>
-                </td>
                 <td>${myApply.leaveStartTime?string('yyyy-MM-dd HH:mm')}
                     至 ${myApply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>
                 <td>${myApply.statusName}</td>
