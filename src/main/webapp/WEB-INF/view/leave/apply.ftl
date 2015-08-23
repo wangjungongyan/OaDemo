@@ -11,7 +11,7 @@
             padding-top: 7px;
             margin-bottom: 0;
             text-align: left;
-            margin-left:50px
+            margin-left: 50px
         }
 
         .form-horizontal input, .form-search textarea, .form-inline textarea, .form-horizontal textarea, .form-search select, .form-inline select, .form-horizontal select, .form-search .help-inline, .form-inline .help-inline, .form-horizontal .help-inline, .form-search .uneditable-input, .form-inline .uneditable-input, .form-horizontal .uneditable-input, .form-search .input-prepend, .form-inline .input-prepend, .form-horizontal .input-prepend, .form-search .input-append, .form-inline .input-append, .form-horizontal .input-append {
@@ -30,7 +30,8 @@
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
                 <tr>
-                    <td colspan="4"><label id="cishu" style="margin-left: 450px;" class="col-sm-40 control-label">请 假 申 请 详 细 信 息</label></td>
+                    <td colspan="4"><label id="cishu" style="margin-left: 450px;" class="col-sm-40 control-label">请 假 申
+                        请 详 细 信 息</label></td>
                 </tr>
                 <tr>
                     <td><label class="col-sm-8 control-label">申请人</label></td>
@@ -54,10 +55,14 @@
                     </td>
                     <td>
                         <div class="col-sm-3">
-                            <select name ="leaveType" id="leaveType">
-                                <#list employeeHolidays as holiday>
-                                    <option value ="${holiday.type}">【${holiday.name}】 本拥${holiday.own}天 剩余${holiday.surplus}天</option>
-                                </#list>
+                            <select name="leaveType" id="leaveType">
+                            <#list employeeHolidays as holiday>
+                                <#if holiday.type !=0>
+                                    <option value="${holiday.type}">【${holiday.name}】 本拥${holiday.own}天
+                                        剩余${holiday.surplus}天
+                                    </option>
+                                </#if>
+                            </#list>
                             </select>
                         </div>
                     </td>
@@ -76,7 +81,8 @@
                     </td>
                     <td>
                         <div class="col-sm-3">
-                            <input class="form-control" id="leaveStartTime" name="leaveStartTime" placeholder="" required="required" />
+                            <input class="form-control" id="leaveStartTime" name="leaveStartTime" placeholder=""
+                                   required="required"/>
                         </div>
                     </td>
                     <td>
@@ -98,13 +104,15 @@
                     </td>
                     <td>
                         <div class="col-sm-3">
-                                <textarea class="form-control" rows="3" cols="20" name="leaveReason" required="required"></textarea>
+                            <textarea class="form-control" rows="3" cols="20" name="leaveReason"
+                                      required="required"></textarea>
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">请假类型描述</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <textarea class="form-control" rows="3" cols="20" name="leaveDesc" readonly>${employeeHolidays[0].desc}</textarea>
+                            <textarea class="form-control" rows="3" cols="20" name="leaveDesc"
+                                      readonly>${employeeHolidays[0].desc}</textarea>
                         </div>
                     </td>
                 </tr>
@@ -123,9 +131,9 @@
         </div>
     </form>
 
-    <#list employeeHolidays as holiday>
-        <input type="hidden" id="holidayDesc${holiday_index+1}" type="${holiday.type}" desc="${holiday.desc}">
-    </#list>
+<#list employeeHolidays as holiday>
+    <input type="hidden" id="holidayDesc${holiday_index+1}" type="${holiday.type}" desc="${holiday.desc}">
+</#list>
 
 </div>
 </body>
@@ -138,33 +146,33 @@
 
     $("#leaveStartTime").datetimepicker({
         format: 'yyyy-mm-dd hh',
-        minView:0,
-        todayHighlight:true,
-        todayBtn:true,
-        autoclose:true
+        minView: 0,
+        todayHighlight: true,
+        todayBtn: true,
+        autoclose: true
     });
 
     $("#leaveEndTime").datetimepicker({
         format: 'yyyy-mm-dd hh',
-        minView:0,
-        todayHighlight:true,
-        todayBtn:true,
-        autoclose:true
+        minView: 0,
+        todayHighlight: true,
+        todayBtn: true,
+        autoclose: true
     });
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-        $("#leaveType").change(function(){
+        $("#leaveType").change(function () {
             var type = $("#leaveType").find("option:selected").attr("value");
             var descId = "#holidayDesc" + type;
             var desc = $(descId).attr("desc");
             $("textarea[name='leaveDesc']").text(desc);
         })
 
-        $("#leaveEndTime").change(function(){
+        $("#leaveEndTime").change(function () {
             var leaveStartTime = $("#leaveStartTime").val();
             var leaveEndTime = $("#leaveEndTime").val();
-            if(leaveEndTime <= leaveStartTime){
+            if (leaveEndTime <= leaveStartTime) {
                 $("#leaveEndTime").val("");
                 alert("假期结束时间必须大于开始时间.");
             }
