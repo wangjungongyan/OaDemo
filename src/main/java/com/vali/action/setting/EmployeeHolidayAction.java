@@ -29,7 +29,7 @@ public class EmployeeHolidayAction {
         Map model = new HashMap();
         model.put("employee", employeeService.loadEmployee(employeeId));
         model.put("year", year);
-        model.put("employeeHolidays", employeeHolidayService.getEmployeeHoliday(employeeId, year));
+        model.put("employeeHolidays", employeeHolidayService.getEmployeeHolidayWhenExists(employeeId, year));
         return new ModelAndView("setting/employeeHolidayList", model);
     }
 

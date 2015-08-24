@@ -82,6 +82,32 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
         return dtos;
     }
 
+    @Override public List<EmployeeHolidayDTO> getEmployeeHolidayWhenExists(int employeeId) {
+        return getEmployeeHolidayWhenExists(employeeId, TimeUtil.getCurrentYear());
+    }
+
+    @Override public List<EmployeeHolidayDTO> getEmployeeHolidayWhenExists(int employeeId, String year) {
+        if (StringUtils.isBlank(year)) {
+            year = TimeUtil.getCurrentYear();
+        }
+
+        List<EmployeeHolidayPO> pos = employeeHolidayDao.getEmployeeHoliday(employeeId, year);
+
+        List<EmployeeHolidayDTO> dtos = new ArrayList<EmployeeHolidayDTO>(pos.size());
+        List<Integer> types = new ArrayList<Integer>(10);
+
+        for (EmployeeHolidayPO po : pos) {
+            EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
+            ENTITY2DTO4Holiday.copy(po, dto, null);
+            LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(po.getType());
+            dto.setName(leaveTypeEnum.getName());
+            dto.setDesc(leaveTypeEnum.getDesc());
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
     @Override public List<EmployeeHolidayDTO> getHolidayTypes() {
 
         List<EmployeeHolidayDTO> dtos = new ArrayList<EmployeeHolidayDTO>(12);

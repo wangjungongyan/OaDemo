@@ -28,6 +28,10 @@ public interface EmployeeHolidayService {
      */
     public List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId, String year);
 
+    public List<EmployeeHolidayDTO> getEmployeeHolidayWhenExists(int employeeId);
+
+    public List<EmployeeHolidayDTO> getEmployeeHolidayWhenExists(int employeeId, String year);
+
     /**
      * 获取各种类型假期
      *
