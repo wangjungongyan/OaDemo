@@ -21,11 +21,10 @@ public class LoginInteceptor implements HandlerInterceptor {
     @Override public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                        Object o) throws Exception {
 
-        String requestUri = httpServletRequest.getRequestURI();
         HttpSession session = httpServletRequest.getSession();
         EmployeeDTO loginUser = (EmployeeDTO) session.getAttribute(Constant.LOGIN_USER);
 
-        if (excludedUrls.contains(requestUri)) {
+        if (excludedUrls.contains(getStartOfRequestUri(httpServletRequest))) {
             if (loginUser != null) {
                 httpServletResponse.sendRedirect("/main");
                 return false;
@@ -41,6 +40,12 @@ public class LoginInteceptor implements HandlerInterceptor {
 
         LoginBO.setLoginUser(loginUser);
         return true;
+    }
+
+    private String getStartOfRequestUri(HttpServletRequest httpServletRequest) {
+        String requestUri = httpServletRequest.getRequestURI();
+        int lastIndex = requestUri.lastIndexOf("/");
+        return (lastIndex == 0) ? requestUri : requestUri.substring(0, lastIndex + 1);
     }
 
     @Override public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,

@@ -70,6 +70,7 @@
                     <list>
                         <value>/login</value>
                         <value>/loginVerify</value>
+                        <value>/image/</value>
                     </list>
                 </property>
             </bean>
