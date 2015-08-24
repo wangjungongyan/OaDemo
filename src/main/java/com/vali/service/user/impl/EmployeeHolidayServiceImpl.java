@@ -89,10 +89,13 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
 
     @Override
     public BigDecimal caculateLevaeDays(Date beginTime, Date endTime) {
+
         BigDecimal dayNum = new BigDecimal("0");
+
         if (isOneDay(beginTime, endTime)) {
             return sameDayLeaveTime(beginTime, endTime);
         }
+
         DateTime oneDayEndTime = new DateTime(beginTime).withTime(18, 0, 0, 0);
         dayNum = dayNum.add(sameDayLeaveTime(beginTime, oneDayEndTime.toDate()));
         //            DateTime oneDayBeginTime = new DateTime(beginTime);
@@ -115,38 +118,60 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
         return dayNum;
     }
 
-    private BigDecimal sameDayLeaveTime(Date begin, Date end) {
+    public BigDecimal sameDayLeaveTime(Date begin, Date end) {
         BigDecimal dayNum = new BigDecimal("0");
         if (end.before(begin)) {
             return dayNum;
         }
+        
         if (!dayIsWorkDay(begin)) {
             return dayNum;
         }
 
         //是工作日且时间有间隔
         DateTime time9 = new DateTime(begin).withTime(9, 0, 0, 0);
-        DateTime time12 = new DateTime(begin).withTime(12, 0, 0, 0);
         DateTime time13 = new DateTime(begin).withTime(13, 0, 0, 0);
-        DateTime time18 = new DateTime(begin).withTime(18, 0, 0, 0);
+        DateTime time13half = new DateTime(begin).withTime(13, 30, 0, 0);
+        DateTime time18 = new DateTime(begin).withTime(17, 30, 0, 0);
 
         DateTime beginTime = new DateTime(begin);
         DateTime endTime = new DateTime(end);
+
         if (beginTime.isBefore(time9)) {
-            //请假时间早于8点，按从8点开始
             beginTime = new DateTime(begin).withTime(9, 0, 0, 0);
         }
+
         if (endTime.isAfter(time18)) {
-            endTime = new DateTime(begin).withTime(18, 0, 0, 0);
+            endTime = new DateTime(begin).withTime(17, 30, 0, 0);
         }
 
-        int secondNum = endTime.secondOfDay().get() - beginTime.secondOfDay().get();
-        //是否排除中午休息时间
-        if (secondNum > 4 * 60 * 60) {
-            dayNum = new BigDecimal("1");
-        } else if (secondNum > 0) {
-            dayNum = new BigDecimal("0.5");
+        if (!endTime.toDate().after(beginTime.toDate())) {
+            return new BigDecimal("0");
         }
+
+        if (!endTime.isAfter(time13)) {
+            return new BigDecimal("0.5");
+        }
+
+        if ((!beginTime.isBefore(time13) && !beginTime.isAfter(time13half))) {
+            if (!endTime.isBefore(time13) && !endTime.isAfter(time13half)) {
+                return new BigDecimal("0.0");
+            }
+            return new BigDecimal("0.5");
+        }
+
+        if (!beginTime.isAfter(time13)) {
+            if (!endTime.isBefore(time13) && !endTime.isAfter(time13half)) {
+                return new BigDecimal("0.5");
+            }
+
+            int secondNum = endTime.secondOfDay().get() - beginTime.secondOfDay().get() - 30 * 60;
+            if (secondNum > 4 * 60 * 60) {
+                return new BigDecimal("1.0");
+            }
+            return new BigDecimal("0.5");
+        }
+
         return dayNum;
     }
 
@@ -168,18 +193,16 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
         }
         return true;
     }
+    //08:30:00 09:00:00
 
-    public static void main(String[] args) {
-        try {
-            EmployeeHolidayServiceImpl a = new EmployeeHolidayServiceImpl();
-            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            //System.out.println(a.caculateLevaeDays(f.parse("2015-01-01 9:0:03"), f.parse("2015-01-1 13:0:04")));
-            DateTime d = new DateTime(f.parse("2015-08-22 9:0:03"));
-            int dayOfWeek = d.dayOfWeek().get();
-            System.out.println(dayOfWeek);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date beginDate = new DateTime(f.parse("2015-08-22 08:30:00")).toDate();
+        Date endDate = new DateTime(f.parse("2015-08-22 09:00:00")).toDate();
+
+        EmployeeHolidayServiceImpl impl = new EmployeeHolidayServiceImpl();
+        System.out.print(impl.sameDayLeaveTime(beginDate, endDate));
 
     }
 
