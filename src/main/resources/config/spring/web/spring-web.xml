@@ -71,6 +71,7 @@
                         <value>/login</value>
                         <value>/loginVerify</value>
                         <value>/image/</value>
+                        <value>/js/</value>
                     </list>
                 </property>
             </bean>
