@@ -115,7 +115,7 @@ public class MenuBO {
 
 
         firstMenuDTO22.addSecondMenuDTO(secondMenuDTO22);
-        firstMenuDTO22.addSecondMenuDTO(getSecondMenuDTO("初始化下年年假","/sys/initNextYearHoliday",3002));
+        firstMenuDTO22.addSecondMenuDTO(getSecondMenuDTO("初始化下年年假","/sys/initYearHoliday",3002));
         return firstMenuDTO22;
     }
 
