@@ -123,7 +123,7 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
         if (end.before(begin)) {
             return dayNum;
         }
-        
+
         if (!dayIsWorkDay(begin)) {
             return dayNum;
         }
