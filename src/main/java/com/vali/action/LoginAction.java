@@ -42,7 +42,7 @@ public class LoginAction {
 
         Map model = new HashMap();
         model.put("msg", loginVerifyDTO.getMsg());
-        return  new ModelAndView("forward:/login", model);
+        return new ModelAndView("forward:/login", model);
     }
 
     @RequestMapping(value = "/")
@@ -62,6 +62,12 @@ public class LoginAction {
         List<FirstMenuDTO> menus = employeeService.getEmployeeMenus(loginName);
         model.put("menus", menus);
         return new ModelAndView("main", model);
+    }
+
+    @RequestMapping(value = "/logOut")
+    public String logOut() {
+        session.removeAttribute(Constant.LOGIN_USER);
+        return "redirect:/login";
     }
 
     private void setLoginUser2Session(String loginName) {

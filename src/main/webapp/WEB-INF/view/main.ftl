@@ -10,7 +10,10 @@
     </head>
     <body>
         <div class="body-top-content-div">
-            <div class="body-top-login-user-div">罗伊斯.罗尔斯</div>
+            <div class="body-top-login-user-div">
+                当前登录用户【${loginUser.chineseName}】
+                <a href="/logOut">我要退出</a>
+            </div>
         </div>
         <div class="body-center-div" >
             <div class="left-menu-div" >
