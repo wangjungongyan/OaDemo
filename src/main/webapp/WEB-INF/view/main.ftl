@@ -10,6 +10,7 @@
     </head>
     <body>
         <div class="body-top-content-div">
+            <img style="height: 55px;margin: 12px 0 18px 100px;" src="/image/logo.png"/>
             <div class="body-top-login-user-div">
                 当前登录用户【${loginUser.chineseName}】
                 <a href="/logOut">我要退出</a>
