@@ -1,4 +1,4 @@
-package com.vali.dto.leave;
+package com.vali.dto.settings;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.vali.service.user.remote;
 
-import com.vali.dto.leave.EmployeeHolidayDTO;
+import com.vali.dto.settings.EmployeeHolidayDTO;
 
 import java.math.BigDecimal;
 import java.util.Date;

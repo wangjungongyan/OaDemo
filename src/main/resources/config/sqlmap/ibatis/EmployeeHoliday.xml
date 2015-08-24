@@ -31,6 +31,21 @@
 		LL_EmployeeHoliday
 		where EmployeeId = #employeeId#
 	</select>
+    <select id="getEmployeeYearHoliday" parameterClass="map" resultMap="EmployeeHolidayResult">
+        SELECT
+        ID,
+        EmployeeId,
+        Year,
+        Own,
+        Used,
+        Type,
+        (Own - Used) as Surplus,
+        AddTime,
+        UpdateTime
+        FROM
+        LL_EmployeeHoliday
+        where EmployeeId = #employeeId# and Year = #year#
+    </select>
 
     <update id="decreaseHolidayDay">
         update LL_EmployeeHoliday

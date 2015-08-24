@@ -1,7 +1,7 @@
 package com.vali.service.user.impl;
 
-import com.vali.dao.leave.EmployeeHolidayDao;
-import com.vali.dto.leave.EmployeeHolidayDTO;
+import com.vali.dao.setting.EmployeeHolidayDao;
+import com.vali.dto.settings.EmployeeHolidayDTO;
 import com.vali.dto.settings.HolidaySettingDTO;
 import com.vali.enums.leave.LeaveTypeEnum;
 import com.vali.po.leave.EmployeeHolidayPO;
