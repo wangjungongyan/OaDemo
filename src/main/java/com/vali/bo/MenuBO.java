@@ -113,11 +113,19 @@ public class MenuBO {
         secondMenuDTO22.setHref("/sys/holidaySettingIndex");
         secondMenuDTO22.setIndex(3001);
 
-        firstMenuDTO22.addSecondMenuDTO(secondMenuDTO22);
 
+        firstMenuDTO22.addSecondMenuDTO(secondMenuDTO22);
+        firstMenuDTO22.addSecondMenuDTO(getSecondMenuDTO("初始化下年年假","/sys/initNextYearHoliday",3002));
         return firstMenuDTO22;
     }
 
+    private static SecondMenuDTO getSecondMenuDTO(String title,String url,int id){
+        SecondMenuDTO secondMenuDTO23 = new SecondMenuDTO();
+        secondMenuDTO23.setName(title);
+        secondMenuDTO23.setHref(url);
+        secondMenuDTO23.setIndex(id);
+        return secondMenuDTO23;
+    }
     private static void initMenu4Normal() {
 
         List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(3);
