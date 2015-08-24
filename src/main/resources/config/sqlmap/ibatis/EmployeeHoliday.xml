@@ -30,6 +30,7 @@
 		FROM
 		LL_EmployeeHoliday
 		where EmployeeId = #employeeId#
+		and Year = #year#
 	</select>
 
     <update id="decreaseHolidayDay">
@@ -48,6 +49,15 @@
         update LL_EmployeeHoliday
         set Used = Used - #po.used#,
             UpdateTime = NOW()
+        where EmployeeId = #po.employeeId#
+        and Year = #po.year#
+        and Type = #po.type#
+    </update>
+
+    <update id="updateHolidayOwn">
+        update LL_EmployeeHoliday
+        set Own =  #po.own#,
+        UpdateTime = NOW()
         where EmployeeId = #po.employeeId#
         and Year = #po.year#
         and Type = #po.type#

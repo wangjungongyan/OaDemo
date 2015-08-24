@@ -20,6 +20,15 @@ public interface EmployeeHolidayService {
     public List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId);
 
     /**
+     * 获取员工假期
+     *
+     * @param employeeId
+     * @param year
+     * @return
+     */
+    public List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId, String year);
+
+    /**
      * 获取各种类型假期
      *
      * @return
@@ -33,7 +42,7 @@ public interface EmployeeHolidayService {
      * @param endTime
      * @return
      */
-    public BigDecimal caculateLevaeDays(Date beginTime, Date endTime);
+    public BigDecimal caculateLeaveDays(Date beginTime, Date endTime);
 
     /**
      * 扣假
@@ -50,5 +59,7 @@ public interface EmployeeHolidayService {
      * @return
      */
     public boolean increaseHolidayDay(EmployeeHolidayDTO dto);
+
+    public boolean updateHolidayOwn(EmployeeHolidayDTO dto);
 
 }

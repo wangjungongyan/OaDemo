@@ -59,7 +59,7 @@ public class ApplyAction {
         applyDTO.setApplicantID(employeeDTO.getId());
         applyDTO.setApplyTime(new Date());
         applyDTO.setLeaveDays(
-                employeeHolidayService.caculateLevaeDays(applyDTO.getLeaveStartTime(), applyDTO.getLeaveEndTime()));
+                employeeHolidayService.caculateLeaveDays(applyDTO.getLeaveStartTime(), applyDTO.getLeaveEndTime()));
 
         int applyId = leaveApplyService.saveApplyDetail(applyDTO);
         applyDTO.setId(applyId);

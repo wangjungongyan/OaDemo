@@ -14,7 +14,7 @@ public class EmployeeHolidayPO {
 
     private int id;
 
-    private int EmployeeId;
+    private int employeeId;
 
     private String year;
 

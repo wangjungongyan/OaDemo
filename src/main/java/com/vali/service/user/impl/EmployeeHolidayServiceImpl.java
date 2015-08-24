@@ -7,8 +7,10 @@ import com.vali.enums.leave.LeaveTypeEnum;
 import com.vali.po.leave.EmployeeHolidayPO;
 import com.vali.service.setting.HolidaySettingService;
 import com.vali.service.user.remote.EmployeeHolidayService;
+import com.vali.util.TimeUtil;
 import lombok.Setter;
 import net.sf.cglib.beans.BeanCopier;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +38,16 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
     private BeanCopier DTO2ENTITY4Holiday = BeanCopier.create(EmployeeHolidayDTO.class, EmployeeHolidayPO.class, false);
 
     @Override public List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId) {
+        return getEmployeeHoliday(employeeId, TimeUtil.getCurrentYear());
+    }
 
-        List<EmployeeHolidayPO> pos = employeeHolidayDao.getEmployeeHoliday(employeeId);
+    @Override public List<EmployeeHolidayDTO> getEmployeeHoliday(int employeeId, String year) {
+
+        if (StringUtils.isBlank(year)) {
+            year = TimeUtil.getCurrentYear();
+        }
+
+        List<EmployeeHolidayPO> pos = employeeHolidayDao.getEmployeeHoliday(employeeId, year);
 
         List<EmployeeHolidayDTO> dtos = new ArrayList<EmployeeHolidayDTO>(pos.size());
         List<Integer> types = new ArrayList<Integer>(10);
@@ -55,14 +65,16 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
         LeaveTypeEnum[] leaveTypeEnums = LeaveTypeEnum.values();
 
         for (LeaveTypeEnum leaveTypeEnum : leaveTypeEnums) {
-            if (!types.contains(leaveTypeEnum.getType())) {
+            if (!types.contains(leaveTypeEnum.getType()) && leaveTypeEnum != LeaveTypeEnum.ALL) {
                 EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
+                dto.setEmployeeId(employeeId);
                 dto.setName(leaveTypeEnum.getName());
                 dto.setDesc(leaveTypeEnum.getDesc());
                 dto.setType(leaveTypeEnum.getType());
                 dto.setUsed(new BigDecimal(0));
                 dto.setOwn(new BigDecimal(0));
                 dto.setSurplus(new BigDecimal(0));
+                dto.setYear(year);
                 dtos.add(dto);
             }
         }
@@ -88,7 +100,7 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
     }
 
     @Override
-    public BigDecimal caculateLevaeDays(Date beginTime, Date endTime) {
+    public BigDecimal caculateLeaveDays(Date beginTime, Date endTime) {
 
         BigDecimal dayNum = new BigDecimal("0");
 
@@ -221,5 +233,14 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
         DTO2ENTITY4Holiday.copy(dto, po, null);
 
         return (employeeHolidayDao.increaseHolidayDay(po) > 0);
+    }
+
+    @Override public boolean updateHolidayOwn(EmployeeHolidayDTO dto) {
+
+        EmployeeHolidayPO po = new EmployeeHolidayPO();
+
+        DTO2ENTITY4Holiday.copy(dto, po, null);
+
+        return (employeeHolidayDao.updateHolidayOwn(po) > 0);
     }
 }
