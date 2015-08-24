@@ -16,7 +16,8 @@ import java.util.List;
 public interface EmployeeHolidayDao {
 
     @Action(action = ActionType.QUERY_LIST)
-    public List<EmployeeHolidayPO> getEmployeeHoliday(@ParamName("employeeId") int employeeId);
+    public List<EmployeeHolidayPO> getEmployeeHoliday(@ParamName("employeeId") int employeeId,
+                                                      @ParamName("year") String year);
 
     @Action(action = ActionType.UPDATE)
     public int decreaseHolidayDay(@ParamName("po") EmployeeHolidayPO po);
@@ -29,5 +30,7 @@ public interface EmployeeHolidayDao {
 
     @Action(action = ActionType.INSERT)
     void saveHolidaySetting(EmployeeHolidayPO po);
+    @Action(action = ActionType.UPDATE)
+    public int updateHolidayOwn(@ParamName("po") EmployeeHolidayPO po);
 
 }

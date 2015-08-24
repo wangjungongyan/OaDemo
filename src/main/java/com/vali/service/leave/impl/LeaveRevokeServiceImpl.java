@@ -99,7 +99,7 @@ public class LeaveRevokeServiceImpl implements LeaveRevokeService {
         po.setType(leaveApplyDTO.getLeaveType());
         po.setYear(TimeUtil.getCurrentYear());
 
-        employeeHolidayDao.decreaseHolidayDay(po);
+        employeeHolidayDao.increaseHolidayDay(po);
         leaveApplyDao.updateApplyStatus(applyId, AuditStatusEnum.REOVKE.getAuditStatus());
         leaveAuditDao.updateStatusAndSuggest4Hr(applyId, suggest, AuditStatusEnum.REOVKE.getAuditStatus());
 

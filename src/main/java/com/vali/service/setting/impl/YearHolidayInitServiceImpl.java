@@ -81,7 +81,7 @@ public class YearHolidayInitServiceImpl  implements YearHolidayInitService {
         return new BigDecimal("0");
     }
 
-    
+
 
     @Override
     public void initSettings(Integer year) throws Exception{
