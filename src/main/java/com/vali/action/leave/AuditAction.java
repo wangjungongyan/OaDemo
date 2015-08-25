@@ -9,6 +9,7 @@ import com.vali.dto.leave.LeaveAuditQueryDTO;
 import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
+import com.vali.service.mail.MailService;
 import com.vali.service.user.remote.EmployeeHolidayService;
 import com.vali.service.user.remote.EmployeeService;
 import com.vali.util.TimeUtil;
@@ -36,6 +37,9 @@ public class AuditAction {
 
     @Resource(name = "employeeService")
     private EmployeeService employeeService;
+
+    @Resource(name = "mailService")
+    private MailService mailService;
 
     @RequestMapping(value = "/leave/wait2Audit")
     public ModelAndView wait2Audit(LeaveAuditQueryDTO leaveAuditQueryDTO, Integer pageNo, Integer pageSize) {
@@ -110,6 +114,8 @@ public class AuditAction {
         if (isHr && originAuditStatus != caculatedAuditStatusEnum.getAuditStatus()) {
             return "由于剩余假期天数不够,审核不通过.";
         }
+
+        mailService.sendEmail(employeeService.getHr().getEmail(), "您有一个待审批请假申请", "http://lloa.com/leave/wait2Audit");
 
         return "已操作成功.";
     }

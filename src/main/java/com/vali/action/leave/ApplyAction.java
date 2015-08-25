@@ -11,6 +11,7 @@ import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.leave.AuditStatusEnum;
 import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
+import com.vali.service.mail.MailService;
 import com.vali.service.user.remote.EmployeeHolidayService;
 import com.vali.service.user.remote.EmployeeService;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,9 @@ public class ApplyAction {
 
     @Resource(name = "employeeHolidayService")
     private EmployeeHolidayService employeeHolidayService;
+
+    @Resource(name = "mailService")
+    private MailService mailService;
 
     @RequestMapping(value = "/leave")
     public ModelAndView leaveIndex() {
@@ -67,6 +71,8 @@ public class ApplyAction {
         if (applyId > 0) {
             leaveAuditService.saveAudit(getLeaveAuditDTO(applyDTO));
         }
+
+        mailService.sendEmail(employeeDTO.getManager().getEmail(), "您有一个待审批请假申请", "http://lloa.com/leave/wait2Audit");
 
         return "redirect:/leave/myLeaveApply";
     }
