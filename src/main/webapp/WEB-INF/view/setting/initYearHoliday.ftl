@@ -36,19 +36,30 @@
 
 <div class="container">
 
+<<<<<<< HEAD
     <form class="form-inline" id="queryForm" action="/sys/holidaySettingIndex">
+=======
+    <form class="form-inline" id="queryForm" action="/sys/initYearHoliday/setting">
+>>>>>>> 65956f735261f62c105b6dcdb5a30961e748a5fc
         <table>
             <tr>
                 <div class="form-group">
 
                     <label>年份</label>
+<<<<<<< HEAD
                     <input name="year" value="${year}" type="text" class="form_datetime" style="width: 150px;">
                     &nbsp;&nbsp;&nbsp;
                     <button name="queryButton" type="submit" class="btn btn-default">设置</button>
+=======
+                    <input name="year" value="${year}" type="text" required="" class="form_datetime" style="width: 150px;">
+                    &nbsp;&nbsp;&nbsp;
+                    <button name="queryButton" type="submit" class="btn btn-default">初始化</button>
+>>>>>>> 65956f735261f62c105b6dcdb5a30961e748a5fc
                 </div>
             </tr>
         </table>
     </form>
+<<<<<<< HEAD
 
     <table class="table  table-striped table-bordered table-hover ">
         <thead>
@@ -142,6 +153,8 @@
             </div>
         </div>
     </div>
+=======
+>>>>>>> 65956f735261f62c105b6dcdb5a30961e748a5fc
 </div>
 
 <script src="/js/jquery-1.8.2.min.js"></script>
@@ -157,6 +170,7 @@
         todayBtn: true,
         autoclose: true
     });
+<<<<<<< HEAD
     $("#add-day").datetimepicker({
         format: 'yyyy-mm-dd',
         minView: 2,
@@ -248,6 +262,8 @@
             }
         });
     }
+=======
+>>>>>>> 65956f735261f62c105b6dcdb5a30961e748a5fc
 </script>
 </body>
 

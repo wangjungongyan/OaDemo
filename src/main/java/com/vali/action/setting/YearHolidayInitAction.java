@@ -6,6 +6,7 @@ import com.vali.service.setting.YearHolidayInitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
@@ -19,21 +20,21 @@ public class YearHolidayInitAction {
     private YearHolidayInitService yearHolidayInitService;
 
     @RequestMapping(value = "/sys/initYearHoliday")
-    public String initYearHoliday(){
+    public String initYearHoliday() {
         return "/sys/initYearHoliday";
     }
 
     @RequestMapping(value = "/sys/initYearHoliday/setting")
     @ResponseBody
-    public Object setting(Integer year){
+    public ModelAndView setting(Integer year) {
         JSONObject json = new JSONObject();
         try {
             yearHolidayInitService.initSettings(year);
-            json.put("success",true);
-        }catch (Exception e){
-            json.put("success",false);
-            json.put("errorMsg","失败:"+e.getMessage());
+            json.put("success", true);
+        } catch (Exception e) {
+            json.put("success", false);
+            json.put("errorMsg", "失败:" + e.getMessage());
         }
-        return json;
+        return new ModelAndView("/setting/initYearHoliday");
     }
 }

@@ -45,7 +45,11 @@
         UpdateTime
         FROM
         LL_EmployeeHoliday
+<<<<<<< HEAD
         where EmployeeId = #employeeId# and Year = #year#
+=======
+        where EmployeeId = #employeeId# and Year = #year# and Type = #type#
+>>>>>>> 65956f735261f62c105b6dcdb5a30961e748a5fc
     </select>
 
     <update id="decreaseHolidayDay">
@@ -77,5 +81,27 @@
         and Year = #po.year#
         and Type = #po.type#
     </update>
+
+    <insert id="saveHolidaySetting">
+      insert into LL_EmployeeHoliday (EmployeeId,
+		Year,
+		Own,
+		Used,
+		Type,
+		AddTime,
+		UpdateTime) values (
+		#po.employeeId#,
+		#po.year#,
+		#po.own#,
+		#po.used#,
+		#po.type#,
+		#po.addTime#,
+		#po.updateTime#
+		)
+		<selectKey resultClass="int" keyProperty="po.id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+
+    </insert>
 
 </sqlMap>

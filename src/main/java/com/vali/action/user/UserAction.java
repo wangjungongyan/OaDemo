@@ -40,6 +40,9 @@ public class UserAction {
             Map model = new HashMap();
             model.put("user", userDTO);
             model.put("errorMsg","此用户邮箱已经存在");
+            model.put("departments", DepartmentEnum.values());
+            model.put("roles", RoleEnum.values());
+            model.put("manageList",employeeService.queryAllManager());
             return new ModelAndView("user/addUserIndex", model);
         }
         userDTO.setStatus(EmployeeStatusEnum.ON.getStatus());

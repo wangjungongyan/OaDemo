@@ -24,16 +24,21 @@
             <table class="table .table-condensed table-striped ">
                 <tr>
                     <td colspan="4"><label id="cishu" style="margin-left: 30px;
-    text-align: left;
-    font-weight: bold;
-    font-size: 16px;
-    color: red;" class="col-sm-40 control-label">添加新员工</label></td>
+                        text-align: left;
+                        font-weight: bold;
+                        font-size: 16px;
+                        class="col-sm-40 control-label">添加新员工</label>
+
+                        <#if errorMsg??>
+                            <label style="color: red;float: right;padding-right: 350px;">${errorMsg}</label>
+                        </#if>
+                    </td>
                 </tr>
                 <tr>
                     <td><label class="col-sm-8 control-label">FirstName</label></td>
                     <td>
                         <div class="col-sm-3">
-                            <input name="firstName" required="" value="${user.firstName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="FirstName">
+                            <input name="firstName" required="FirstName" value="${user.firstName}" type="gongzuocantime" class="form-control" id="inputgongzuocantime" placeholder="FirstName">
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">MiddleName</label></td>
@@ -147,11 +152,9 @@
                     </td>
                     <td>
                         <p>
-                            <a href="applyList">
                                 <button type="submit" class="btn btn-info">
                                     确认添加员工
                                 </button>
-                            </a>
                         </p>
                     </td>
                     <td></td>

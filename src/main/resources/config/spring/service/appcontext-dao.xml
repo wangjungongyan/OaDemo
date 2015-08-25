@@ -11,9 +11,16 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+<<<<<<< HEAD
         <property name="url" value="${url}"/>
         <property name="username" value="${username}"/>
         <property name="password" value="${password}"/>
+=======
+        <property name="url"
+                  value="jdbc:mysql://192.168.120.130/ll-oa"/>
+        <property name="username" value="utest"/>
+        <property name="password" value="ptest"/>
+>>>>>>> 65956f735261f62c105b6dcdb5a30961e748a5fc
     </bean>
 
     <bean id="sqlMapClient" class="com.leya.idal.IdalSqlMapClientFactoryBean">
