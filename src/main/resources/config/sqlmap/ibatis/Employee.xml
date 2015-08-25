@@ -154,7 +154,24 @@
 	<select id="pageQueryEmployee_count" parameterClass="map" resultClass="int">
 		SELECT count(*) from LL_Employee
 		where 1=1
-		
+		<isNotEmpty property="employee.chineseName">
+          and ChineseName like CONCAT('%',#employee.chineseName#,'%')
+        </isNotEmpty>
+        <isNotEmpty property="employee.firstName">
+            and firstName like CONCAT('%',#employee.firstName#,'%')
+        </isNotEmpty>
+        <isNotEmpty property="employee.middleName">
+            and middleName like CONCAT('%',#employee.middleName#,'%')
+        </isNotEmpty>
+        <isNotEmpty property="employee.lastName">
+            and lastName like CONCAT('%',#employee.lastName#,'%')
+        </isNotEmpty>
+        <isNotEmpty property="startDate">
+            and JoinDate <![CDATA[ >= ]]> #startDate#
+        </isNotEmpty>
+        <isNotEmpty property="endDate">
+            and JoinDate <![CDATA[ <= ]]> #endDate#
+        </isNotEmpty>
 	</select>
 	<select id="pageQueryEmployee" parameterClass="map" resultMap="EmployeeResult">
 		SELECT
@@ -177,6 +194,24 @@
         FROM
         LL_Employee
         where 1=1
+        <isNotEmpty property="employee.chineseName">
+            and ChineseName like CONCAT('%',#employee.chineseName#,'%')
+        </isNotEmpty>
+        <isNotEmpty property="employee.firstName">
+            and firstName like CONCAT('%',#employee.firstName#,'%')
+        </isNotEmpty>
+        <isNotEmpty property="employee.middleName">
+            and middleName like CONCAT('%',#employee.middleName#,'%')
+        </isNotEmpty>
+        <isNotEmpty property="employee.lastName">
+            and lastName like CONCAT('%',#employee.lastName#,'%')
+        </isNotEmpty>
+        <isNotEmpty property="startDate">
+            and JoinDate <![CDATA[ >= ]]> #startDate#
+        </isNotEmpty>
+        <isNotEmpty property="endDate">
+            and JoinDate <![CDATA[ <= ]]> #endDate#
+        </isNotEmpty>
 	</select>
     <select id="queryAllEmployee" parameterClass="map" resultMap="EmployeeResult">
         SELECT
