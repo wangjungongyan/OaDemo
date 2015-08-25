@@ -20,19 +20,20 @@ public class YearHolidayInitAction {
     private YearHolidayInitService yearHolidayInitService;
 
     @RequestMapping(value = "/sys/initYearHoliday")
-    public String initYearHoliday(){
-        return "/setting/initYearHoliday";
+    public String initYearHoliday() {
+        return "/sys/initYearHoliday";
     }
 
     @RequestMapping(value = "/sys/initYearHoliday/setting")
-    public ModelAndView setting(Integer year){
+    @ResponseBody
+    public ModelAndView setting(Integer year) {
         JSONObject json = new JSONObject();
         try {
             yearHolidayInitService.initSettings(year);
-            json.put("success",true);
-        }catch (Exception e){
-            json.put("success",false);
-            json.put("errorMsg","失败:"+e.getMessage());
+            json.put("success", true);
+        } catch (Exception e) {
+            json.put("success", false);
+            json.put("errorMsg", "失败:" + e.getMessage());
         }
         return new ModelAndView("/setting/initYearHoliday");
     }
