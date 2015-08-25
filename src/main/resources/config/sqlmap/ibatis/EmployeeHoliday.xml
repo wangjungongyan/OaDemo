@@ -45,11 +45,7 @@
         UpdateTime
         FROM
         LL_EmployeeHoliday
-<<<<<<< HEAD
-        where EmployeeId = #employeeId# and Year = #year#
-=======
         where EmployeeId = #employeeId# and Year = #year# and Type = #type#
->>>>>>> 65956f735261f62c105b6dcdb5a30961e748a5fc
     </select>
 
     <update id="decreaseHolidayDay">
