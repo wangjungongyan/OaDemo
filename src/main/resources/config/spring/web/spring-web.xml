@@ -64,7 +64,10 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
+            <mvc:mapping path="/leave/*"/>
+            <mvc:mapping path="/user/*"/>
+            <mvc:mapping path="/sys/*"/>
+            <mvc:mapping path="/main"/>
             <bean class="com.vali.inteceptor.LoginInteceptor">
                 <property name="excludedUrls">
                     <list>

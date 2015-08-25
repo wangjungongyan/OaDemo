@@ -21,7 +21,7 @@ public class YearHolidayInitAction {
 
     @RequestMapping(value = "/sys/initYearHoliday")
     public String initYearHoliday() {
-        return "/sys/initYearHoliday";
+        return "/setting/initYearHoliday";
     }
 
     @RequestMapping(value = "/sys/initYearHoliday/setting")
