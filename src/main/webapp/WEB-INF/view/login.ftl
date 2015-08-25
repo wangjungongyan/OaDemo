@@ -47,7 +47,7 @@
                                 margin-left: 25px;
                                 margin-top: 35px;
                                 border-radius: 3px;
-                                border: 1px solid #ccc;" placeholder="请输入用户名" value="vali@ll.com">
+                                border: 1px solid #ccc;" placeholder="请输入用户名" value="">
             </div>
             <div>
                 <input name="passWord" type="password" style="height: 25px;
@@ -55,7 +55,7 @@
                                 margin-left: 25px;
                                 margin-top: 35px;
                                 border-radius: 3px;
-                                border: 1px solid #ccc;" placeholder="请输入密码" value="123456">
+                                border: 1px solid #ccc;" placeholder="请输入密码" value="">
             </div>
             <div>
                 <input type="submit" style="height: 35px;
