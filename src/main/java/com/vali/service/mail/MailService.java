@@ -5,5 +5,5 @@ package com.vali.service.mail;
  */
 public interface MailService {
 
-    void sendEmail(String email,String content);
+    void sendEmail(String email,String title,String content);
 }
