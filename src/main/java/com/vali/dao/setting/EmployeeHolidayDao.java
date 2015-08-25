@@ -1,4 +1,4 @@
-package com.vali.dao.leave;
+package com.vali.dao.setting;
 
 import com.leya.idal.annotation.Action;
 import com.leya.idal.annotation.NameSpace;
@@ -25,6 +25,11 @@ public interface EmployeeHolidayDao {
     @Action(action = ActionType.UPDATE)
     public int increaseHolidayDay(@ParamName("po") EmployeeHolidayPO po);
 
+    @Action(action = ActionType.QUERY_LIST)
+    public List<EmployeeHolidayPO> getEmployeeYearHoliday(@ParamName("employeeId") int employeeId,@ParamName("year")String year);
+
+    @Action(action = ActionType.INSERT)
+    void saveHolidaySetting(EmployeeHolidayPO po);
     @Action(action = ActionType.UPDATE)
     public int updateHolidayOwn(@ParamName("po") EmployeeHolidayPO po);
 

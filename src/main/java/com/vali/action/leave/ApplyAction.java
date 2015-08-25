@@ -3,7 +3,7 @@ package com.vali.action.leave;
 import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
 import com.vali.bo.PageBO;
-import com.vali.dto.leave.EmployeeHolidayDTO;
+import com.vali.dto.settings.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditDTO;

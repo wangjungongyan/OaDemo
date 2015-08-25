@@ -41,4 +41,7 @@ public interface EmployeeDao {
 
     @Action(action = ActionType.QUERY_LIST)
     List<EmployeePO> queryAllManager(@ParamName("roleList")List<Integer> roleList);
+
+    @Action(action = ActionType.QUERY_LIST)
+    List<EmployeePO> queryAllEmployee();
 }

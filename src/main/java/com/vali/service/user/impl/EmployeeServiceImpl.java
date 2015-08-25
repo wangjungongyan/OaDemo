@@ -9,11 +9,13 @@ import com.vali.dto.menu.FirstMenuDTO;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.user.RoleEnum;
 import com.vali.po.user.EmployeePO;
+import com.vali.service.setting.YearHolidayInitService;
 import com.vali.service.user.remote.EmployeeService;
 import com.vali.util.BeanUtilsA;
 import lombok.Setter;
 import net.sf.cglib.beans.BeanCopier;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -30,6 +32,8 @@ import java.util.List;
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
 
+    @Resource(name = "yearHolidayInitService")
+    private YearHolidayInitService yearHolidayInitService;
     @Setter
     @Resource(name = "employeeDao")
     private EmployeeDao employeeDao;
@@ -80,7 +84,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         BeanUtils.copyProperties(userDTO, po);
         po.setPassword(LoginBO.encryptPassword(po.getPassword()));
         po.setMangerId(userDTO.getManager().getId());
-        return employeeDao.saveEmployee(po);
+        int id = employeeDao.saveEmployee(po);
+        userDTO.setId(id);
+        try {
+            yearHolidayInitService.initUserSettings(new DateTime(new Date()).getYear(),userDTO);
+        }catch (Exception e){
+
+        }
+        return id;
     }
 
     @Override
@@ -191,6 +202,21 @@ public class EmployeeServiceImpl implements EmployeeService {
             managerDtoList.add(dto);
         }
         return managerDtoList;
+    }
+
+    @Override
+    public List<EmployeeDTO> queryAllEmployee() {
+        List<EmployeePO>  poList = employeeDao.queryAllEmployee();
+        if(CollectionUtils.isEmpty(poList)){
+            return null;
+        }
+        List<EmployeeDTO> dtoList = new ArrayList<EmployeeDTO>();
+        for (EmployeePO po:poList){
+            EmployeeDTO dto= new EmployeeDTO();
+            BeanUtils.copyProperties(po,dto);
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 
     @Override public RoleEnum getRoleByApplicantID(int applicantID) {

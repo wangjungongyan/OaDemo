@@ -1,7 +1,7 @@
 package com.vali.service.leave.impl;
 
 import com.leya.idal.model.PageModel;
-import com.vali.dao.leave.EmployeeHolidayDao;
+import com.vali.dao.setting.EmployeeHolidayDao;
 import com.vali.dao.leave.LeaveApplyDao;
 import com.vali.dao.leave.LeaveAuditDao;
 import com.vali.dto.leave.LeaveApplyDTO;

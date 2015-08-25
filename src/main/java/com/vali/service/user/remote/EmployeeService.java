@@ -49,6 +49,8 @@ public interface EmployeeService {
 
     public List<EmployeeDTO> queryAllManager();
 
+    public List<EmployeeDTO> queryAllEmployee();
+
     public RoleEnum getRoleByApplicantID(int applicantID);
 
 }

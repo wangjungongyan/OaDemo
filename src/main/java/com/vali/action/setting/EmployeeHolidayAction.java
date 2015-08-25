@@ -1,6 +1,6 @@
 package com.vali.action.setting;
 
-import com.vali.dto.leave.EmployeeHolidayDTO;
+import com.vali.dto.settings.EmployeeHolidayDTO;
 import com.vali.service.user.remote.EmployeeHolidayService;
 import com.vali.service.user.remote.EmployeeService;
 import org.springframework.stereotype.Controller;
