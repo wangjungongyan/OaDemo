@@ -89,7 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             yearHolidayInitService.initUserSettings(new DateTime(new Date()).getYear(),userDTO);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         return id;
     }
@@ -169,7 +169,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean hasSameEmployee(EmployeeDTO userDTO) {
-        if (userDTO.getEmail().equals(loadEmployee(userDTO.getEmail()))) {
+        if (loadEmployee(userDTO.getEmail())!=null) {
             return true;
         }
         return false;

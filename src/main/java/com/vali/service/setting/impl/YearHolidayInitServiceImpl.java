@@ -27,13 +27,15 @@ public class YearHolidayInitServiceImpl  implements YearHolidayInitService {
     EmployeeService employeeService;
     @Override
     public void initUserSettings(Integer year, EmployeeDTO userDTO)throws Exception{
-        if(!CollectionUtils.isEmpty(employeeHolidayDao.getEmployeeYearHoliday(userDTO.getId(), year.toString()))){
-            throw new Exception("已经设置过了，请去修改");
-        }
+
         LeaveTypeEnum [] leaveTypeEnums = LeaveTypeEnum.values();
         for (LeaveTypeEnum leaveTypeEnum:leaveTypeEnums){
+            if(!CollectionUtils.isEmpty(employeeHolidayDao.getEmployeeYearHoliday(userDTO.getId(), year.toString(),leaveTypeEnum.getType()))){
+                continue;
+            }
             EmployeeHolidayPO po = new EmployeeHolidayPO();
             po.setEmployeeId(userDTO.getId());
+            po.setYear(year.toString());
             po.setUsed(new BigDecimal("0"));
             po.setAddTime(new Date());
             po.setType(leaveTypeEnum.getType());
@@ -46,7 +48,7 @@ public class YearHolidayInitServiceImpl  implements YearHolidayInitService {
         }
     }
 
-    private BigDecimal mathUserAnnualLeaveNum(Integer year, Date joinDate) {
+    public static BigDecimal mathUserAnnualLeaveNum(Integer year, Date joinDate) {
         DateTime joinDateTime = new DateTime(joinDate);
         if(joinDateTime.year().get()==year.intValue()){
             //当年入职
@@ -75,12 +77,17 @@ public class YearHolidayInitServiceImpl  implements YearHolidayInitService {
                 if(num>20){
                     num=20;
                 }
-                new BigDecimal(num);
+                return new BigDecimal(num);
             }
         }
         return new BigDecimal("0");
     }
 
+    public static void main(String[] args){
+        Date joinDate =new DateTime().withDate(2004,7,1).toDate();
+        System.out.println(joinDate);
+        System.out.println(mathUserAnnualLeaveNum(2015,joinDate));
+    }
 
 
     @Override

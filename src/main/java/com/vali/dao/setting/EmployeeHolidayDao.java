@@ -26,10 +26,10 @@ public interface EmployeeHolidayDao {
     public int increaseHolidayDay(@ParamName("po") EmployeeHolidayPO po);
 
     @Action(action = ActionType.QUERY_LIST)
-    public List<EmployeeHolidayPO> getEmployeeYearHoliday(@ParamName("employeeId") int employeeId,@ParamName("year")String year);
+    public List<EmployeeHolidayPO> getEmployeeYearHoliday(@ParamName("employeeId") int employeeId,@ParamName("year")String year,@ParamName("type") int type);
 
     @Action(action = ActionType.INSERT)
-    void saveHolidaySetting(EmployeeHolidayPO po);
+    void saveHolidaySetting(@ParamName("po")EmployeeHolidayPO po);
     @Action(action = ActionType.UPDATE)
     public int updateHolidayOwn(@ParamName("po") EmployeeHolidayPO po);
 
