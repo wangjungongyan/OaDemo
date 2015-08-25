@@ -66,7 +66,7 @@ public class UserAction {
         if(pageNum<1){
             pageNum=1;
         }
-        PageModel pageModel = employeeService.queryEmployee(userDTO,startTime,endTime,pageNum,20);
+        PageModel pageModel = employeeService.queryEmployee(userDTO,startTime,endTime,pageNum,10);
         //employeeService.
         Map model = new HashMap();
         model.put("pageModel",pageModel);

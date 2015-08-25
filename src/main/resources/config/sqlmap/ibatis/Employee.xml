@@ -154,6 +154,7 @@
 	<select id="pageQueryEmployee_count" parameterClass="map" resultClass="int">
 		SELECT count(*) from LL_Employee
 		where 1=1
+		
 	</select>
 	<select id="pageQueryEmployee" parameterClass="map" resultMap="EmployeeResult">
 		SELECT
