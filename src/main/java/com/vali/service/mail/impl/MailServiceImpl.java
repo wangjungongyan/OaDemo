@@ -7,4 +7,8 @@ import com.vali.service.mail.MailService;
  */
 public class MailServiceImpl implements MailService {
 
+    @Override
+    public void sendEmail(String email, String content) {
+        
+    }
 }
