@@ -11,4 +11,10 @@
 
     <context:annotation-config/>
 
+    <bean id="mailSender" class="com.vali.service.mail.impl.SimpleMailSender">
+        <constructor-arg index="0" value="smtp.126.com"></constructor-arg>
+        <constructor-arg index="1" value="fanshuai168@126.com"></constructor-arg>
+        <constructor-arg index="2" value="loveting1314"></constructor-arg>
+    </bean>
+
 </beans>

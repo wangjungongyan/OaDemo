@@ -49,6 +49,16 @@ public class SimpleMailSender {
         init(username, password, smtpHostName);
     }
 
+    public static void main(String [] args){
+        SimpleMailSender mailSender = new SimpleMailSender("smtp.126.com","fanshuai168@126.com","loveting1314");
+        try {
+            mailSender.send("fanshuai168@126.com","测试","lasjfalkfjaslf");
+            System.out.print("success");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 初始化
