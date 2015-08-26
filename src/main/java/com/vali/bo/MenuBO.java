@@ -85,12 +85,12 @@ public class MenuBO {
         SecondMenuDTO secondMenuDTO11 = new SecondMenuDTO();
         secondMenuDTO11.setName("添加新员工");
         secondMenuDTO11.setHref("/user/addUserIndex");
-        secondMenuDTO11.setIndex(1008);
+        secondMenuDTO11.setIndex(1009);
 
         SecondMenuDTO secondMenuDTO22 = new SecondMenuDTO();
         secondMenuDTO22.setName("员工查询");
         secondMenuDTO22.setHref("/user/list");
-        secondMenuDTO22.setIndex(1009);
+        secondMenuDTO22.setIndex(1010);
 
         List<SecondMenuDTO> secondMenus22 = new ArrayList<SecondMenuDTO>(3);
         secondMenus22.add(secondMenuDTO11);

@@ -73,7 +73,8 @@
                             在职
                         </#if>
                     </td>
-                    <td><a href="/user/updateUserIndex?id=${employee.id}">修改</a></td>
+                    <td><a href="/user/updateUserIndex?id=${employee.id}">修改</a>&nbsp;&nbsp;&nbsp;
+                        <a href="/sys/employeeHolidayList?employeeId=${employee.id}">设置假期</a></td>
                 </tr>
                 </#list>
             </#if>
