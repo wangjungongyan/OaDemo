@@ -58,6 +58,7 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
             LeaveTypeEnum leaveTypeEnum = LeaveTypeEnum.getLeaveType(po.getType());
             dto.setName(leaveTypeEnum.getName());
             dto.setDesc(leaveTypeEnum.getDesc());
+            dto.setEnglishName(leaveTypeEnum.name());
             dtos.add(dto);
             types.add(po.getType());
         }
@@ -75,6 +76,7 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
                 dto.setOwn(new BigDecimal(0));
                 dto.setSurplus(new BigDecimal(0));
                 dto.setYear(year);
+                dto.setEnglishName(leaveTypeEnum.name());
                 dtos.add(dto);
             }
         }

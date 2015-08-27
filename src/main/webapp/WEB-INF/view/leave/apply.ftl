@@ -18,7 +18,7 @@
             display: inline-block;
             margin-bottom: 0;
             vertical-align: middle;
-            margin-left: -300px;
+            margin-left: -250px;
         }
     </style>
 </head>
@@ -58,12 +58,15 @@
                             <select name="leaveType" id="leaveType">
                             <#list employeeHolidays as holiday>
                                 <#if holiday.type !=0>
-                                    <option value="${holiday.type}">【${holiday.name}】 本拥${holiday.own}天
-                                        剩余${holiday.surplus}天
-                                    </option>
+                                    <option value="${holiday.type}">${holiday.englishName}</option>
+                                </#if>
+                                <#if holiday_index == 0>
+                                    <#assign firstOwn = holiday.own/>
+                                    <#assign firstSurplus = holiday.surplus/>
                                 </#if>
                             </#list>
                             </select>
+                            <span id="leaveDeatil">共${firstOwn}天，余${firstSurplus}天</span>
                         </div>
                     </td>
                     <td><label class="col-sm-8 control-label">HR</label></td>
@@ -132,7 +135,7 @@
     </form>
 
 <#list employeeHolidays as holiday>
-    <input type="hidden" id="holidayDesc${holiday_index+1}" type="${holiday.type}" desc="${holiday.desc}">
+    <input type="hidden" id="holidayDesc${holiday_index+1}" type="${holiday.type}" desc="${holiday.desc}" surplus="${holiday.surplus}" own="${holiday.own}">
 </#list>
 
 </div>
@@ -163,10 +166,15 @@
     $(document).ready(function () {
 
         $("#leaveType").change(function () {
-            var type = $("#leaveType").find("option:selected").attr("value");
+            var obj = $(this).find("option:selected");
+            var type = obj.attr("value");
             var descId = "#holidayDesc" + type;
             var desc = $(descId).attr("desc");
+            var own = $(descId).attr("own");
+            var surplus = $(descId).attr("surplus");
             $("textarea[name='leaveDesc']").text(desc);
+            var leaveDeatil= "共" + own + "天，余" + surplus + "天";
+            $("#leaveDeatil").text(leaveDeatil);
         })
 
         $("#leaveEndTime").change(function () {

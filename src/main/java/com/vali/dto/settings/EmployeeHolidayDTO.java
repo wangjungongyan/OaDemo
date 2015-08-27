@@ -28,6 +28,8 @@ public class EmployeeHolidayDTO {
 
     private String name;
 
+    private String englishName;
+
     private String desc;
 
     private Date addTime;
