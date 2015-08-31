@@ -7,6 +7,28 @@ public enum LeaveTypeEnum {
 
     ALL(0,"全部",200,"所有假期类型"),
 
+    AnnualLeaveEntitlement(9, "带薪年假",200,
+                           "所有办公室员工将每年享有 15天年假;工作满 5年后第一个年度一月一日起年假天数将每年增加 1天,但最多年假天数为 20天;每年最多有 5天年假可以延期至明年三月底之前使用。任何在第二年三月底前未及时修完的年假除特殊原因外都将作为自动放弃处理。\n"
+                           + "\n"
+                           + "All office employees are entitled to have 15 days annual leave per year. After finished 5 years service, from the first January 1st of the year, the annual leave entitlement for office employees will increase by 1 day for each additional year of service up to a maximum of 20 days. Maximum 5 days annual leave can be carried forward to next year before the end of March. Any leave days not taken by the end of March of the next year will be lost unless there are exceptional circumstances.\n"
+                           + "\n"
+                           + "年假最少使用天数\n"
+                           + "您每次请年假最少以半天为基数。 \n"
+                           + "\n"
+                           + "Minimum Period of Annual Leave Application\n"
+                           + "Half a day is the minimum base for you to apply for annual leave each time.\n"
+                           + "\n"
+                           + "在试用期内可享受的年假\n"
+                           + "在试用期内,您只可以休最多2天年假。\n"
+                           + "\n"
+                           + "Annual Leave Entitlement during your Probation Period\n"
+                           + "During your probation period, you are only entitled to a have maximum 2 days annual leave.\n"
+                           + "\n"
+                           + "新员工和离职人员可享受的年假按比例计算。 \n"
+                           + "\n"
+                           + "Annual leave entitlement for new starters and leavers is calculated on a pro-rata basis.\n"
+    ),
+
     LactationLeave(1, "哺乳假",200,
                    "中国政府规定在孩子未满 1周岁之前,女性员工每天享有 1小时的哺乳假。对于家在公司的刚生育完孩子的女性可按规定享有次假。但由于很少有员工住在公司附近能享有此假,公司决定给予凡无法享有此假的女性员工额外 5天的产假来替代此哺乳假。 \n"
                    + "\n"
@@ -100,28 +122,6 @@ public enum LeaveTypeEnum {
                           "如果您申请扣薪病假(例如由于生病,您一年内休病假的时间超过 10天),您需要提供医生/医院开具的确认您无法工作的病假证明。本公司有权指定特定医院,并有权与您的医生/医院交流确认您无法工作。有关长期生病假期的规定将适用当地政府规定。 \n"
                           + "\n"
                           + "If you suffer pro-longed sickness (i.e. you are absent due to sickness beyond your 10 calendar day entitlement in any one year) you are required to provide a Medical certificate from your doctor / hospital to confirm your inability to work. The Company has the right to assign a specific hospital and is entitled to speak to your doctor / hospital to confirm your inability to work. The payment for this pro-longed sick leave will be applied as per local government regulations.\n"
-    ),
-
-    AnnualLeaveEntitlement(9, "带薪年假",200,
-                           "所有办公室员工将每年享有 15天年假;工作满 5年后第一个年度一月一日起年假天数将每年增加 1天,但最多年假天数为 20天;每年最多有 5天年假可以延期至明年三月底之前使用。任何在第二年三月底前未及时修完的年假除特殊原因外都将作为自动放弃处理。\n"
-                           + "\n"
-                           + "All office employees are entitled to have 15 days annual leave per year. After finished 5 years service, from the first January 1st of the year, the annual leave entitlement for office employees will increase by 1 day for each additional year of service up to a maximum of 20 days. Maximum 5 days annual leave can be carried forward to next year before the end of March. Any leave days not taken by the end of March of the next year will be lost unless there are exceptional circumstances.\n"
-                           + "\n"
-                           + "年假最少使用天数\n"
-                           + "您每次请年假最少以半天为基数。 \n"
-                           + "\n"
-                           + "Minimum Period of Annual Leave Application\n"
-                           + "Half a day is the minimum base for you to apply for annual leave each time.\n"
-                           + "\n"
-                           + "在试用期内可享受的年假\n"
-                           + "在试用期内,您只可以休最多2天年假。\n"
-                           + "\n"
-                           + "Annual Leave Entitlement during your Probation Period\n"
-                           + "During your probation period, you are only entitled to a have maximum 2 days annual leave.\n"
-                           + "\n"
-                           + "新员工和离职人员可享受的年假按比例计算。 \n"
-                           + "\n"
-                           + "Annual leave entitlement for new starters and leavers is calculated on a pro-rata basis.\n"
     ),
 
     CompassionateLeave(10, "丧假",200, "如果您的直系亲属(父母、配偶、孩子)去世,您可享有 3天有薪假期。\n"

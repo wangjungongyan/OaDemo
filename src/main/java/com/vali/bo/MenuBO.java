@@ -64,11 +64,17 @@ public class MenuBO {
         secondMenuDTO4.setHref("/leave/myAudits");
         secondMenuDTO4.setIndex(1008);
 
+        SecondMenuDTO secondMenuDTO5 = new SecondMenuDTO();
+        secondMenuDTO5.setName("我的假期");
+        secondMenuDTO5.setHref("/leave/myHolidays");
+        secondMenuDTO5.setIndex(1009);
+
         List<SecondMenuDTO> secondMenus1 = new ArrayList<SecondMenuDTO>(3);
         secondMenus1.add(secondMenuDTO1);
         secondMenus1.add(secondMenuDTO2);
         secondMenus1.add(secondMenuDTO3);
         secondMenus1.add(secondMenuDTO4);
+        secondMenus1.add(secondMenuDTO5);
 
         firstMenuDTO1.setSecondMenus(secondMenus1);
 

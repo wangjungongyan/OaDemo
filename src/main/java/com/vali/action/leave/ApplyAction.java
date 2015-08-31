@@ -116,4 +116,16 @@ public class ApplyAction {
         return leaveAuditDTO;
     }
 
+    @RequestMapping(value = "/leave/myHolidays")
+    public ModelAndView showMyHolidays() {
+
+        EmployeeDTO employee = LoginBO.getLoginUser();
+        employee.setHr(employeeService.getHr());
+        List<EmployeeHolidayDTO> employeeHolidays = employeeHolidayService.getEmployeeHoliday(employee.getId());
+
+        Map model = new HashMap();
+        model.put("employeeHolidays", employeeHolidays);
+        return new ModelAndView("leave/myHolidays", model);
+    }
+
 }

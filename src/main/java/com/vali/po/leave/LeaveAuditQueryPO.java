@@ -20,4 +20,6 @@ public class LeaveAuditQueryPO {
     private int leaveType;
 
     private int role;
+
+    private String applyUserName;
 }

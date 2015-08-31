@@ -105,17 +105,19 @@
                             <span style="color:#F00">*</span>请假事由
                         </label>
                     </td>
-                    <td>
+                    <td colspan="3">
                         <div class="col-sm-3">
-                            <textarea class="form-control" rows="3" cols="20" name="leaveReason"
-                                      required="required"></textarea>
+                            <textarea class="form-control" rows="5" cols="50" name="leaveReason"
+                                      required="required" style="width: 600px"></textarea>
                         </div>
                     </td>
+                </tr>
+                <tr>
                     <td><label class="col-sm-8 control-label">请假类型描述</label></td>
-                    <td>
+                    <td colspan="3">
                         <div class="col-sm-3">
-                            <textarea class="form-control" rows="3" cols="20" name="leaveDesc"
-                                      readonly>${employeeHolidays[0].desc}</textarea>
+                            <textarea class="form-control" rows="5" cols="50" name="leaveDesc"
+                                      readonly style="width: 600px">${employeeHolidays[0].desc}</textarea>
                         </div>
                     </td>
                 </tr>

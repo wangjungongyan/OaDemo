@@ -81,41 +81,12 @@
 
 <div class="container">
 
-    <form class="form-inline" id="queryForm" action="/leave/wait2Audit" method="post">
-        <table>
-            <tr>
-                <div class="form-group">
-
-                    <label>申请类型</label>
-                    <select id="leaveType" name="leaveType">
-                    <#list employeeHolidays as holiday>
-                        <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
-                                selected="selected" </#if>>${holiday.name}</option>
-                    </#list>
-                    </select>
-
-                    &nbsp;&nbsp;&nbsp;
-                    <label>申请时间从</label>
-                    <input name="startTime" type="text" class="form_datetime" style="width: 150px;"
-                           value="<#if (queryDTO??) && queryDTO.startTime ??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
-
-                    <label>到</label>
-                    <input name="endTime" type="text" class="form_datetime" style="width: 150px;"
-                           value="<#if (queryDTO??) && queryDTO.endTime>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
-
-                    &nbsp;&nbsp;&nbsp;
-                    <button name="queryButton" type="submit" class="btn btn-default">查询</button>
-
-                </div>
-            </tr>
-        </table>
-    </form>
-
     <table class="table  table-striped table-bordered table-hover ">
         <thead>
         <tr style="background-color: #eee">
             <th>申请人</th>
             <th>申请时间</th>
+            <th>状态</th>
             <th>类型</th>
             <th>开始时间</th>
             <th>结束时间</th>
@@ -130,6 +101,7 @@
             <tr class="info" id="apply${apply.id}">
                 <td>${apply.applicant.chineseName}</td>
                 <td>${apply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                <td>待审批</td>
                 <td>${apply.leaveName}</td>
                 <td>${apply.leaveStartTime?string('yyyy-MM-dd HH:mm')}</td>
                 <td>${apply.leaveEndTime?string('yyyy-MM-dd HH:mm')}</td>

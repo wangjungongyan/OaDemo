@@ -143,6 +143,12 @@
         <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
             LeaveType = #po.leaveType#
         </isGreaterThan>
+        <isNotEmpty property="po.applyUserName" prepend="and">
+            ApplicantID in (
+            select ID from LL_Employee
+            where ChineseName = #po.applyUserName#
+            )
+        </isNotEmpty>
         order by AddTime desc
     </select>
 
@@ -178,6 +184,12 @@
         <isGreaterThan prepend="and" property="po.leaveType" compareValue="0">
             LeaveType = #po.leaveType#
         </isGreaterThan>
+        <isNotEmpty property="po.applyUserName" prepend="and">
+            ApplicantID in (
+            select ID from LL_Employee
+            where ChineseName = #po.applyUserName#
+            )
+        </isNotEmpty>
     </select>
 
 </sqlMap>

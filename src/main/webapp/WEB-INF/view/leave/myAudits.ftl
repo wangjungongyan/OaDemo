@@ -80,18 +80,22 @@
 
 <div class="container">
 
-    <form class="form-inline" id="queryForm" action="/leave/myLeaveApply" method="post">
+    <form class="form-inline" id="queryForm" action="/leave/myAudits" method="post">
         <table>
             <tr>
                 <div class="form-group">
 
                     <label>申请类型</label>
-                    <select id="leaveType" name="leaveType">
+                    <select id="leaveType" name="leaveType" style="width: 150px">
                     <#list employeeHolidays as holiday>
                         <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
                                 selected="selected" </#if>>${holiday.name}</option>
                     </#list>
                     </select>
+
+                    &nbsp;&nbsp;&nbsp;
+                    <label>申请人</label>
+                    <input name="applyUserName" type="text" style="width: 80px" value="${queryDTO.applyUserName}"/>
 
                     &nbsp;&nbsp;&nbsp;
                     <label>申请时间从</label>

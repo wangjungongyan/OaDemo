@@ -24,6 +24,8 @@ public class LeaveAuditQueryDTO extends QueryBaseDTO {
 
     private int leaveType;
 
+    private String applyUserName;
+
     public LeaveAuditQueryDTO() {
     }
 
@@ -40,6 +42,7 @@ public class LeaveAuditQueryDTO extends QueryBaseDTO {
         }
 
         query.append("leaveType=" + leaveType);
+        query.append("&applyUserName=" + applyUserName);
 
         this.queryCondition = query.toString();
     }

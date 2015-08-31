@@ -212,6 +212,13 @@ public class EmployeeHolidayServiceImpl implements EmployeeHolidayService {
             return new BigDecimal("0.5");
         }
 
+        if(!beginTime.isBefore(time13half) && !beginTime.isAfter(time18)){
+            return new BigDecimal("0.5");
+        }
+        if(beginTime.isAfter(time18)){
+            return new BigDecimal("0");
+        }
+
         return dayNum;
     }
 
