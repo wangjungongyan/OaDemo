@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by vali on 15-9-12.
  */
-@NameSpace("PurchaseApply")
+@NameSpace("PurchaseReimburse")
 public interface PurchaseReimburseDao {
 
     @Action(action = ActionType.INSERT)
