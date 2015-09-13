@@ -15,7 +15,7 @@ import java.util.List;
 public interface PurchaseOperateDao {
 
     @Action(action = ActionType.INSERT)
-    public int savePurchaseOperate(@ParamName("operateDetail") PurchaseOperateDetailPO operateDetail);
+    public int savePurchaseOperate(@ParamName("detail") PurchaseOperateDetailPO operateDetail);
 
     @Action(action = ActionType.QUERY_LIST)
     public List<PurchaseOperateDetailPO> getPurchaseOperatRecords(@ParamName("purchaseId") int purchaseId);

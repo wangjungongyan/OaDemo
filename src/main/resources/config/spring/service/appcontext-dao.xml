@@ -69,4 +69,32 @@
         </property>
     </bean>
 
+    <bean id="purchaseApplyDao" parent="parentDao">
+        <property name="proxyInterfaces" value="com.vali.dao.purchase.PurchaseApplyDao"/>
+        <property name="target">
+            <ref local="iBatisGenericDao"/>
+        </property>
+    </bean>
+
+    <bean id="purchaseOperateDao" parent="parentDao">
+        <property name="proxyInterfaces" value="com.vali.dao.purchase.PurchaseOperateDao"/>
+        <property name="target">
+            <ref local="iBatisGenericDao"/>
+        </property>
+    </bean>
+
+    <bean id="purchaseReimburseOperateDao" parent="parentDao">
+        <property name="proxyInterfaces" value="com.vali.dao.purchase.PurchaseReimburseOperateDao"/>
+        <property name="target">
+            <ref local="iBatisGenericDao"/>
+        </property>
+    </bean>
+
+    <bean id="purchaseReimburseDao" parent="parentDao">
+        <property name="proxyInterfaces" value="com.vali.dao.purchase.PurchaseReimburseDao"/>
+        <property name="target">
+            <ref local="iBatisGenericDao"/>
+        </property>
+    </bean>
+
 </beans>

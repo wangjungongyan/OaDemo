@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="PurchaseApply">
+
+    <typeAlias alias="PurchasePO" type="com.vali.po.purchase.PurchasePO"/>
+    <typeAlias alias="PurchaseItemPO" type="com.vali.po.purchase.PurchaseItemPO"/>
+    <typeAlias alias="PurchaseAttaPO" type="com.vali.po.purchase.PurchaseAttaPO"/>
+
+    <resultMap id="PurchaseResult" class="PurchasePO">
+        <result column="ID" property="id"/>
+        <result column="Applicant" property="applicant"/>
+        <result column="Dept" property="dept"/>
+        <result column="ApplyTime" property="applyTime"/>
+        <result column="BuyType" property="buyType"/>
+        <result column="BuyUser" property="buyUser"/>
+        <result column="Manager" property="manager"/>
+        <result column="ExtendedPrice" property="extendedPrice"/>
+        <result column="MngApproveStatus" property="mngApproveStatus"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="PurchaseItemResult" class="PurchaseItemPO">
+        <result column="ID" property="id"/>
+        <result column="PurchaseId" property="purchaseId"/>
+        <result column="ItemName" property="itemName"/>
+        <result column="Quantity" property="quantity"/>
+        <result column="UnitPrice" property="unitPrice"/>
+        <result column="Currency" property="currency"/>
+        <result column="ExtendedPrice" property="extendedPrice"/>
+        <result column="ExpDelDate" property="expDelDate"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="PurchaseAttaResult" class="PurchaseAttaPO">
+        <result column="ID" property="id"/>
+        <result column="PurchaseId" property="purchaseId"/>
+        <result column="FileName" property="fileName"/>
+        <result column="FilePath" property="filePath"/>
+        <result column="FileType" property="fileType"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <insert id="savePurchaseApply">
+        insert into
+        LL_Purchase(Applicant,Dept,ApplyTime,BuyType,BuyUser,Manager,ExtendedPrice,MngApproveStatus,AddTime,UpdateTime)
+        values
+        (#apply.applicant#,#apply.dept#,#apply.applyTime#,#apply.buyType#,#apply.buyUser#,#apply.manager#,#apply.extendedPrice#,#apply.mngApproveStatus#,NOW(),NOW())
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+    </insert>
+
+    <update id="updateMngApproveStatus">
+        update LL_Purchase
+        set MngApproveStatus = #mngApproveStatus#
+        where ID= #purchaseId#
+    </update>
+
+    <select id="getPurchaseApplyRecord" resultMap="PurchaseResult">
+        select ID,
+        Applicant,
+        Dept,
+        ApplyTime,
+        BuyType,
+        BuyUser,
+        Manager,
+        ExtendedPrice,
+        MngApproveStatus,
+        AddTime,
+        UpdateTime
+        from LL_Purchase
+        where ID= #purchaseId#
+    </select>
+
+    <select id="pagePurchaseApplyRecords" resultMap="PurchaseResult">
+        select ID,
+        Applicant,
+        Dept,
+        ApplyTime,
+        BuyType,
+        BuyUser,
+        Manager,
+        ExtendedPrice,
+        MngApproveStatus,
+        AddTime,
+        UpdateTime
+        from LL_Purchase
+        where applicant= #applicant#
+        order by AddTime desc
+    </select>
+
+    <select id="pagePurchaseApplyRecords_count" resultClass="int">
+        select count(1)
+        from LL_Purchase
+        where applicant= #applicant#
+    </select>
+
+    <select id="pagePurchaseApproveRecords" resultMap="PurchaseResult">
+        select ID,
+        Applicant,
+        Dept,
+        ApplyTime,
+        BuyType,
+        BuyUser,
+        Manager,
+        ExtendedPrice,
+        MngApproveStatus,
+        AddTime,
+        UpdateTime
+        from LL_Purchase
+        where Manager= #manager#
+        order by AddTime desc
+    </select>
+
+    <select id="pagePurchaseApproveRecords_count" resultClass="int">
+        select count(1)
+        from LL_Purchase
+        where Manager= #manager#
+    </select>
+
+    <insert id="savePurchaseApplyItem">
+        insert into
+        LL_PurchaseItem(PurchaseId,ItemName,Quantity,UnitPrice,Currency,ExtendedPrice,ExpDelDate,AddTime,UpdateTime)
+        values(#item.purchaseId#,
+        #item.itemName#,
+        #item.quantity#,
+        #item.unitPrice#,
+        #item.currency#,
+        #item.extendedPrice#,
+        #item.expDelDate#,
+        NOW(),
+        NOW())
+
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+    </insert>
+
+    <select id="getPurchaseApplyItems" resultMap="PurchaseItemResult">
+        select ID,
+        PurchaseId,
+        ItemName,
+        Quantity,
+        UnitPrice,
+        Currency,
+        ExtendedPrice,
+        ExpDelDate,
+        AddTime,
+        UpdateTime
+        from LL_PurchaseItem
+        where purchaseId = #purchaseId#
+    </select>
+
+    <insert id="savePurchaseAtta">
+        insert into LL_PurchaseAtta(PurchaseId,FileName,FilePath,FileType,AddTime,UpdateTime)
+        values(#atta.purchaseId#,
+        #atta.fileName#,
+        #atta.filePath#,
+        #atta.fileType#,
+        NOW(),
+        NOW())
+
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+    </insert>
+
+    <select id="getPurchaseAttas" resultMap="PurchaseAttaResult">
+        select ID,
+        PurchaseId,
+        FileName,
+        FilePath,
+        FileType,
+        AddTime,
+        UpdateTime
+        from LL_PurchaseAtta
+        where purchaseId =#purchaseId#
+    </select>
+
+</sqlMap>

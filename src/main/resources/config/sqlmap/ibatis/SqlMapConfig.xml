@@ -11,4 +11,8 @@
     <sqlMap resource="config/sqlmap/ibatis/EmployeeHoliday.xml" />
     <sqlMap resource="config/sqlmap/ibatis/LeaveAudit.xml" />
 	<sqlMap resource="config/sqlmap/ibatis/HolidaySetting.xml" />
+    <sqlMap resource="config/sqlmap/ibatis/PurchaseApply.xml" />
+    <sqlMap resource="config/sqlmap/ibatis/PurchaseOperate.xml" />
+    <sqlMap resource="config/sqlmap/ibatis/PurchaseReimburse.xml" />
+    <sqlMap resource="config/sqlmap/ibatis/PurchaseReimburseOperate.xml" />
 </sqlMapConfig>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="PurchaseReimburseOperate">
+
+    <typeAlias alias="ApplyBuyBaoxiaoDetailPO" type="com.vali.po.purchase.ApplyBuyBaoxiaoDetailPO"/>
+
+    <resultMap id="ApplyBuyBaoxiaoDetailResult" class="ApplyBuyBaoxiaoDetailPO">
+        <result column="ID" property="id"/>
+        <result column="PurchaseReimburseId" property="purchaseReimburseId"/>
+        <result column="Operator" property="operator"/>
+        <result column="OperateType" property="operateType"/>
+        <result column="Description" property="description"/>
+        <result column="OperateTime" property="operateTime"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <insert id="savePurchaseReimburseOperate">
+        insert into
+        LL_ApplyBuyBaoxiaoDetail(,AddTime,UpdateTime)
+        values
+        (#apply.applicantID#,#apply.leaveType#,#apply.leaveStartTime#,#apply.leaveEndTime#,#apply.leaveDays#,#apply.leaveReason#,#apply.applyTime#,0,NOW(),NOW())
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+    </insert>
+
+
+</sqlMap>

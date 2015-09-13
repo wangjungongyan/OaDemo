@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="PurchaseReimburse">
+
+    <typeAlias alias="PurchaseReimbursePO" type="com.vali.po.purchase.PurchaseReimbursePO"/>
+
+    <resultMap id="PurchaseReimburseResult" class="PurchaseReimbursePO">
+        <result column="ID" property="id"/>
+        <result column="PurchaseId" property="purchaseId"/>
+        <result column="Applicant" property="applicant"/>
+        <result column="Dept" property="dept"/>
+        <result column="ApplyTime" property="applyTime"/>
+        <result column="BankAccountName" property="bankAccountName"/>
+        <result column="BankName" property="bankName"/>
+        <result column="BankAccountNO" property="bankAccountNO"/>
+        <result column="PayAccount" property="payAccount"/>
+        <result column="Currency" property="currency"/>
+        <result column="PayDate" property="payDate"/>
+        <result column="DescriptionFile" property="descriptionFile"/>
+        <result column="Description" property="description"/>
+        <result column="Manager" property="manager"/>
+        <result column="MngApproveStatus" property="mngApproveStatus"/>
+        <result column="Status" property="status"/>
+        <result column="FinnaceUserId" property="finnaceUserId"/>
+        <result column="FinnaceApproveStatus" property="finnaceApproveStatus"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <insert id="savePurchaseReimburse">
+        insert into LL_PurchaseReimburse(PurchaseId,
+        Applicant,
+        Dept,
+        ApplyTime,
+        BankAccountName,
+        BankName,
+        BankAccountNO,
+        PayAccount,
+        Currency,
+        PayDate,
+        DescriptionFile,
+        Description,
+        Manager,
+        MngApproveStatus,
+        Status,
+        FinnaceUserId,
+        FinnaceApproveStatus,
+        AddTime,
+        UpdateTime)
+        values(#purchaseReimburse.purchaseId#,
+        #purchaseReimburse.applicant#,
+        #purchaseReimburse.dept#,
+        #purchaseReimburse.applyTime#,
+        #purchaseReimburse.bankAccountName#,
+        #purchaseReimburse.bankName#,
+        #purchaseReimburse.bankAccountNO#,
+        #purchaseReimburse.payAccount#,
+        #purchaseReimburse.currency#,
+        #purchaseReimburse.payDate#,
+        #purchaseReimburse.descriptionFile#,
+        #purchaseReimburse.description#,
+        #purchaseReimburse.manager#,
+        #purchaseReimburse.mngApproveStatus#,
+        #purchaseReimburse.status#,
+        #purchaseReimburse.finnaceUserId#,
+        #purchaseReimburse.finnaceApproveStatus#,
+        NOW(),
+        NOW())
+
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ff
+        </selectKey>
+    </insert>
+
+    <select id="getPurchaseReimburse" resultMap="PurchaseReimburseResult">
+        select ID,
+         PurchaseId,
+         Applicant,
+         Dept,
+         ApplyTime,
+         BankAccountName,
+         BankName,
+         BankAccountNO,
+         PayAccount,
+         Currency,
+         PayDate,
+         DescriptionFile,
+         Description,
+         Manager,
+         MngApproveStatus,
+         Status,
+         FinnaceUserId,
+         FinnaceApproveStatus,
+         AddTime,
+         UpdateTime
+        from LL_PurchaseReimburse
+        where Applicant = #applicant#
+    </select>
+
+    <select id="pagePurchaseReimburses" resultMap="PurchaseReimburseResult">
+        select ID,
+         PurchaseId,
+         Applicant,
+         Dept,
+         ApplyTime,
+         BankAccountName,
+         BankName,
+         BankAccountNO,
+         PayAccount,
+         Currency,
+         PayDate,
+         DescriptionFile,
+         Description,
+         Manager,
+         MngApproveStatus,
+         Status,
+         FinnaceUserId,
+         FinnaceApproveStatus,
+         AddTime,
+         UpdateTime
+        from LL_PurchaseReimburse
+        where Applicant = #applicant#
+        order by AddTime desc
+    </select>
+
+    <select id="pagePurchaseReimburses_count" resultClass="int">
+        select count(1)
+        from LL_PurchaseReimburse
+        where Applicant = #applicant#
+    </select>
+
+    <select id="pagePurchaseReimburseManagerApproves" resultMap="PurchaseReimburseResult">
+        select ID,
+         PurchaseId,
+         Applicant,
+         Dept,
+         ApplyTime,
+         BankAccountName,
+         BankName,
+         BankAccountNO,
+         PayAccount,
+         Currency,
+         PayDate,
+         DescriptionFile,
+         Description,
+         Manager,
+         MngApproveStatus,
+         Status,
+         FinnaceUserId,
+         FinnaceApproveStatus,
+         AddTime,
+         UpdateTime
+        from LL_PurchaseReimburse
+        where Manager = #manager#
+        order by AddTime desc
+    </select>
+
+    <select id="pagePurchaseReimburseManagerApproves_count" resultClass="int">
+        select count(1)
+        from LL_PurchaseReimburse
+        where Manager = #manager#
+    </select>
+
+    <select id="pagePurchaseReimburseFinnaceApproves" resultMap="PurchaseReimburseResult">
+        select ID,
+        PurchaseId,
+        Applicant,
+        Dept,
+        ApplyTime,
+        BankAccountName,
+        BankName,
+        BankAccountNO,
+        PayAccount,
+        Currency,
+        PayDate,
+        DescriptionFile,
+        Description,
+        Manager,
+        MngApproveStatus,
+        Status,
+        FinnaceUserId,
+        FinnaceApproveStatus,
+        AddTime,
+        UpdateTime
+        from LL_PurchaseReimburse
+        where FinnaceUserId = #finnaceUserId#
+        order by AddTime desc
+    </select>
+
+    <select id="pagePurchaseReimburseFinnaceApproves_count" resultClass="int">
+        select count(1)
+        from LL_PurchaseReimburse
+        where FinnaceUserId = #finnaceUserId#
+    </select>
+
+    <update id="updateMngApproveStatus">
+        update LL_PurchaseReimburse
+        set MngApproveStatus =  #mngApproveStatus#
+        where ID = #reimburseId#
+    </update>
+
+    <update id="updateFinnaceApproveStatus">
+        update LL_PurchaseReimburse
+        set FinnaceApproveStatus =  #finnaceApproveStatus#
+        where ID = #reimburseId#
+    </update>
+
+</sqlMap>
