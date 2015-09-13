@@ -36,7 +36,17 @@ public class MenuBO {
         }
 
     }
+    private static FirstMenuDTO preparePurchaseManage(){
+        FirstMenuDTO firstMenuDTO1 = new FirstMenuDTO();
+        firstMenuDTO1.setHref("oneMenuId_004");
+        firstMenuDTO1.setName("请购管理");
 
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销申请","/purchase/applyIndex",4001));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购报销","/purchase/myApply",4002));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销审核","/purchase/approveIndex",4003));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销查询","/purchase/myApprove",4004));
+        return firstMenuDTO1;
+    }
     //请假管理
     private static FirstMenuDTO prepareLeaveManage() {
 
@@ -91,12 +101,12 @@ public class MenuBO {
         SecondMenuDTO secondMenuDTO11 = new SecondMenuDTO();
         secondMenuDTO11.setName("添加新员工");
         secondMenuDTO11.setHref("/user/addUserIndex");
-        secondMenuDTO11.setIndex(1009);
+        secondMenuDTO11.setIndex(2001);
 
         SecondMenuDTO secondMenuDTO22 = new SecondMenuDTO();
         secondMenuDTO22.setName("员工查询");
         secondMenuDTO22.setHref("/user/list");
-        secondMenuDTO22.setIndex(1010);
+        secondMenuDTO22.setIndex(2002);
 
         List<SecondMenuDTO> secondMenus22 = new ArrayList<SecondMenuDTO>(3);
         secondMenus22.add(secondMenuDTO11);
@@ -111,7 +121,7 @@ public class MenuBO {
     private static FirstMenuDTO prepareSyetemManage() {
 
         FirstMenuDTO firstMenuDTO22 = new FirstMenuDTO();
-        firstMenuDTO22.setHref("sysManage");
+        firstMenuDTO22.setHref("sysManage_03");
         firstMenuDTO22.setName("系统管理");
 
         SecondMenuDTO secondMenuDTO22 = new SecondMenuDTO();
@@ -136,7 +146,7 @@ public class MenuBO {
 
         List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(3);
         menus.add(prepareLeaveManage());
-
+        menus.add(preparePurchaseManage());
         roleMenu.put(RoleEnum.NOMALR.getType(), menus);
     }
 
@@ -144,7 +154,7 @@ public class MenuBO {
 
         List<FirstMenuDTO> menus = new ArrayList<FirstMenuDTO>(3);
         menus.add(prepareLeaveManage());
-
+        menus.add(preparePurchaseManage());
         roleMenu.put(RoleEnum.MANAGE.getType(), menus);
     }
 
@@ -163,8 +173,8 @@ public class MenuBO {
 
         menus.add(leaveManage);
         menus.add(prepareUserManage());
+        menus.add(preparePurchaseManage());
         menus.add(prepareSyetemManage());
-
         roleMenu.put(RoleEnum.HR.getType(), menus);
     }
 
