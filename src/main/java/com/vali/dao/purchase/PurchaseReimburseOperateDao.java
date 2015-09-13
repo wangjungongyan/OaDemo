@@ -16,10 +16,10 @@ public interface PurchaseReimburseOperateDao {
 
     @Action(action = ActionType.INSERT)
     public int savePurchaseReimburseOperate(
-            @ParamName("applyBuyBaoxiaoDetailPO") ApplyBuyBaoxiaoDetailPO applyBuyBaoxiaoDetailPO);
+            @ParamName("detail") ApplyBuyBaoxiaoDetailPO applyBuyBaoxiaoDetailPO);
 
     @Action(action = ActionType.QUERY_LIST)
     public List<ApplyBuyBaoxiaoDetailPO> getPurchaseReimburseOperatRecords(
-            @ParamName("purchaseReimburseID") int purchaseReimburseID);
+            @ParamName("purchaseReimburseId") int purchaseReimburseId);
 
 }

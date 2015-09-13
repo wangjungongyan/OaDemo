@@ -17,13 +17,31 @@
 
     <insert id="savePurchaseReimburseOperate">
         insert into
-        LL_ApplyBuyBaoxiaoDetail(,AddTime,UpdateTime)
+        LL_ApplyBuyBaoxiaoDetail(PurchaseReimburseId,Operator,OperateType,Description,OperateTime,AddTime,UpdateTime)
         values
-        (#apply.applicantID#,#apply.leaveType#,#apply.leaveStartTime#,#apply.leaveEndTime#,#apply.leaveDays#,#apply.leaveReason#,#apply.applyTime#,0,NOW(),NOW())
+        (#detail.purchaseReimburseId#,
+        #detail.operator#,
+        #detail.operateType#,
+        #detail.description#,
+        #detail.operateTime#,
+        NOW(),
+        NOW())
         <selectKey resultClass="java.lang.Integer" keyProperty="id">
             SELECT @@IDENTITY AS ff
         </selectKey>
     </insert>
 
+    <select id="getPurchaseReimburseOperatRecords" resultMap="ApplyBuyBaoxiaoDetailResult">
+        select ID,
+        PurchaseReimburseId,
+        Operator,
+        OperateType,
+        Description,
+        OperateTime,
+        AddTime,
+        UpdateTime
+        from LL_ApplyBuyBaoxiaoDetail
+        where PurchaseReimburseId = #purchaseReimburseId#
+    </select>
 
 </sqlMap>
