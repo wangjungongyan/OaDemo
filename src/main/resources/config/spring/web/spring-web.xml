@@ -67,6 +67,7 @@
             <mvc:mapping path="/leave/*"/>
             <mvc:mapping path="/user/*"/>
             <mvc:mapping path="/sys/*"/>
+            <mvc:mapping path="/purchase/*"/>
             <mvc:mapping path="/main"/>
             <mvc:mapping path="/leave"/>
             <bean class="com.vali.inteceptor.LoginInteceptor">
