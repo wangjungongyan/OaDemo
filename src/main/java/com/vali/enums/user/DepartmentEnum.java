@@ -73,4 +73,13 @@ public enum DepartmentEnum {
     public String getDepartmentName() {
         return departmentName;
     }
+
+    public static DepartmentEnum getDepartment(int departmentId){
+        for (DepartmentEnum departmentEnum:DepartmentEnum.values()){
+            if(departmentEnum.getType()==departmentId){
+                return departmentEnum;
+            }
+        }
+        return null;
+    }
 }

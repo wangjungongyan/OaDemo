@@ -14,6 +14,8 @@ public class PurchaseReimbursePO {
 
     private int id;
 
+    private int applicant;
+
     //请购申请id
     private int purchaseId;
 

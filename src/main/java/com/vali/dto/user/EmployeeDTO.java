@@ -93,6 +93,11 @@ public class EmployeeDTO {
      */
     private EmployeeDTO hr;
 
-
-
+    public String getDeptName(){
+        DepartmentEnum departmentEnum = DepartmentEnum.getDepartment(departMent);
+        if(departmentEnum!=null){
+            return departmentEnum.getDepartmentName();
+        }
+        return "无";
+    }
 }
