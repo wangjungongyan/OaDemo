@@ -1,7 +1,6 @@
 package com.vali.dto.user;
 
 import com.vali.enums.user.DepartmentEnum;
-import com.vali.enums.user.RoleEnum;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -78,7 +77,6 @@ public class EmployeeDTO {
      */
     private Integer status;
 
-
     private Date addTime;
 
     private Date updateTime;
@@ -93,9 +91,9 @@ public class EmployeeDTO {
      */
     private EmployeeDTO hr;
 
-    public String getDeptName(){
+    public String getDeptName() {
         DepartmentEnum departmentEnum = DepartmentEnum.getDepartment(departMent);
-        if(departmentEnum!=null){
+        if (departmentEnum != null) {
             return departmentEnum.getDepartmentName();
         }
         return "无";

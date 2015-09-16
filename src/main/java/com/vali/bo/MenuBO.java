@@ -41,10 +41,14 @@ public class MenuBO {
         firstMenuDTO1.setHref("oneMenuId_004");
         firstMenuDTO1.setName("请购管理");
 
-        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销申请","/purchase/applyIndex",4001));
-        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购报销","/purchase/myApply",4002));
-        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销审核","/purchase/approveIndex",4003));
-        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销查询","/purchase/myApprove",4004));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我要请购申请","/purchase/applyIndex",4001));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购申请","/purchase/myPurchaseApplyList",4002));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我要请购审批","/purchase/myPurchaseAudits",4003));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购审批","/purchase/myPurchaseAudits",4004));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销申请","/purchase/applyIndex",4005));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购报销","/purchase/myApply",4006));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销审核","/purchase/approveIndex",4007));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销查询","/purchase/myApprove",4008));
         return firstMenuDTO1;
     }
     //请假管理

@@ -17,7 +17,7 @@ import java.util.Map;
 @Controller("purchase")
 public class PurchaseReimburseAction {
 
-    @RequestMapping(value = "/purchase/applyIndex")
+    @RequestMapping(value = "/purchase/reimburseApplyIndex")
     public ModelAndView applyIndex(){
         EmployeeDTO employee = LoginBO.getLoginUser();
         Map model = new HashMap();
@@ -26,7 +26,7 @@ public class PurchaseReimburseAction {
         return new ModelAndView("/purchase/applyIndex",model);
     }
 
-    @RequestMapping(value = "/purchase/apply")
+    @RequestMapping(value = "/purchase/reimburseApply")
     public ModelAndView apply(PurchaseReimburseDTO purchaseReimburseDTO){
 
         EmployeeDTO employee = LoginBO.getLoginUser();
@@ -38,13 +38,13 @@ public class PurchaseReimburseAction {
         return new ModelAndView("/purchase/applyIndex",model);
     }
 
-    @RequestMapping(value = "/purchase/myApply")
+    @RequestMapping(value = "/purchase/myReimburseApply")
     public ModelAndView myApply(){
 
         return new ModelAndView("/purchase/myApply.ftl");
     }
 
-    @RequestMapping(value = "/purchase/approveIndex")
+    @RequestMapping(value = "/purchase/reimburseApproveIndex")
     public ModelAndView approveIndex(){
 
         return new ModelAndView("apply");

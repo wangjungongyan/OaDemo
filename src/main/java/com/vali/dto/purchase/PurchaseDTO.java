@@ -1,6 +1,7 @@
 package com.vali.dto.purchase;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class PurchaseDTO {
     private String dept;
 
     //申请时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date applyTime;
 
     //请购类型
