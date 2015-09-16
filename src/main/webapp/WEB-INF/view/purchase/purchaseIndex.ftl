@@ -84,7 +84,7 @@
                <tr>
                    <td>${i}</td>
                    <td><input name="itemNames"></td>
-                   <td><input name="quantitys" style="width: 50px;" placeholder="1"></td>
+                   <td><input name="quantitys" style="width: 50px;" placeholder="1" type="number"></td>
                    <td><input name="unitPrices" style="width: 50px;" placeholder="0.00"></td>
                    <td><input name="currencys" style="width: 50px;" placeholder="人民币"></td>
                    <td><input name="extendedPrices" style="width: 70px;" placeholder="0.00"></td>
