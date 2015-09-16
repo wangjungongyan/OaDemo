@@ -1,6 +1,7 @@
 package com.vali.dto.purchase;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,6 +15,8 @@ public class PurchaseReimburseDTO {
 
     private int id;
 
+    private int applicant;
+
     //请购申请id
     private int purchaseId;
 
@@ -21,6 +24,7 @@ public class PurchaseReimburseDTO {
     private String dept;
 
     //报销时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date applyTime;
 
     //收款人姓名
@@ -39,6 +43,7 @@ public class PurchaseReimburseDTO {
     private String currency;
 
     //要求付款时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date payDate;
 
     //具体付款内容文件地址

@@ -29,7 +29,13 @@ public class PurchaseReimburseAction {
     @RequestMapping(value = "/purchase/apply")
     public ModelAndView apply(PurchaseReimburseDTO purchaseReimburseDTO){
 
-        return new ModelAndView("/purchase/applyIndex.ftl");
+        EmployeeDTO employee = LoginBO.getLoginUser();
+        Map model = new HashMap();
+        model.put("employee",employee);
+        model.put("today",new Date());
+        model.put("message","提交申请成功");
+        model.put("dto",purchaseReimburseDTO);
+        return new ModelAndView("/purchase/applyIndex",model);
     }
 
     @RequestMapping(value = "/purchase/myApply")

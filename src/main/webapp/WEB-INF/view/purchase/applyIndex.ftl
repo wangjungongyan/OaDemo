@@ -27,48 +27,55 @@
 
 <body>
 <div style="margin-top:10px;margin-left:10px;visibility:visible">
-    <form class="form-horizontal form-inline" action="/leave/apply" method="post">
+    <form class="form-horizontal form-inline" action="/purchase/apply" method="post">
         <div class="container">
             <div class="row form-title" >
                 <div class="col-md-12">请购申请</div>
             </div>
             <div class="row">
                 <div class="col-md-2 form-label">申请人:</div>
-                <div class="col-md-2 form-input"><input class="form-control" readonly  value="${employee.chineseName}" style="width:130px;"></div>
+                <div class="col-md-2 form-input"><input class="form-control" readonly  value="${employee.chineseName}" style="width:130px;">
+                    <input name="applicant" value="${employee.id}" type="hidden">
+                </div>
                 <div class="col-md-1 form-label">部门:</div>
-                <div class="col-md-3 form-input"><input class="form-control" readonly  value="${employee.deptName}"  style="width:180px;"></div>
+                <div class="col-md-3 form-input"><input name="dept" class="form-control" readonly  value="${employee.deptName}"  style="width:180px;"></div>
                 <div class="col-md-1 form-label">时间:</div>
-                <div class="col-md-3 form-input"><input class="form-control" readonly  value="${today?string("yyyy-MM-dd")}"  style="width:130px;"></div>
+                <div class="col-md-3 form-input"><input name="applyTime" class="form-control" readonly  value="${today?string("yyyy-MM-dd")}"  style="width:130px;"></div>
             </div>
             <div class="row">
                 <div class="col-md-2 form-label">收款人姓名:</div>
-                <div class="col-md-10 form-input"><input class="form-control" required="请填写收款人姓名"  style="width: 200px;"></div>
+                <div class="col-md-10 form-input"><input name="bankAccountName" value="${dto.bankAccountName}" class="form-control" required="请填写收款人姓名"  style="width: 200px;"></div>
             </div>
             <div class="row">
                 <div class="col-md-2 form-label">收款人银行名称:</div>
-                <div class="col-md-10 form-input"><input class="form-control"  required="请填写收款人银行名称"  style="width: 200px;"></div>
+                <div class="col-md-10 form-input"><input name="bankName" value="${dto.bankName}"  class="form-control"  required="请填写收款人银行名称"  style="width: 200px;"></div>
 
             </div>
             <div class="row">
                 <div class="col-md-2 form-label">收款人银行帐号:</div>
-                <div class="col-md-10 form-input"><input class="form-control"  required="请填写银行帐号" style="width: 200px;"></div>
+                <div class="col-md-10 form-input"><input name="bankAccountNO" value="${dto.bankAccountNO}"  class="form-control"  required="请填写银行帐号" style="width: 200px;"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 form-label">付款金额:</div>
+                <div class="col-md-10 form-input"><input name="payAccount" value="${dto.payAccount}" type="number"  class="form-control"  required="请填写付款金额" style="width: 200px;"></div>
             </div>
             <div class="row">
                 <div class="col-md-2 form-label">币种:</div>
-                <div class="col-md-5 form-input" style="padding-bottom: 10px;padding-top: 10px;">
-                    <input type="radio" value="人民币" name="moneyType" required="请选择币种">人民币
-                    <input type="radio" value="美元" name="moneyType" required="请选择币种">美元
-                    <input type="radio" value="其它" name="moneyType" required="请选择币种">其它
+                <div class="col-md-5 form-input" style="line-height: 28px;">
+                    <input type="radio" value="人民币" <#if dto.currency == '人民币'>checked="true"</#if> name="moneyType" required="请选择币种" >人民币
+                    <input type="radio" value="美元" <#if dto.currency == '美元'>checked="true"</#if> name="moneyType" required="请选择币种" >美元
+                    <input type="radio" value="其它" <#if dto.currency != '人民币' && dto.currency != '美元' >checked="true"</#if> name="moneyType" required="请选择币种" >其它
+                    <input id="currency" name="currency" value="${dto.currency}"  <#if dto.currency == '人民币' || dto.currency == '美元' >style="display: none"</#if> required="请输入币种">
                 </div>
                 <div class="col-md-2 form-label">要求付款日期:</div>
                 <div class="col-md-3 form-input">
-                    <input class="form-control" id="payMentType" name="payMentType"  required="请选择时间"/>
+                    <input class="form-control" id="payDate" value="${dto.payDate?string("yyyy-MM-dd")}"  name="payDate"  required="请选择付款时间"/>
                 </div>
             </div>
-            <div class="row" style="border-left: 1px solid #ccc;">
-                <div class="col-md-2 form-label" style="border: 0">具体付款内容:</div>
-                <div class="col-md-10 form-input">
-                    <textarea rows="5" cols="100" required="请填写付款内容"></textarea></div>
+            <div class="row" >
+                <div class="col-md-2 form-label" style="height: 120px;line-height: 100px">具体付款内容:</div>
+                <div class="col-md-10 form-input" style="height: 120px;">
+                    <textarea name="description" rows="5" cols="100" required="请填写付款内容">${dto.description}</textarea></div>
             </div>
             <div class="row">
                 <div class="col-md-12 form-label">
@@ -91,7 +98,7 @@
 
 <script type="text/javascript">
 
-    $("#payMentType").datetimepicker({
+    $("#payDate").datetimepicker({
         format: 'yyyy-mm-dd',
         minView: 2,
         todayHighlight: true,
@@ -99,13 +106,16 @@
         autoclose: true
     });
 
-    $("#leaveEndTime").datetimepicker({
-        format: 'yyyy-mm-dd hh',
-        minView: 0,
-        todayHighlight: true,
-        todayBtn: true,
-        autoclose: true
+    $("input[name='moneyType']").click(function(){
+        if($(this).val()=="其它"){
+            $("#currency").val("");
+            $("#currency").show();
+        }else{
+            $("#currency").val($(this).val());
+            $("#currency").hide();
+        }
     });
+
 </script>
 
 </html>
