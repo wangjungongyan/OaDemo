@@ -60,10 +60,14 @@
                             </select>
                         </div>
                     </td>
-                    <td><label class="col-sm-8 control-label">申请日期</label></td>
+                    <td>
+                        <label class="col-sm-8 control-label">
+                            <span style="color:#F00">*</span>申请日期
+                        </label>
+                    </td>
                     <td>
                         <div class="col-sm-3">
-                            <input class="form-control" placeholder="" name="applyTime" id="applyTime">
+                            <input class="form-control" placeholder="" name="applyTime" required="required">
                         </div>
                     </td>
                 </tr>
@@ -121,20 +125,23 @@
 <script src="/js/jquery-1.8.2.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/js/date.js"></script>
 
 <script type="text/javascript">
 
-    $("#applyTime").datetimepicker({
+    $("input[name='applyTime']").datetimepicker({
         format: 'yyyy-mm-dd',
-        minView: 0,
+        startView: 2,
+        minView: 2,
         todayHighlight: true,
         todayBtn: true,
         autoclose: true
-    });
+    }).val(new Date().Format("yyyy-MM-dd"));
 
     $("input[name='expDelDates']").datetimepicker({
         format: 'yyyy-mm-dd',
-        minView: 0,
+        startView: 2,
+        minView: 2,
         todayHighlight: true,
         todayBtn: true,
         autoclose: true
