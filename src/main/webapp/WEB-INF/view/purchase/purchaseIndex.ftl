@@ -25,7 +25,7 @@
 <body>
 
 <div style="margin-top:10px;margin-left:10px;visibility:visible">
-    <form class="form-horizontal form-inline" action="/purchase/apply" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal form-inline" method="post" enctype="multipart/form-data" name="purchaseForm">
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
                 <tr>
@@ -84,17 +84,17 @@
                 <th>总价</th>
                 <th>预计交货时间</th>
             </tr>
-            <#list 1..10 as i>
-                <tr>
-                    <td>${i}</td>
-                    <td><input name="itemNames"></td>
-                    <td><input name="quantitys" style="width: 50px;" placeholder="1" type="number"></td>
-                    <td><input name="unitPrices" style="width: 50px;" placeholder="0.00"></td>
-                    <td><input name="currencys" style="width: 50px;" placeholder="人民币"></td>
-                    <td><input name="extendedPrices" style="width: 70px;" placeholder="0.00"></td>
-                    <td><input name="expDelDates"></td>
-                </tr>
-            </#list>
+        <#list 1..10 as i>
+            <tr>
+                <td>${i}</td>
+                <td><input name="itemNames" id="itemName${i}"></td>
+                <td><input name="quantitys" id="quantity${i}" style="width: 50px;" placeholder="1" type="number"></td>
+                <td><input name="unitPrices" id="unitPrice${i}" style="width: 50px;" placeholder="0.00"></td>
+                <td><input name="currencys" id="currency${i}" style="width: 50px;" placeholder="人民币"></td>
+                <td><input name="extendedPrices" id="extendedPrice${i}" style="width: 70px;" placeholder="0.00"></td>
+                <td><input name="expDelDates" id="expDelDate${i}"></td>
+            </tr>
+        </#list>
         </table>
 
         <div class="col-sm-10">
@@ -113,7 +113,7 @@
         </div>
 
         <p style="margin-left: 450px;">
-            <button type="submit" class="btn btn-info">
+            <button id="purchaseSubmitButton" type="submit" class="btn btn-info">
                 提 交 请 购 申 请
             </button>
         </p>
@@ -149,9 +149,31 @@
 
     $(document).ready(function () {
 
-        $("input[name='addNewPurchaseAttachment']").live("click",function () {
+        $("input[name='addNewPurchaseAttachment']").live("click", function () {
             var newPurchaseAttachment = $(this).parent().parent();
             newPurchaseAttachment.after(newPurchaseAttachment.clone());
+        });
+
+        $("#purchaseSubmitButton").click(function (e) {
+            $(this).attr("action", "/purchase/apply");
+
+            for (var i = 1; i <= 20; i++) {
+                var itemName = $("#itemName" + i).val();
+                var quantity = $("#quantity" + i).val();
+                var unitPrice = $("#unitPrice" + i).val();
+                var currency = $("#currency" + i).val();
+                var extendedPrice = $("#extendedPrice" + i).val();
+
+                if ((itemName == "" && quantity == "" && unitPrice == "" && currency == "" && extendedPrice == "") || (itemName != "" && quantity != "" && unitPrice != "" && currency != "" && extendedPrice != "")) {
+                    continue;
+                } else {
+                    e.preventDefault();
+                    alert("第" + i + "行有未完善的数据.");
+                }
+            }
+
+            $(this).submit();
+
         });
     });
 
