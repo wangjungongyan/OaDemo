@@ -3,7 +3,7 @@ package com.vali.enums.leave;
 /**
  * Created by fanshuai on 15/8/13.
  */
-public enum AuditStatusEnum {
+public enum LeaveAuditStatusEnum {
 
     AUDITING(0, "审核中"),
 
@@ -17,16 +17,16 @@ public enum AuditStatusEnum {
 
     private String auditStatusName;
 
-    private AuditStatusEnum(int auditStatus, String auditStatusName) {
+    private LeaveAuditStatusEnum(int auditStatus, String auditStatusName) {
         this.auditStatus = auditStatus;
         this.auditStatusName = auditStatusName;
     }
 
-    public static AuditStatusEnum getAuditStatus(int auditStatus) {
+    public static LeaveAuditStatusEnum getAuditStatus(int auditStatus) {
 
-        AuditStatusEnum[] statuss = AuditStatusEnum.values();
+        LeaveAuditStatusEnum[] statuss = LeaveAuditStatusEnum.values();
 
-        for (AuditStatusEnum s : statuss) {
+        for (LeaveAuditStatusEnum s : statuss) {
             if (s.auditStatus == auditStatus) {
                 return s;
             }

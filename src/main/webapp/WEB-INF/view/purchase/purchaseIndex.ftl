@@ -25,11 +25,11 @@
 <body>
 
 <div style="margin-top:10px;margin-left:10px;visibility:visible">
-    <form class="form-horizontal form-inline" action="/purchase/apply" method="post">
+    <form class="form-horizontal form-inline" action="/purchase/apply" method="post" enctype="multipart/form-data">
         <div class="col-sm-10">
             <table class="table .table-condensed table-striped ">
                 <tr>
-                    <td colspan="4"><label id="cishu" style="margin-left: 450px;" class="col-sm-40 control-label">请 购 申
+                    <td colspan="4"><label style="margin-left: 450px;" class="col-sm-40 control-label">请 购 申
                         请 详 细 信 息</label></td>
                 </tr>
                 <tr>
@@ -80,30 +80,39 @@
                 <th>总价</th>
                 <th>预计交货时间</th>
             </tr>
-           <#list 1..10 as i>
-               <tr>
-                   <td>${i}</td>
-                   <td><input name="itemNames"></td>
-                   <td><input name="quantitys" style="width: 50px;" placeholder="1" type="number"></td>
-                   <td><input name="unitPrices" style="width: 50px;" placeholder="0.00"></td>
-                   <td><input name="currencys" style="width: 50px;" placeholder="人民币"></td>
-                   <td><input name="extendedPrices" style="width: 70px;" placeholder="0.00"></td>
-                   <td><input name="expDelDates"></td>
-               </tr>
+            <#list 1..10 as i>
+                <tr>
+                    <td>${i}</td>
+                    <td><input name="itemNames"></td>
+                    <td><input name="quantitys" style="width: 50px;" placeholder="1" type="number"></td>
+                    <td><input name="unitPrices" style="width: 50px;" placeholder="0.00"></td>
+                    <td><input name="currencys" style="width: 50px;" placeholder="人民币"></td>
+                    <td><input name="extendedPrices" style="width: 70px;" placeholder="0.00"></td>
+                    <td><input name="expDelDates"></td>
+                </tr>
             </#list>
-
         </table>
 
-        <tr>
-            <td colspan="4">
-                <p style="margin-left: 450px;">
-                    <button type="submit" class="btn btn-info">
-                        提 交 请 购 申 请
-                    </button>
-                    </a>
-                </p>
-            </td>
-        </tr>
+        <div class="col-sm-10">
+            <table class="table .table-condensed table-striped">
+                <tr>
+                    <td colspan="2"><label id="cishu" style="margin-left: 450px;" class="col-sm-40 control-label">附 件 上
+                        传</label></td>
+                </tr>
+                <tr>
+                    <td><input type="file" name="purchaseAttachments"></td>
+                    <td><input class="btn btn-primary btn-lg" type="button" name="addNewPurchaseAttachment"
+                               value="继续添加附件"></td>
+                </tr>
+
+            </table>
+        </div>
+
+        <p style="margin-left: 450px;">
+            <button type="submit" class="btn btn-info">
+                提 交 请 购 申 请
+            </button>
+        </p>
     </form>
 
 </div>
@@ -133,6 +142,10 @@
 
     $(document).ready(function () {
 
+        $("input[name='addNewPurchaseAttachment']").live("click",function () {
+            var newPurchaseAttachment = $(this).parent().parent();
+            newPurchaseAttachment.after(newPurchaseAttachment.clone());
+        });
     });
 
 </script>

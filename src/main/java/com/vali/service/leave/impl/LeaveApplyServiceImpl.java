@@ -5,7 +5,7 @@ import com.vali.dao.leave.LeaveApplyDao;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditQueryDTO;
-import com.vali.enums.leave.AuditStatusEnum;
+import com.vali.enums.leave.LeaveAuditStatusEnum;
 import com.vali.enums.leave.LeaveTypeEnum;
 import com.vali.po.leave.LeaveApplyPO;
 import com.vali.po.leave.LeaveApplyQueryPO;
@@ -80,7 +80,7 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
             LeaveApplyDTO dto = new LeaveApplyDTO();
             ENTITY2DTO4LeaveApply.copy(po, dto, null);
             dto.setLeaveName(LeaveTypeEnum.getLeaveType(dto.getLeaveType()).getName());
-            dto.setStatusName(AuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
+            dto.setStatusName(LeaveAuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
             dto.setAudit(leaveAuditService.getAuditChain(dto.getId()));
             dtos.add(dto);
         }
@@ -107,7 +107,7 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
             LeaveApplyDTO dto = new LeaveApplyDTO();
             ENTITY2DTO4LeaveApply.copy(record, dto, null);
             dto.setLeaveName(LeaveTypeEnum.getLeaveType(dto.getLeaveType()).getName());
-            dto.setStatusName(AuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
+            dto.setStatusName(LeaveAuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
             resultDTOS.add(dto);
         }
 
@@ -128,7 +128,7 @@ public class LeaveApplyServiceImpl implements LeaveApplyService {
         LeaveApplyDTO dto = new LeaveApplyDTO();
         ENTITY2DTO4LeaveApply.copy(po, dto, null);
         dto.setLeaveName(LeaveTypeEnum.getLeaveType(dto.getLeaveType()).getName());
-        dto.setStatusName(AuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
+        dto.setStatusName(LeaveAuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
         dto.setAudit(leaveAuditService.getAuditChain(dto.getId()));
         dto.setApplicant(employeeService.loadEmployee(dto.getApplicantID()));
 

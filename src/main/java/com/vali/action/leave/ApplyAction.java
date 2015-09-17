@@ -8,7 +8,7 @@ import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveApplyQueryDTO;
 import com.vali.dto.leave.LeaveAuditDTO;
 import com.vali.dto.user.EmployeeDTO;
-import com.vali.enums.leave.AuditStatusEnum;
+import com.vali.enums.leave.LeaveAuditStatusEnum;
 import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
 import com.vali.service.mail.MailService;
@@ -108,10 +108,10 @@ public class ApplyAction {
 
         EmployeeDTO employee = LoginBO.getLoginUser();
         leaveAuditDTO.setApplyId(applyDTO.getId());
-        leaveAuditDTO.setHrAuditStatus(AuditStatusEnum.AUDITING.getAuditStatus());
+        leaveAuditDTO.setHrAuditStatus(LeaveAuditStatusEnum.AUDITING.getAuditStatus());
         leaveAuditDTO.setHrId(employeeService.getHr().getId());
         leaveAuditDTO.setManagerId(employee.getManager().getId());
-        leaveAuditDTO.setManagerAuditStatus(AuditStatusEnum.AUDITING.getAuditStatus());
+        leaveAuditDTO.setManagerAuditStatus(LeaveAuditStatusEnum.AUDITING.getAuditStatus());
 
         return leaveAuditDTO;
     }
