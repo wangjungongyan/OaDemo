@@ -27,10 +27,10 @@
 
 <body>
 <div style="margin-top:10px;margin-left:10px;visibility:visible">
-    <form class="form-horizontal form-inline" action="/purchase/apply" method="post">
+    <form class="form-horizontal form-inline" action="/purchase/reimburseApply" method="post">
         <div class="container">
             <div class="row form-title" >
-                <div class="col-md-12">请购申请</div>
+                <div class="col-md-12">请购报销申请</div>
             </div>
             <div class="row">
                 <div class="col-md-2 form-label">申请人:</div>
@@ -84,10 +84,6 @@
             </div>
         </div>
     </form>
-
-<#list employeeHolidays as holiday>
-    <input type="hidden" id="holidayDesc${holiday_index+1}" type="${holiday.type}" desc="${holiday.desc}" surplus="${holiday.surplus}" own="${holiday.own}">
-</#list>
 
 </div>
 </body>
