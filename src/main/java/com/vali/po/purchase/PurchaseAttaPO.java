@@ -22,9 +22,6 @@ public class PurchaseAttaPO {
     //附件路径
     private String filePath;
 
-    //附件文件类型
-    private String fileType;
-
     private Date addTime;
 
     private Date updateTime;

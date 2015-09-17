@@ -7,22 +7,22 @@ import com.vali.dto.purchase.PurchaseItemDTO;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.purchase.PurchaseAuditStatusEnum;
 import com.vali.enums.purchase.PurchaseBuyTypeEnum;
+import com.vali.service.purchase.PurchaseService;
 import com.vali.util.FileUtil;
 import com.vali.util.TimeUtil;
-
-import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.math.BigDecimal;
@@ -32,14 +32,19 @@ import java.util.*;
 public class PurchaseAction {
 
     @Setter
-    @Getter
     @Value("${temp.upload.path}")
     private String tempPath;
 
     @Setter
-    @Getter
     @Value("${real.upload.path}")
     private String realPath;
+
+    @Setter
+    @Value("${root.upload.path}")
+    private String rootPath;
+
+    @Resource(name = "purchaseService")
+    private PurchaseService purchaseService;
 
     @RequestMapping(value = "/purchase/applyIndex")
     public ModelAndView index() {
@@ -52,6 +57,7 @@ public class PurchaseAction {
     @RequestMapping(value = "/purchase/apply", method = RequestMethod.POST)
     public ModelAndView apply(HttpServletRequest request) {
         PurchaseDTO purchaseDTO = parseFileUpload(request);
+        purchaseService.savePurchaseApply(purchaseDTO);
 
         EmployeeDTO employee = LoginBO.getLoginUser();
         Map model = new HashMap();
@@ -61,12 +67,12 @@ public class PurchaseAction {
 
     private PurchaseDTO parseFileUpload(HttpServletRequest request) {
 
-        FileUtil.createFolder(tempPath);
-        FileUtil.createFolder(realPath);
+        FileUtil.createFolder(rootPath + tempPath);
+        FileUtil.createFolder(rootPath + realPath);
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(5 * 1024);
-        factory.setRepository(new File(tempPath));
+        factory.setRepository(new File(rootPath + tempPath));
         ServletFileUpload upload = new ServletFileUpload(factory);
         upload.setSizeMax(1024 * 1024);
 
@@ -98,7 +104,7 @@ public class PurchaseAction {
                 PurchaseAttaDTO atta = this.preparePurchaseAtta(item.getName());
                 attas.add(atta);
 
-                item.write(new File(atta.getFilePath()));
+                item.write(new File(rootPath + realPath + atta.getFilePath()));
             }
 
             purchaseDTO.setPurchaseItemDTOs(preparePurchaseItems(items));
@@ -196,61 +202,20 @@ public class PurchaseAction {
     }
 
     private PurchaseAttaDTO preparePurchaseAtta(String originalFileName) {
-
-        String originalFileExtension = prepareFileExtension(originalFileName);
-        String originalFileUploadPath = prepareRealUploadPath(originalFileName);
+        String originalFileUploadPath = prepareRelativeUploadPath(originalFileName);
 
         PurchaseAttaDTO atta = new PurchaseAttaDTO();
         atta.setFileName(originalFileName);
         atta.setFilePath(originalFileUploadPath);
-        atta.setFileType(originalFileExtension);
 
         return atta;
     }
 
-    private List<PurchaseItemDTO> preparePurchaseItems(HttpServletRequest request) {
-        String[] itemNames = request.getParameterValues("itemNames");
-        String[] quantitys = request.getParameterValues("quantitys");
-        String[] currencys = request.getParameterValues("currencys");
-        String[] unitPrices = request.getParameterValues("unitPrices");
-        String[] extendedPrices = request.getParameterValues("extendedPrices");
-        String[] expDelDates = request.getParameterValues("expDelDates");
-
-        List<PurchaseItemDTO> items = new ArrayList<PurchaseItemDTO>(20);
-
-        if (itemNames == null || itemNames.length == 0) {
-            return items;
-        }
-
-        for (int i = 0; i < itemNames.length; i++) {
-            PurchaseItemDTO item = new PurchaseItemDTO();
-
-            if (StringUtils.isBlank(itemNames[i])) {
-                continue;
-            }
-
-            item.setItemName(itemNames[i]);
-            item.setCurrency(currencys[i]);
-            item.setExpDelDate(TimeUtil.format2Date(expDelDates[i], "yyyy-MM-dd"));
-            item.setExtendedPrice(new BigDecimal(extendedPrices[i]));
-            item.setQuantity(new Integer(quantitys[i]));
-            item.setUnitPrice(new BigDecimal(unitPrices[i]));
-
-            items.add(item);
-        }
-
-        return items;
-    }
-
-    private String prepareRealUploadPath(String originalFileName) {
+    private String prepareRelativeUploadPath(String originalFileName) {
         String uuid = UUID.randomUUID().toString();
         StringBuffer realUploadPath = new StringBuffer();
-        realUploadPath.append(realPath).append(uuid + originalFileName);
+        realUploadPath.append("/").append(uuid + originalFileName);
         return realUploadPath.toString();
-    }
-
-    private String prepareFileExtension(String originalFileName) {
-        return originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
     }
 
     @RequestMapping(value = "/purchase/myPurchaseApplyList")
