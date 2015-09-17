@@ -6,7 +6,7 @@ import com.vali.dao.leave.LeaveApplyDao;
 import com.vali.dao.leave.LeaveAuditDao;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveRevokeQueryDTO;
-import com.vali.enums.leave.AuditStatusEnum;
+import com.vali.enums.leave.LeaveAuditStatusEnum;
 import com.vali.enums.leave.LeaveTypeEnum;
 import com.vali.po.leave.EmployeeHolidayPO;
 import com.vali.po.leave.LeaveApplyPO;
@@ -100,8 +100,8 @@ public class LeaveRevokeServiceImpl implements LeaveRevokeService {
         po.setYear(TimeUtil.getCurrentYear());
 
         employeeHolidayDao.increaseHolidayDay(po);
-        leaveApplyDao.updateApplyStatus(applyId, AuditStatusEnum.REOVKE.getAuditStatus());
-        leaveAuditDao.updateStatusAndSuggest4Hr(applyId, suggest, AuditStatusEnum.REOVKE.getAuditStatus());
+        leaveApplyDao.updateApplyStatus(applyId, LeaveAuditStatusEnum.REOVKE.getAuditStatus());
+        leaveAuditDao.updateStatusAndSuggest4Hr(applyId, suggest, LeaveAuditStatusEnum.REOVKE.getAuditStatus());
 
         return true;
     }

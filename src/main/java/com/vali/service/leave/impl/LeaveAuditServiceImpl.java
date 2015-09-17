@@ -6,7 +6,7 @@ import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveAuditDTO;
 import com.vali.dto.leave.LeaveAuditQueryDTO;
 import com.vali.dto.user.EmployeeDTO;
-import com.vali.enums.leave.AuditStatusEnum;
+import com.vali.enums.leave.LeaveAuditStatusEnum;
 import com.vali.enums.leave.LeaveTypeEnum;
 import com.vali.po.leave.LeaveApplyPO;
 import com.vali.po.leave.LeaveAuditPO;
@@ -120,7 +120,7 @@ public class LeaveAuditServiceImpl implements LeaveAuditService {
             ENTITY2DTO4LeaveApply.copy(po, dto, null);
             dto.setLeaveName(LeaveTypeEnum.getLeaveType(dto.getLeaveType()).getName());
             dto.setApplicant(employeeService.loadEmployee(dto.getApplicantID()));
-            dto.setStatusName(AuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
+            dto.setStatusName(LeaveAuditStatusEnum.getAuditStatus(dto.getStatus()).getAuditStatusName());
             dtos.add(dto);
         }
 

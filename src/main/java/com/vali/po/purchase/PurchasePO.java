@@ -32,9 +32,6 @@ public class PurchasePO {
     //审批上级
     private int manager;
 
-    //申请总价
-    private BigDecimal extendedPrice;
-
     //上级审批状态
     private int mngApproveStatus;
 

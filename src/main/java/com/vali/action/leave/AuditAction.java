@@ -6,7 +6,7 @@ import com.vali.bo.PageBO;
 import com.vali.dto.settings.EmployeeHolidayDTO;
 import com.vali.dto.leave.LeaveApplyDTO;
 import com.vali.dto.leave.LeaveAuditQueryDTO;
-import com.vali.enums.leave.AuditStatusEnum;
+import com.vali.enums.leave.LeaveAuditStatusEnum;
 import com.vali.service.leave.remote.LeaveApplyService;
 import com.vali.service.leave.remote.LeaveAuditService;
 import com.vali.service.mail.MailService;
@@ -66,14 +66,14 @@ public class AuditAction {
 
         boolean isHr = employeeService.isHr(LoginBO.getLoginUser().getId());
 
-        AuditStatusEnum auditStatusEnum = this.prepareAuditStatus(isHr, applyId, auditStatus);
+        LeaveAuditStatusEnum auditStatusEnum = this.prepareAuditStatus(isHr, applyId, auditStatus);
 
         if (isHr) {
             leaveAuditService.hrAudit(applyId, auditSuggest, auditStatusEnum.getAuditStatus());
             leaveApplyService.updateApplyStatus(applyId, auditStatusEnum.getAuditStatus());
         } else {
             leaveAuditService.manageAudit(applyId, auditSuggest, auditStatusEnum.getAuditStatus());
-            if (auditStatusEnum == AuditStatusEnum.REJECT) {
+            if (auditStatusEnum == LeaveAuditStatusEnum.REJECT) {
                 leaveApplyService.updateApplyStatus(applyId, auditStatusEnum.getAuditStatus());
             }
         }
@@ -81,14 +81,14 @@ public class AuditAction {
         return prepareAuditResult(auditStatusEnum, auditStatus, isHr);
     }
 
-    private AuditStatusEnum prepareAuditStatus(boolean isHr, Integer applyId, Integer auditStatus) {
+    private LeaveAuditStatusEnum prepareAuditStatus(boolean isHr, Integer applyId, Integer auditStatus) {
 
-        if (auditStatus == AuditStatusEnum.REJECT.getAuditStatus()) {
-            return AuditStatusEnum.REJECT;
+        if (auditStatus == LeaveAuditStatusEnum.REJECT.getAuditStatus()) {
+            return LeaveAuditStatusEnum.REJECT;
         }
 
         if (!isHr) {
-            return AuditStatusEnum.PASS;
+            return LeaveAuditStatusEnum.PASS;
         }
 
         EmployeeHolidayDTO dto = new EmployeeHolidayDTO();
@@ -102,13 +102,13 @@ public class AuditAction {
         boolean sucessDecreaseHoliday = employeeHolidayService.decreaseHolidayDay(dto);
 
         if (sucessDecreaseHoliday) {
-            return AuditStatusEnum.PASS;
+            return LeaveAuditStatusEnum.PASS;
         }
 
-        return AuditStatusEnum.REJECT;
+        return LeaveAuditStatusEnum.REJECT;
     }
 
-    private String prepareAuditResult(AuditStatusEnum caculatedAuditStatusEnum,
+    private String prepareAuditResult(LeaveAuditStatusEnum caculatedAuditStatusEnum,
                                       Integer originAuditStatus, boolean isHr) {
 
         if (isHr && originAuditStatus != caculatedAuditStatusEnum.getAuditStatus()) {

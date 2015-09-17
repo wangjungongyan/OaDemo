@@ -3,7 +3,6 @@ package com.vali.dto.purchase;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -34,9 +33,6 @@ public class PurchaseDTO {
 
     //审批上级
     private int manager;
-
-    //申请总价
-    private BigDecimal extendedPrice;
 
     //上级审批状态
     private int mngApproveStatus;
