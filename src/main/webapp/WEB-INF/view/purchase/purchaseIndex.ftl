@@ -119,6 +119,19 @@
         </p>
     </form>
 
+    <div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" style="display: none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" name="closeButton" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" style="text-align: center"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 
@@ -157,7 +170,7 @@
         $("#purchaseSubmitButton").click(function (e) {
             $(this).attr("action", "/purchase/apply");
 
-            for (var i = 1; i <= 20; i++) {
+            for (var i = 1; i <= 10; i++) {
                 var itemName = $("#itemName" + i).val();
                 var quantity = $("#quantity" + i).val();
                 var unitPrice = $("#unitPrice" + i).val();
@@ -168,7 +181,8 @@
                     continue;
                 } else {
                     e.preventDefault();
-                    alert("第" + i + "行有未完善的数据.");
+                    $(".modal-title").html("第" + i + "行有未完善的数据");
+                    $("#promptModal").modal('show');
                 }
             }
 
