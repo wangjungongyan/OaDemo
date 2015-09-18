@@ -65,7 +65,6 @@
         BuyType,
         BuyUser,
         Manager,
-        ExtendedPrice,
         MngApproveStatus,
         AddTime,
         UpdateTime
@@ -81,7 +80,6 @@
         BuyType,
         BuyUser,
         Manager,
-        ExtendedPrice,
         MngApproveStatus,
         AddTime,
         UpdateTime
@@ -153,7 +151,7 @@
 
     <select id="pagePurchaseAuditRecords_count" resultClass="int">
         select count(1)
-        from LL_Purchase applyUserId
+        from LL_Purchase
         where Manager =#po.manager#
         <isNotEmpty property="po.startTime" prepend="and">
             <![CDATA[
