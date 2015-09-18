@@ -162,6 +162,22 @@
 
     $(document).ready(function () {
 
+        $("input[name='unitPrices']").keyup(function () {
+            var v = $(this).val();
+            if (!(/(^\d+$)/.test(v) || /(^\d+(\.)(\d+))|(^\d+)$/.test(v))) {
+                alert("单价只能请输入数字哦");
+                $(this).val("");
+            }
+        });
+
+        $("input[name='extendedPrices']").keyup(function () {
+            var v = $(this).val();
+            if (!(/(^\d+$)/.test(v) || /(^\d+(\.)(\d+))|(^\d+)$/.test(v))) {
+                alert("总价只能请输入数字哦");
+                $(this).val("");
+            }
+        });
+
         $("input[name='addNewPurchaseAttachment']").live("click", function () {
             var newPurchaseAttachment = $(this).parent().parent();
             newPurchaseAttachment.after(newPurchaseAttachment.clone());
