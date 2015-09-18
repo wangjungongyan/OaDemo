@@ -5,9 +5,7 @@ import com.leya.idal.annotation.NameSpace;
 import com.leya.idal.annotation.ParamName;
 import com.leya.idal.enums.ActionType;
 import com.leya.idal.model.PageModel;
-import com.vali.po.purchase.PurchaseAttaPO;
-import com.vali.po.purchase.PurchaseItemPO;
-import com.vali.po.purchase.PurchasePO;
+import com.vali.po.purchase.*;
 
 import java.util.List;
 
@@ -28,14 +26,14 @@ public interface PurchaseApplyDao {
     public PurchasePO getPurchaseApplyRecord(@ParamName("purchaseId") int purchaseId);
 
     @Action(action = ActionType.PAGE)
-    public PageModel pagePurchaseApplyRecords(@ParamName("applicant") int applicant,
+    public PageModel pagePurchaseApplyRecords(@ParamName("queryPO") PurchaseApplyQueryPO po,
                                               @ParamName("pageNo") int pageNo,
                                               @ParamName("pageSize") int pageSize);
 
     @Action(action = ActionType.PAGE)
-    public PageModel pagePurchaseApproveRecords(@ParamName("manager") int manager,
-                                                @ParamName("pageNo") int pageNo,
-                                                @ParamName("pageSize") int pageSize);
+    public PageModel pagePurchaseAuditRecords(@ParamName("po") PurchaseAuditQueryPO po,
+                                              @ParamName("pageNo") int pageNo,
+                                              @ParamName("pageSize") int pageSize);
 
     @Action(action = ActionType.INSERT)
     public int savePurchaseApplyItem(@ParamName("item") PurchaseItemPO item);

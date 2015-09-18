@@ -54,6 +54,7 @@
         update LL_Purchase
         set MngApproveStatus = #mngApproveStatus#
         where ID= #purchaseId#
+        and UpdateTime = NOW()
     </update>
 
     <select id="getPurchaseApplyRecord" resultMap="PurchaseResult">
@@ -86,6 +87,19 @@
         UpdateTime
         from LL_Purchase
         where applicant= #applicant#
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >=#po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <=#po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.auditStatus" compareValue="-1">
+            MngApproveStatus =#po.auditStatus#
+        </isGreaterThan>
         order by AddTime desc
     </select>
 
@@ -93,9 +107,22 @@
         select count(1)
         from LL_Purchase
         where applicant= #applicant#
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >=#po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <=#po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.auditStatus" compareValue="-1">
+            MngApproveStatus =#po.auditStatus#
+        </isGreaterThan>
     </select>
 
-    <select id="pagePurchaseApproveRecords" resultMap="PurchaseResult">
+    <select id="pagePurchaseAuditRecords" resultMap="PurchaseResult">
         select ID,
         Applicant,
         Dept,
@@ -103,19 +130,44 @@
         BuyType,
         BuyUser,
         Manager,
-        ExtendedPrice,
         MngApproveStatus,
         AddTime,
         UpdateTime
-        from LL_Purchase
-        where Manager= #manager#
+        from LL_Purchase applyUserId
+        where Manager =#po.manager#
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >=#po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <=#po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.applyUserId" compareValue="0">
+            Applicant =#po.applyUserId#
+        </isGreaterThan>
         order by AddTime desc
     </select>
 
-    <select id="pagePurchaseApproveRecords_count" resultClass="int">
+    <select id="pagePurchaseAuditRecords_count" resultClass="int">
         select count(1)
-        from LL_Purchase
-        where Manager= #manager#
+        from LL_Purchase applyUserId
+        where Manager =#po.manager#
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             ApplyTime >=#po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 ApplyTime <=#po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.applyUserId" compareValue="0">
+            Applicant =#po.applyUserId#
+        </isGreaterThan>
     </select>
 
     <insert id="savePurchaseApplyItem">

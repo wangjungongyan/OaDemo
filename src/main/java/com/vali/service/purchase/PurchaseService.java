@@ -1,5 +1,8 @@
 package com.vali.service.purchase;
 
+import com.leya.idal.model.PageModel;
+import com.vali.dto.purchase.PurchaseApplyQueryDTO;
+import com.vali.dto.purchase.PurchaseAuditQueryDTO;
 import com.vali.dto.purchase.PurchaseDTO;
 
 /**
@@ -8,5 +11,13 @@ import com.vali.dto.purchase.PurchaseDTO;
 public interface PurchaseService {
 
     public boolean savePurchaseApply(PurchaseDTO purchaseDTO);
+
+    public PageModel pagePurchaseApplys(PurchaseApplyQueryDTO queryDTO, int pageNo, int pageSize);
+
+    public PageModel pagePurchaseAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize);
+
+    public boolean auditPurchaseApply(int purchaseId, int mngApproveStatus);
+
+    public PurchaseDTO getPurchaseApply(int purchaseId);
 
 }

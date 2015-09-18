@@ -1,6 +1,8 @@
 package com.vali.action.purchase;
 
+import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
+import com.vali.dto.purchase.PurchaseApplyQueryDTO;
 import com.vali.dto.purchase.PurchaseAttaDTO;
 import com.vali.dto.purchase.PurchaseDTO;
 import com.vali.dto.purchase.PurchaseItemDTO;
@@ -218,11 +220,19 @@ public class PurchaseAction {
         return realUploadPath.toString();
     }
 
-    @RequestMapping(value = "/purchase/myPurchaseApplyList")
-    public ModelAndView myApplyList() {
+    @RequestMapping(value = "/purchase/myApply")
+    public ModelAndView myApplyList(PurchaseApplyQueryDTO queryDTO, Integer pageNo, Integer pageSize) {
+
+        int applicantID = LoginBO.getLoginUser().getId();
+        queryDTO.setApplicantID(applicantID);
+
+        PageModel pageModel = purchaseService.pagePurchaseApplys(queryDTO, pageNo, pageSize);
+
         Map model = new HashMap();
-        model.put("employeeHolidays", null);
-        return new ModelAndView("purchase/apply", model);
+        model.put("queryDTO", queryDTO);
+        model.put("pageModel", pageModel);
+
+        return new ModelAndView("purchase/myApply", model);
     }
 
     @RequestMapping(value = "/purchase/myPurchaseAudits")

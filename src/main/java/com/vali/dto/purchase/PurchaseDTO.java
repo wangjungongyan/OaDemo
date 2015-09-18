@@ -15,8 +15,11 @@ public class PurchaseDTO {
 
     private int id;
 
-    //申请人
+    //申请人ID
     private int applicant;
+
+    //申请人
+    private String applicantName;
 
     //申请人部门
     private String dept;
