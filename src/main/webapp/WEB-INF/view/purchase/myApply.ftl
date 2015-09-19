@@ -201,6 +201,14 @@
                         </tr>
                     </table>
                 </div>
+
+                <div class="panel panel-default">
+                    <table class="table" id="attasTable">
+                        <tr>
+                            <th>附件列表</th>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" name="closeButton" class="btn btn-default" id="closeEditButton"
@@ -307,6 +315,20 @@
                         });
                        $("#itemsTable").append(items);
                     }
+
+                    if(purchaseAttaDTOs!= ""){
+                        var attas ="";
+                        $.each(purchaseAttaDTOs,function(){
+                            var dto = this;
+                            var atta = "<tr>"
+                                    + "<td><a href='" + dto.filePath + ">" + dto.fileName + "</a></td>"
+                                    + "</tr>";
+                            attas = attas + atta;
+                        });
+                        $("#attasTable").append(attas);
+                    }
+
+                    attasTable
                 },
                 error: function () {
                     alert("出错咯，稍后再试吧.");
