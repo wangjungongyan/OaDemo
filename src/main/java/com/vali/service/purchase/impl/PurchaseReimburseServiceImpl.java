@@ -7,6 +7,7 @@ import com.vali.dto.purchase.PurchaseReimburseDTO;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.po.purchase.PurchaseReimbursePO;
 import com.vali.service.purchase.PurchaseReimburseService;
+import com.vali.service.user.remote.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -22,6 +23,8 @@ import java.util.List;
 public class PurchaseReimburseServiceImpl implements PurchaseReimburseService{
     @Resource(name = "purchaseReimburseDao")
     PurchaseReimburseDao purchaseReimburseDao;
+    @Resource(name = "employeeService")
+    EmployeeService employeeService;
     @Override
     public void savePurchaseReimburseApply(PurchaseReimburseDTO purchaseReimburseDTO) {
         PurchaseReimbursePO purchaseReimburse = new PurchaseReimbursePO();
@@ -30,7 +33,7 @@ public class PurchaseReimburseServiceImpl implements PurchaseReimburseService{
     }
 
     @Override
-    public List<PurchaseReimburseDTO> queryMyPurchaseReimburse(EmployeeDTO loginUser, int pageNo, int limit) {
+    public PageModel queryMyPurchaseReimburse(EmployeeDTO loginUser, int pageNo, int limit) {
         PageModel pageModel = purchaseReimburseDao.pagePurchaseReimburses(loginUser.getId(), pageNo, limit);
         List<PurchaseReimbursePO> purchaseReimbursePOs =(List<PurchaseReimbursePO>) pageModel.getRecords();
         if(CollectionUtils.isEmpty(purchaseReimbursePOs)){
@@ -40,8 +43,10 @@ public class PurchaseReimburseServiceImpl implements PurchaseReimburseService{
         for (PurchaseReimbursePO po:purchaseReimbursePOs){
             PurchaseReimburseDTO dto = new PurchaseReimburseDTO();
             BeanUtils.copyProperties(po,dto);
+            dto.setApplicantName(employeeService.loadEmployee(dto.getApplicant()).getChineseName());
             dtoList.add(dto);
         }
-        return dtoList;
+        pageModel.setRecords(dtoList);
+        return pageModel;
     }
 }

@@ -1,5 +1,6 @@
 package com.vali.dto.purchase;
 
+import com.vali.enums.DefaultApproveStatusEnum;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -71,4 +72,22 @@ public class PurchaseReimburseDTO {
 
     private Date updateTime;
 
+
+
+    private String applicantName;
+
+    public String getMngApproveStatusName(){
+        DefaultApproveStatusEnum defaultApproveStatusEnum = DefaultApproveStatusEnum.getApproveStatusEnum(mngApproveStatus);
+        if(defaultApproveStatusEnum==null){
+            return  "未知";
+        }
+        return defaultApproveStatusEnum.getStatusName();
+    }
+    public String getFinnaceApproveStatusName(){
+        DefaultApproveStatusEnum defaultApproveStatusEnum = DefaultApproveStatusEnum.getApproveStatusEnum(finnaceApproveStatus);
+        if(defaultApproveStatusEnum==null){
+            return  "未知";
+        }
+        return defaultApproveStatusEnum.getStatusName();
+    }
 }
