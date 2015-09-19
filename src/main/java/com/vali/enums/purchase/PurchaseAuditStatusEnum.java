@@ -5,7 +5,7 @@ package com.vali.enums.purchase;
  */
 public enum PurchaseAuditStatusEnum {
 
-    AUDITING(0, "审核中"), PASS(1, "通过"),REJECT(2, "不通过");
+    AUDITING(1, "审核中"), PASS(2, "通过"), REJECT(3, "不通过");
 
     private int type;
 
@@ -14,6 +14,17 @@ public enum PurchaseAuditStatusEnum {
     PurchaseAuditStatusEnum(int type, String desc) {
         this.type = type;
         this.desc = desc;
+    }
+
+    public static PurchaseAuditStatusEnum match(int type) {
+        PurchaseAuditStatusEnum[] enums = PurchaseAuditStatusEnum.values();
+        for (PurchaseAuditStatusEnum purchaseAuditStatusEnum : enums) {
+            if (purchaseAuditStatusEnum.getType() == type) {
+                return purchaseAuditStatusEnum;
+            }
+        }
+
+        return null;
     }
 
     public int getType() {

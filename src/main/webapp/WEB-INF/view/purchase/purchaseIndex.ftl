@@ -55,8 +55,8 @@
                     <td>
                         <div class="col-sm-3">
                             <select name="buyType" id="buyType">
-                                <option value="0">自己采购</option>
-                                <option value="1">IT采购</option>
+                                <option value="1">自己采购</option>
+                                <option value="2">IT采购</option>
                             </select>
                         </div>
                     </td>

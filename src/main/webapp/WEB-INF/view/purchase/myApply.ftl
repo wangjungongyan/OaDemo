@@ -80,27 +80,26 @@
 
 <div class="container">
 
-    <form class="form-inline" id="queryForm" action="/leave/myLeaveApply" method="post">
+    <form class="form-inline" id="queryForm" action="/purchase/myApply" method="post">
         <table>
             <tr>
                 <div class="form-group">
 
-                    <label>申请类型</label>
-                    <select id="leaveType" name="leaveType">
-                    <#list employeeHolidays as holiday>
-                        <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
-                                selected="selected" </#if>>${holiday.name}</option>
-                    </#list>
+                    <label>购买类型</label>
+                    <select id="buyType" name="buyType">
+                        <option value="0">全部</option>
+                        <option value="1" <#if queryDTO.buyType== 1> selected="selected" </#if>>自己购买</option>
+                        <option value="2" <#if queryDTO.buyType== 2> selected="selected" </#if>>IT购买</option>
                     </select>
 
                     &nbsp;&nbsp;&nbsp;
                     <label>申请时间从</label>
                     <input name="startTime" type="text" class="form_datetime" style="width: 150px;"
-                           value="<#if (queryDTO??) && queryDTO.startTime ??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+                           value="<#if (queryDTO??) && queryDTO.startTime ??>${queryDTO.startTime?string('yyyy-MM-dd')}</#if>">
 
                     <label>到</label>
                     <input name="endTime" type="text" class="form_datetime" style="width: 150px;"
-                           value="<#if (queryDTO??) && queryDTO.endTime>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+                           value="<#if (queryDTO??) && queryDTO.endTime>${queryDTO.endTime?string('yyyy-MM-dd')}</#if>">
 
                     &nbsp;&nbsp;&nbsp;
                     <button name="queryButton" type="submit" class="btn btn-default">查询</button>
@@ -122,9 +121,9 @@
         <tbody>
         <#if pageModel?? && pageModel.records?? && (pageModel.records?size>0)>
             <#list pageModel.records as myApply>
-                <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
-                <td>${myApply.leaveName}</td>
-                <td>${myApply.leaveName}</td>
+                <td>${myApply.applyTime?string('yyyy-MM-dd')}</td>
+                <td>${myApply.buyTypeName}</td>
+                <td>${myApply.mngApproveStatusName}</td>
                 <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})"
                        data-toggle="modal" data-target="#editModal">查看详情</a>
                 </td>
@@ -255,16 +254,18 @@
     var selectedApplyId = 0;
 
     $("input[name='startTime']").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii:ss',
-        minView: 0,
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        minView: 2,
         todayHighlight: true,
         todayBtn: true,
         autoclose: true
     });
 
     $("input[name='endTime']").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii:ss',
-        minView: 0,
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        minView: 2,
         todayHighlight: true,
         todayBtn: true,
         autoclose: true

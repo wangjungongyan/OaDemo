@@ -4,6 +4,8 @@ import com.leya.idal.model.PageModel;
 import com.vali.dao.purchase.PurchaseApplyDao;
 import com.vali.dto.purchase.*;
 import com.vali.dto.user.EmployeeDTO;
+import com.vali.enums.purchase.PurchaseAuditStatusEnum;
+import com.vali.enums.purchase.PurchaseBuyTypeEnum;
 import com.vali.po.purchase.*;
 import com.vali.service.purchase.PurchaseService;
 import com.vali.service.user.remote.EmployeeService;
@@ -168,6 +170,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 
             EmployeeDTO employeeDTO = employeeService.loadEmployee(dto.getApplicant());
             dto.setApplicantName(employeeDTO.getChineseName());
+
+            dto.setBuyTypeName(PurchaseBuyTypeEnum.matchType(dto.getBuyType()).getDesc());
+            dto.setMngApproveStatusName(PurchaseAuditStatusEnum.match(dto.getMngApproveStatus()).getDesc());
 
             resultDTOS.add(dto);
         }

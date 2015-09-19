@@ -5,7 +5,7 @@ package com.vali.enums.purchase;
  */
 public enum PurchaseBuyTypeEnum {
 
-    SELF(0, "自己购买"), IT(1, "IT购买");
+    ALL(0, "全部"), SELF(1, "自己购买"), IT(2, "IT购买");
 
     private int type;
 
@@ -14,6 +14,17 @@ public enum PurchaseBuyTypeEnum {
     PurchaseBuyTypeEnum(int type, String desc) {
         this.type = type;
         this.desc = desc;
+    }
+
+    public static PurchaseBuyTypeEnum matchType(int type) {
+        PurchaseBuyTypeEnum[] enums = PurchaseBuyTypeEnum.values();
+        for (PurchaseBuyTypeEnum purchaseBuyTypeEnum : enums) {
+            if (purchaseBuyTypeEnum.getType() == type) {
+                return purchaseBuyTypeEnum;
+            }
+        }
+
+        return null;
     }
 
     public int getType() {

@@ -2,6 +2,7 @@ package com.vali.action.purchase;
 
 import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
+import com.vali.bo.PageBO;
 import com.vali.dto.purchase.PurchaseApplyQueryDTO;
 import com.vali.dto.purchase.PurchaseAttaDTO;
 import com.vali.dto.purchase.PurchaseDTO;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -226,7 +228,8 @@ public class PurchaseAction {
         int applicantID = LoginBO.getLoginUser().getId();
         queryDTO.setApplicantID(applicantID);
 
-        PageModel pageModel = purchaseService.pagePurchaseApplys(queryDTO, pageNo, pageSize);
+        PageModel pageModel = purchaseService.pagePurchaseApplys(queryDTO, PageBO.getPageNo(pageNo), PageBO.getPageSize(
+                pageSize));
 
         Map model = new HashMap();
         model.put("queryDTO", queryDTO);
@@ -235,11 +238,17 @@ public class PurchaseAction {
         return new ModelAndView("purchase/myApply", model);
     }
 
-    @RequestMapping(value = "/purchase/myPurchaseAudits")
+    @RequestMapping(value = "/purchase/myAudits")
     public ModelAndView myAudits() {
         Map model = new HashMap();
         model.put("employeeHolidays", null);
         return new ModelAndView("purchase/apply", model);
+    }
+
+    @RequestMapping(value = "/purchase/ajaxGetPurchaseDeatil")
+    @ResponseBody
+    public PurchaseDTO getPurchaseDeatil(Integer purchaseId) {
+        return purchaseService.getPurchaseApply(purchaseId);
     }
 
 }

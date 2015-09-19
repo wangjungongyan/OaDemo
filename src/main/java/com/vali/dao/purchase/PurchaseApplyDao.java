@@ -26,7 +26,7 @@ public interface PurchaseApplyDao {
     public PurchasePO getPurchaseApplyRecord(@ParamName("purchaseId") int purchaseId);
 
     @Action(action = ActionType.PAGE)
-    public PageModel pagePurchaseApplyRecords(@ParamName("queryPO") PurchaseApplyQueryPO po,
+    public PageModel pagePurchaseApplyRecords(@ParamName("po") PurchaseApplyQueryPO po,
                                               @ParamName("pageNo") int pageNo,
                                               @ParamName("pageSize") int pageSize);
 

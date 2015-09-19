@@ -19,4 +19,6 @@ public class PurchaseApplyQueryPO {
 
     private int applicantID;
 
+    private int buyType;
+
 }
