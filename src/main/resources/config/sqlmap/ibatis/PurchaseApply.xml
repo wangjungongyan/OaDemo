@@ -26,6 +26,7 @@
         <result column="Quantity" property="quantity"/>
         <result column="UnitPrice" property="unitPrice"/>
         <result column="Currency" property="currency"/>
+        <result column="ExtendedPrice" property="extendedPrice"/>
         <result column="ExpDelDate" property="expDelDate"/>
         <result column="AddTime" property="addTime"/>
         <result column="UpdateTime" property="updateTime"/>

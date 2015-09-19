@@ -115,6 +115,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         PurchaseDTO purchaseDTO = new PurchaseDTO();
         ENTITY2DTO4Purchase.copy(purchasePO, purchaseDTO, null);
+        fillApplicantName(purchaseDTO);
+        fillBuyTypeName(purchaseDTO);
+        fillMngApproveStatusName(purchaseDTO);
 
         List<PurchaseAttaPO> attaPOs = purchaseApplyDao.getPurchaseAttas(purchaseId);
         purchaseDTO.setPurchaseAttaDTOs(convertAttaPOs2AttaDTOs(attaPOs));
@@ -168,11 +171,9 @@ public class PurchaseServiceImpl implements PurchaseService {
             PurchaseDTO dto = new PurchaseDTO();
             ENTITY2DTO4Purchase.copy(record, dto, null);
 
-            EmployeeDTO employeeDTO = employeeService.loadEmployee(dto.getApplicant());
-            dto.setApplicantName(employeeDTO.getChineseName());
-
-            dto.setBuyTypeName(PurchaseBuyTypeEnum.matchType(dto.getBuyType()).getDesc());
-            dto.setMngApproveStatusName(PurchaseAuditStatusEnum.match(dto.getMngApproveStatus()).getDesc());
+            fillApplicantName(dto);
+            fillBuyTypeName(dto);
+            fillMngApproveStatusName(dto);
 
             resultDTOS.add(dto);
         }
@@ -180,4 +181,18 @@ public class PurchaseServiceImpl implements PurchaseService {
         result.setRecords(resultDTOS);
         return result;
     }
+
+    private void fillBuyTypeName(PurchaseDTO dto) {
+        dto.setBuyTypeName(PurchaseBuyTypeEnum.matchType(dto.getBuyType()).getDesc());
+    }
+
+    private void fillMngApproveStatusName(PurchaseDTO dto) {
+        dto.setMngApproveStatusName(PurchaseAuditStatusEnum.match(dto.getMngApproveStatus()).getDesc());
+    }
+
+    private void fillApplicantName(PurchaseDTO dto) {
+        EmployeeDTO employeeDTO = employeeService.loadEmployee(dto.getApplicant());
+        dto.setApplicantName(employeeDTO.getChineseName());
+    }
+
 }

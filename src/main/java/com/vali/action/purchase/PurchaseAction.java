@@ -245,7 +245,7 @@ public class PurchaseAction {
         return new ModelAndView("purchase/apply", model);
     }
 
-    @RequestMapping(value = "/purchase/ajaxGetPurchaseDeatil")
+    @RequestMapping(value = "/purchase/ajaxGetPurchaseDetail")
     @ResponseBody
     public PurchaseDTO getPurchaseDeatil(Integer purchaseId) {
         return purchaseService.getPurchaseApply(purchaseId);
