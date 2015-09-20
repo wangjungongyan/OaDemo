@@ -22,7 +22,9 @@ public class PurchaseAuditQueryDTO extends QueryBaseDTO {
 
     private String applyUserName;
 
-    private int applicantID;
+    private int applyUserId;
+
+    private int manager;
 
     private int buyType;
 

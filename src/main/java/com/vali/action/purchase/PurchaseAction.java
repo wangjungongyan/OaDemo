@@ -4,10 +4,7 @@ import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
 import com.vali.bo.PageBO;
 import com.vali.bo.UploadBO;
-import com.vali.dto.purchase.PurchaseApplyQueryDTO;
-import com.vali.dto.purchase.PurchaseAttaDTO;
-import com.vali.dto.purchase.PurchaseDTO;
-import com.vali.dto.purchase.PurchaseItemDTO;
+import com.vali.dto.purchase.*;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.purchase.PurchaseAuditStatusEnum;
 import com.vali.enums.purchase.PurchaseBuyTypeEnum;
@@ -232,10 +229,18 @@ public class PurchaseAction {
     }
 
     @RequestMapping(value = "/purchase/myAudits")
-    public ModelAndView myAudits() {
+    public ModelAndView myAudits(PurchaseAuditQueryDTO queryDTO, Integer pageNo, Integer pageSize) {
+        int applicantID = LoginBO.getLoginUser().getId();
+        queryDTO.setManager(applicantID);
+
+        PageModel pageModel = purchaseService.pagePurchaseAudits(queryDTO, PageBO.getPageNo(pageNo), PageBO.getPageSize(
+                pageSize));
+
         Map model = new HashMap();
-        model.put("employeeHolidays", null);
-        return new ModelAndView("purchase/apply", model);
+        model.put("queryDTO", queryDTO);
+        model.put("pageModel", pageModel);
+
+        return new ModelAndView("purchase/myAudit", model);
     }
 
     @RequestMapping(value = "/purchase/ajaxGetPurchaseDetail")
