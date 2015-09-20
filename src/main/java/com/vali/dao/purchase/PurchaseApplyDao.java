@@ -31,9 +31,9 @@ public interface PurchaseApplyDao {
                                               @ParamName("pageSize") int pageSize);
 
     @Action(action = ActionType.PAGE)
-    public PageModel pagePurchaseAuditRecords(@ParamName("po") PurchaseAuditQueryPO po,
-                                              @ParamName("pageNo") int pageNo,
-                                              @ParamName("pageSize") int pageSize);
+    public PageModel pagePurchaseHisAuditRecords(@ParamName("po") PurchaseAuditQueryPO po,
+                                                 @ParamName("pageNo") int pageNo,
+                                                 @ParamName("pageSize") int pageSize);
 
     @Action(action = ActionType.INSERT)
     public int savePurchaseApplyItem(@ParamName("item") PurchaseItemPO item);

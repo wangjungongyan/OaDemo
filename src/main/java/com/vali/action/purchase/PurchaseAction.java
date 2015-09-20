@@ -8,6 +8,8 @@ import com.vali.dto.purchase.*;
 import com.vali.dto.user.EmployeeDTO;
 import com.vali.enums.purchase.PurchaseAuditStatusEnum;
 import com.vali.enums.purchase.PurchaseBuyTypeEnum;
+import com.vali.enums.purchase.PurchaseOperateTypeEnum;
+import com.vali.service.purchase.PurchaseOperateService;
 import com.vali.service.purchase.PurchaseService;
 import com.vali.util.FileUtil;
 import com.vali.util.TimeUtil;
@@ -40,6 +42,9 @@ public class PurchaseAction {
     @Resource(name = "purchaseService")
     private PurchaseService purchaseService;
 
+    @Resource(name = "purchaseOperateService")
+    private PurchaseOperateService purchaseOperateService;
+
     @RequestMapping(value = "/purchase/applyIndex")
     public ModelAndView index() {
         EmployeeDTO employee = LoginBO.getLoginUser();
@@ -51,12 +56,22 @@ public class PurchaseAction {
     @RequestMapping(value = "/purchase/apply", method = RequestMethod.POST)
     public ModelAndView apply(HttpServletRequest request) {
         PurchaseDTO purchaseDTO = parseFileUpload(request);
-        purchaseService.savePurchaseApply(purchaseDTO);
+        int purchaseId = purchaseService.savePurchaseApply(purchaseDTO);
+        logWhenApplyPurchase(purchaseId);
 
         EmployeeDTO employee = LoginBO.getLoginUser();
         Map model = new HashMap();
         model.put("employee", employee);
         return new ModelAndView("purchase/purchaseIndex", model);
+    }
+
+    private void logWhenApplyPurchase(int purchaseId) {
+        PurchaseOperateDetailDTO detailDTO = new PurchaseOperateDetailDTO();
+        detailDTO.setPurchaseId(purchaseId);
+        detailDTO.setOperateType(PurchaseOperateTypeEnum.COMMIT_MANAGER.getType());
+        detailDTO.setOperateId(LoginBO.getLoginUser().getId());
+        detailDTO.setOperateTime(new Date());
+        purchaseOperateService.savePurchaseOperate(detailDTO);
     }
 
     private PurchaseDTO parseFileUpload(HttpServletRequest request) {
@@ -228,13 +243,14 @@ public class PurchaseAction {
         return new ModelAndView("purchase/myApply", model);
     }
 
-    @RequestMapping(value = "/purchase/myAudits")
+    @RequestMapping(value = "/purchase/myHisAudits")
     public ModelAndView myAudits(PurchaseAuditQueryDTO queryDTO, Integer pageNo, Integer pageSize) {
         int applicantID = LoginBO.getLoginUser().getId();
         queryDTO.setManager(applicantID);
 
-        PageModel pageModel = purchaseService.pagePurchaseAudits(queryDTO, PageBO.getPageNo(pageNo), PageBO.getPageSize(
-                pageSize));
+        PageModel pageModel = purchaseService.pagePurchaseHisAudits(queryDTO, PageBO.getPageNo(pageNo),
+                                                                    PageBO.getPageSize(
+                                                                            pageSize));
 
         Map model = new HashMap();
         model.put("queryDTO", queryDTO);

@@ -184,7 +184,7 @@
         });
 
         $("#purchaseSubmitButton").click(function (e) {
-            $(this).attr("action", "/purchase/apply");
+            $("form[name='purchaseForm']").attr("action", "/purchase/apply");
 
             for (var i = 1; i <= 10; i++) {
                 var itemName = $("#itemName" + i).val();

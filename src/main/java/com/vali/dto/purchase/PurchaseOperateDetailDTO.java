@@ -19,6 +19,9 @@ public class PurchaseOperateDetailDTO {
     //操作类型
     private int operateType;
 
+    //操作类型描述
+    private String operateTypeDesc;
+
     //描述
     private String description;
 

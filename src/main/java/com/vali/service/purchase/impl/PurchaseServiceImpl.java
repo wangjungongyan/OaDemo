@@ -56,7 +56,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     private BeanCopier PAGECopier = BeanCopier.create(PageModel.class, PageModel.class, false);
 
-    @Override public boolean savePurchaseApply(PurchaseDTO purchaseDTO) {
+    @Override public int savePurchaseApply(PurchaseDTO purchaseDTO) {
 
         PurchasePO po = new PurchasePO();
         DTO2ENTITY4Purchase.copy(purchaseDTO, po, null);
@@ -82,7 +82,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             }
         }
 
-        return true;
+        return purchaseId;
     }
 
     @Override public PageModel pagePurchaseApplys(PurchaseApplyQueryDTO queryDTO, int pageNo,
@@ -94,11 +94,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         return convertEntityModel2DTOModel(queryModel);
     }
 
-    @Override public PageModel pagePurchaseAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize) {
+    @Override public PageModel pagePurchaseHisAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize) {
         PurchaseAuditQueryPO po = new PurchaseAuditQueryPO();
         DTO2ENTITY4PurchaseAuditQuery.copy(queryDTO, po, null);
 
-        PageModel queryModel = purchaseApplyDao.pagePurchaseAuditRecords(po, pageNo, pageSize);
+        PageModel queryModel = purchaseApplyDao.pagePurchaseHisAuditRecords(po, pageNo, pageSize);
         return convertEntityModel2DTOModel(queryModel);
     }
 

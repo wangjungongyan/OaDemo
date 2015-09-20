@@ -10,11 +10,11 @@ import com.vali.dto.purchase.PurchaseDTO;
  */
 public interface PurchaseService {
 
-    public boolean savePurchaseApply(PurchaseDTO purchaseDTO);
+    public int savePurchaseApply(PurchaseDTO purchaseDTO);
 
     public PageModel pagePurchaseApplys(PurchaseApplyQueryDTO queryDTO, int pageNo, int pageSize);
 
-    public PageModel pagePurchaseAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize);
+    public PageModel pagePurchaseHisAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize);
 
     public boolean auditPurchaseApply(int purchaseId, int mngApproveStatus);
 

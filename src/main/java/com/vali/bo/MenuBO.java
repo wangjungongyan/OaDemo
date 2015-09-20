@@ -44,7 +44,7 @@ public class MenuBO {
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我要请购申请","/purchase/applyIndex",4001));
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购申请","/purchase/myApply",4002));
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我要请购审批","/purchase/myAudits",4003));
-        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购审批","/purchase/myPurchaseAudits",4004));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购审批","/purchase/myHisAudits",4004));
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销申请","/purchase/reimburseApplyIndex",4005));
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购报销","/purchase/myReimburseApply",4006));
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销审核","/purchase/reimburseApproveIndex",4007));

@@ -127,68 +127,73 @@
         </isGreaterThan>
     </select>
 
-    <select id="pagePurchaseAuditRecords" resultMap="PurchaseResult">
-        select ID,
-        Applicant,
-        Dept,
-        ApplyTime,
-        BuyType,
-        BuyUser,
-        Manager,
-        MngApproveStatus,
-        AddTime,
-        UpdateTime
-        from LL_Purchase applyUserId
-        where Manager =#po.manager#
+    <select id="pagePurchaseHisAuditRecords" resultMap="PurchaseResult">
+        select distinct a.ID,
+        a.Applicant,
+        a.Dept,
+        a.ApplyTime,
+        a.BuyType,
+        a.BuyUser,
+        a.Manager,
+        a.MngApproveStatus,
+        a.AddTime,
+        a.UpdateTime
+        from LL_Purchase a,LL_PurchaseOperateDetail b
+        where a.Manager =#po.manager#
         <isNotEmpty property="po.startTime" prepend="and">
             <![CDATA[
-             ApplyTime >=#po.startTime#
+             a.ApplyTime >=#po.startTime#
              ]]>
         </isNotEmpty>
         <isNotEmpty property="po.endTime" prepend="and">
             <![CDATA[
-                 ApplyTime <=#po.endTime#
+                 a.ApplyTime <=#po.endTime#
              ]]>
         </isNotEmpty>
         <isGreaterThan prepend="and" property="po.applyUserId" compareValue="0">
-            Applicant =#po.applyUserId#
+            a.Applicant =#po.applyUserId#
         </isGreaterThan>
         <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
-            BuyType =#po.buyType#
+            a.BuyType =#po.buyType#
         </isGreaterThan>
+        and a.ID = b.PurchaseId
+        and b.OperateType in(2,3)
         order by AddTime desc
     </select>
 
-    <select id="pagePurchaseAuditRecords_count" resultClass="int">
-        select count(1)
-        from LL_Purchase
-        where Manager =#po.manager#
+    <select id="pagePurchaseHisAuditRecords_count" resultClass="int">
+        select count(distinct a.ID)
+        from LL_Purchase a,LL_PurchaseOperateDetail b
+        where a.Manager =#po.manager#
         <isNotEmpty property="po.startTime" prepend="and">
             <![CDATA[
-             ApplyTime >=#po.startTime#
+             a.ApplyTime >=#po.startTime#
              ]]>
         </isNotEmpty>
         <isNotEmpty property="po.endTime" prepend="and">
             <![CDATA[
-                 ApplyTime <=#po.endTime#
+                 a.ApplyTime <=#po.endTime#
              ]]>
         </isNotEmpty>
         <isGreaterThan prepend="and" property="po.applyUserId" compareValue="0">
-            Applicant =#po.applyUserId#
+            a.Applicant =#po.applyUserId#
         </isGreaterThan>
         <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
-            BuyType =#po.buyType#
+            a.BuyType =#po.buyType#
         </isGreaterThan>
+        and a.ID = b.PurchaseId
+        and b.OperateType in(2,3)
     </select>
 
     <insert id="savePurchaseApplyItem">
         insert into
-        LL_PurchaseItem(PurchaseId,ItemName,Quantity,UnitPrice,Currency,ExpDelDate,AddTime,UpdateTime)
+        LL_PurchaseItem(PurchaseId,ItemName,Quantity,UnitPrice,Currency,ExtendedPrice,ExpDelDate,AddTime,UpdateTime)
         values(#item.purchaseId#,
         #item.itemName#,
         #item.quantity#,
         #item.unitPrice#,
         #item.currency#,
+        #item.extendedPrice#,
         #item.expDelDate#,
         NOW(),
         NOW())

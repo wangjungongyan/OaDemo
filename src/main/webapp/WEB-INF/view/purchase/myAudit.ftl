@@ -80,7 +80,7 @@
 
 <div class="container">
 
-    <form class="form-inline" id="queryForm" action="/purchase/myAudits" method="post">
+    <form class="form-inline" id="queryForm" action="/purchase/myHisAudits" method="post">
         <table>
             <tr>
                 <div class="form-group">
