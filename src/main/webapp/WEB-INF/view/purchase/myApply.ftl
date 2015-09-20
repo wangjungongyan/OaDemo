@@ -80,27 +80,26 @@
 
 <div class="container">
 
-    <form class="form-inline" id="queryForm" action="/leave/myLeaveApply" method="post">
+    <form class="form-inline" id="queryForm" action="/purchase/myApply" method="post">
         <table>
             <tr>
                 <div class="form-group">
 
-                    <label>申请类型</label>
-                    <select id="leaveType" name="leaveType">
-                    <#list employeeHolidays as holiday>
-                        <option value="${holiday.type}" <#if queryDTO?? && queryDTO.leaveType== holiday.type>
-                                selected="selected" </#if>>${holiday.name}</option>
-                    </#list>
+                    <label>购买类型</label>
+                    <select id="buyType" name="buyType">
+                        <option value="0">全部</option>
+                        <option value="1" <#if queryDTO.buyType== 1> selected="selected" </#if>>自己购买</option>
+                        <option value="2" <#if queryDTO.buyType== 2> selected="selected" </#if>>IT购买</option>
                     </select>
 
                     &nbsp;&nbsp;&nbsp;
                     <label>申请时间从</label>
                     <input name="startTime" type="text" class="form_datetime" style="width: 150px;"
-                           value="<#if (queryDTO??) && queryDTO.startTime ??>${queryDTO.startTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+                           value="<#if (queryDTO??) && queryDTO.startTime ??>${queryDTO.startTime?string('yyyy-MM-dd')}</#if>">
 
                     <label>到</label>
                     <input name="endTime" type="text" class="form_datetime" style="width: 150px;"
-                           value="<#if (queryDTO??) && queryDTO.endTime>${queryDTO.endTime?string('yyyy-MM-dd HH:mm:ss')}</#if>">
+                           value="<#if (queryDTO??) && queryDTO.endTime>${queryDTO.endTime?string('yyyy-MM-dd')}</#if>">
 
                     &nbsp;&nbsp;&nbsp;
                     <button name="queryButton" type="submit" class="btn btn-default">查询</button>
@@ -122,9 +121,9 @@
         <tbody>
         <#if pageModel?? && pageModel.records?? && (pageModel.records?size>0)>
             <#list pageModel.records as myApply>
-                <td>${myApply.applyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
-                <td>${myApply.leaveName}</td>
-                <td>${myApply.leaveName}</td>
+                <td>${myApply.applyTime?string('yyyy-MM-dd')}</td>
+                <td>${myApply.buyTypeName}</td>
+                <td>${myApply.mngApproveStatusName}</td>
                 <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})"
                        data-toggle="modal" data-target="#editModal">查看详情</a>
                 </td>
@@ -142,7 +141,7 @@
             <div class="modal-header">
                 <button type="button" name="closeButton" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">请假详情</h4>
+                <h4 class="modal-title">请 购 详 情</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
@@ -151,7 +150,23 @@
                             <td><label class="col-sm-8 control-label">申请人</label></td>
                             <td>
                                 <div class="col-sm-3">
-                                    <input class="form-control" readonly name="applyUser"/>
+                                    <input class="form-control" readonly name="applicantName"/>
+                                </div>
+                            </td>
+                            <td><label class="col-sm-8 control-label">部门</label></td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <input class="form-control" readonly name="dept"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="col-sm-8 control-label">请购类型</label>
+                            </td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <input class="form-control" readonly name="buyTypeName">
                                 </div>
                             </td>
                             <td><label class="col-sm-8 control-label">申请时间</label></td>
@@ -163,54 +178,11 @@
                         </tr>
                         <tr>
                             <td>
-                                <label class="col-sm-8 control-label">
-                                    请假类型
-                                </label>
+                                <label class="col-sm-8 control-label">审批结果</label>
                             </td>
-                            <td>
-                                <div class="col-sm-3">
-                                    <input class="form-control" readonly name="selectedType">
-                                </div>
-                            </td>
-                            <td><label class="col-sm-8 control-label">审批结果</label></td>
                             <td>
                                 <div class="col-sm-3">
                                     <input class="form-control" readonly name="auditResult"/>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="col-sm-8 control-label">
-                                    开始时间
-                                </label>
-                            </td>
-                            <td>
-                                <div class="col-sm-3">
-                                    <input class="form-control" readonly name="leaveStartTime"/>
-                                </div>
-                            </td>
-                            <td>
-                                <label class="col-sm-8 control-label">
-                                    结束时间
-                                </label>
-                            </td>
-                            <td>
-                                <div class="col-sm-3">
-                                    <input class="form-control" readonly name="leaveEndTime"/>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="col-sm-8 control-label">
-                                    请假事由
-                                </label>
-                            </td>
-                            <td>
-                                <div class="col-sm-3">
-                                    <textarea class="form-control" rows="3" cols="40" readonly
-                                              id="leaveReason"></textarea>
                                 </div>
                             </td>
                         </tr>
@@ -218,12 +190,22 @@
                 </form>
 
                 <div class="panel panel-default">
-                    <table class="table" id="auditChainTable">
+                    <table class="table" id="itemsTable">
                         <tr>
-                            <th>审批人</th>
-                            <th>审批时间</th>
-                            <th>审批意见</th>
-                            <th>审批结果</th>
+                            <th>物品名称</th>
+                            <th>数量</th>
+                            <th>单价</th>
+                            <th>币种</th>
+                            <th>总价</th>
+                            <th>预计交货时间</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="panel panel-default">
+                    <table class="table" id="attasTable">
+                        <tr>
+                            <th>附件列表</th>
                         </tr>
                     </table>
                 </div>
@@ -255,16 +237,18 @@
     var selectedApplyId = 0;
 
     $("input[name='startTime']").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii:ss',
-        minView: 0,
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        minView: 2,
         todayHighlight: true,
         todayBtn: true,
         autoclose: true
     });
 
     $("input[name='endTime']").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii:ss',
-        minView: 0,
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        minView: 2,
         todayHighlight: true,
         todayBtn: true,
         autoclose: true
@@ -281,18 +265,6 @@
         return value;
     }
 
-    function getStatusName(status) {
-        if (status == 0) {
-            return "审核中";
-        }
-        if (status == 1) {
-            return "通过";
-        }
-        if (status == 2) {
-            return "不通过";
-        }
-    }
-
     function formatDate(originDate) {
         if (originDate == null) {
             return "/";
@@ -305,49 +277,58 @@
 
         $("a[name='showApplyDetail']").click(function () {
 
-            var url = "/leave/ajaxGetApplyDetail?applyId=" + selectedApplyId;
+            var url = "/purchase/ajaxGetPurchaseDetail?purchaseId=" + selectedApplyId;
 
             $.ajax(url, {
                 dataType: "json",
                 contentType: "application/xml",
                 method: "get",
                 success: function (result) {
-                    var applyUser = result.applicant.chineseName;
+                    var applicantName = result.applicantName;
                     var applyTime = formatDate(result.applyTime);
-                    var selectedType = result.leaveName;
-                    var auditResult = result.statusName;
-                    var leaveStartTime = formatDate(result.leaveStartTime);
-                    var leaveEndTime = formatDate(result.leaveEndTime);
-                    var leaveReason = getNullValue(result.leaveReason);
+                    var auditResult = result.mngApproveStatusName;
+                    var buyTypeName = result.buyTypeName;
+                    var dept = result.dept;
 
-                    $("input[name='applyUser']").val(applyUser);
+                    $("input[name='applicantName']").val(applicantName);
                     $("input[name='applyTime']").val(applyTime);
-                    $("input[name='selectedType']").val(selectedType);
                     $("input[name='auditResult']").val(auditResult);
-                    $("input[name='leaveStartTime']").val(leaveStartTime);
-                    $("input[name='leaveEndTime']").val(leaveEndTime);
-                    $("#leaveReason").attr("value", leaveReason);
+                    $("input[name='buyTypeName']").val(buyTypeName);
+                    $("input[name='dept']").val(dept);
 
-                    var audit = result.audit;
-                    var manager = audit.manager;
-                    var hr = audit.hr;
+                    var purchaseAttaDTOs = result.purchaseAttaDTOs;
+                    var purchaseItemDTOs= result.purchaseItemDTOs;
 
-                    var auditChain = "<tr>"
-                            + "<td>" + getNullValue(manager.chineseName) + "</td>"
-                            + "<td>" + formatDate(audit.managerAuditTime) + "</td>"
-                            + "<td>" + getNullValue(audit.managerAuditSuggest) + "</td>"
-                            + "<td>" + getStatusName(audit.managerAuditStatus) + "</td>"
-                            + "</tr>";
-                    if (audit.managerAuditStatus != 2) {//经理审核不通过
-                        auditChain = auditChain
-                                + "<tr>"
-                                + "<td>" + getNullValue(hr.chineseName) + "</td>"
-                                + "<td>" + formatDate(audit.hrAuditTime) + "</td>"
-                                + "<td>" + getNullValue(audit.hrAuditSuggest) + "</td>"
-                                + "<td>" + getStatusName(audit.hrAuditStatus) + "</td>"
-                                + "</tr>";
+                    if(purchaseItemDTOs!= ""){
+                       var items ="";
+                        $.each(purchaseItemDTOs,function(){
+                            var dto = this;
+                            var item = "<tr>"
+                                    + "<td>" + dto.itemName + "</td>"
+                                    + "<td>" + dto.quantity + "</td>"
+                                    + "<td>" + dto.unitPrice + "</td>"
+                                    + "<td>" + dto.currency + "</td>"
+                                    + "<td>" + dto.extendedPrice + "</td>"
+                                    + "<td>" + formatDate(dto.expDelDate) + "</td>"
+                                    + "</tr>";
+                            items = items + item;
+                        });
+                       $("#itemsTable").append(items);
                     }
-                    $("#auditChainTable").append(auditChain);
+
+                    if(purchaseAttaDTOs!= ""){
+                        var attas ="";
+                        $.each(purchaseAttaDTOs,function(){
+                            var dto = this;
+                            var atta = "<tr>"
+                                    + "<td><a href='" + dto.filePath + ">" + dto.fileName + "</a></td>"
+                                    + "</tr>";
+                            attas = attas + atta;
+                        });
+                        $("#attasTable").append(attas);
+                    }
+
+                    attasTable
                 },
                 error: function () {
                     alert("出错咯，稍后再试吧.");

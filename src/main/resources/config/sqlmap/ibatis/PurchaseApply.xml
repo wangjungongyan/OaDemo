@@ -26,6 +26,7 @@
         <result column="Quantity" property="quantity"/>
         <result column="UnitPrice" property="unitPrice"/>
         <result column="Currency" property="currency"/>
+        <result column="ExtendedPrice" property="extendedPrice"/>
         <result column="ExpDelDate" property="expDelDate"/>
         <result column="AddTime" property="addTime"/>
         <result column="UpdateTime" property="updateTime"/>
@@ -84,7 +85,7 @@
         AddTime,
         UpdateTime
         from LL_Purchase
-        where applicant= #applicant#
+        where applicant= #po.applicantID#
         <isNotEmpty property="po.startTime" prepend="and">
             <![CDATA[
              ApplyTime >=#po.startTime#
@@ -95,8 +96,11 @@
                  ApplyTime <=#po.endTime#
              ]]>
         </isNotEmpty>
-        <isGreaterThan prepend="and" property="po.auditStatus" compareValue="-1">
+        <isGreaterThan prepend="and" property="po.auditStatus" compareValue="0">
             MngApproveStatus =#po.auditStatus#
+        </isGreaterThan>
+        <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
+            BuyType =#po.buyType#
         </isGreaterThan>
         order by AddTime desc
     </select>
@@ -104,7 +108,7 @@
     <select id="pagePurchaseApplyRecords_count" resultClass="int">
         select count(1)
         from LL_Purchase
-        where applicant= #applicant#
+        where applicant= #po.applicantID#
         <isNotEmpty property="po.startTime" prepend="and">
             <![CDATA[
              ApplyTime >=#po.startTime#
@@ -115,8 +119,11 @@
                  ApplyTime <=#po.endTime#
              ]]>
         </isNotEmpty>
-        <isGreaterThan prepend="and" property="po.auditStatus" compareValue="-1">
+        <isGreaterThan prepend="and" property="po.auditStatus" compareValue="0">
             MngApproveStatus =#po.auditStatus#
+        </isGreaterThan>
+        <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
+            BuyType =#po.buyType#
         </isGreaterThan>
     </select>
 
@@ -146,6 +153,9 @@
         <isGreaterThan prepend="and" property="po.applyUserId" compareValue="0">
             Applicant =#po.applyUserId#
         </isGreaterThan>
+        <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
+            BuyType =#po.buyType#
+        </isGreaterThan>
         order by AddTime desc
     </select>
 
@@ -165,6 +175,9 @@
         </isNotEmpty>
         <isGreaterThan prepend="and" property="po.applyUserId" compareValue="0">
             Applicant =#po.applyUserId#
+        </isGreaterThan>
+        <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
+            BuyType =#po.buyType#
         </isGreaterThan>
     </select>
 

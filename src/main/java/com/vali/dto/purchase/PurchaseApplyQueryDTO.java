@@ -24,6 +24,8 @@ public class PurchaseApplyQueryDTO extends QueryBaseDTO {
 
     private int applicantID;
 
+    private int buyType;
+
     public PurchaseApplyQueryDTO() {
     }
 
@@ -41,6 +43,7 @@ public class PurchaseApplyQueryDTO extends QueryBaseDTO {
 
         query.append("auditStatus=" + auditStatus);
         query.append("&applicantID=" + applicantID);
+        query.append("&buyType=" + buyType);
 
         this.queryCondition = query.toString();
     }

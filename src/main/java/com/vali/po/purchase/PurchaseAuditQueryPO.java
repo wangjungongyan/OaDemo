@@ -21,4 +21,6 @@ public class PurchaseAuditQueryPO {
 
     private int manager;
 
+    private int buyType;
+
 }

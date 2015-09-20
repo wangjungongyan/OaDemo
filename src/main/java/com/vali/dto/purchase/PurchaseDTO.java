@@ -31,6 +31,9 @@ public class PurchaseDTO {
     //请购类型
     private int buyType;
 
+    //请购类型名
+    private String buyTypeName;
+
     //最终购买人
     private int buyUser;
 
@@ -40,14 +43,13 @@ public class PurchaseDTO {
     //上级审批状态
     private int mngApproveStatus;
 
+    //上级审批状态
+    private String mngApproveStatusName;
+
     //请购申请条目
     private List<PurchaseItemDTO> purchaseItemDTOs;
 
     //请购申请附件
     private List<PurchaseAttaDTO> purchaseAttaDTOs;
-
-    private Date addTime;
-
-    private Date updateTime;
 
 }

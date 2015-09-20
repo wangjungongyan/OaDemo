@@ -4,6 +4,8 @@ import com.leya.idal.model.PageModel;
 import com.vali.dao.purchase.PurchaseApplyDao;
 import com.vali.dto.purchase.*;
 import com.vali.dto.user.EmployeeDTO;
+import com.vali.enums.purchase.PurchaseAuditStatusEnum;
+import com.vali.enums.purchase.PurchaseBuyTypeEnum;
 import com.vali.po.purchase.*;
 import com.vali.service.purchase.PurchaseService;
 import com.vali.service.user.remote.EmployeeService;
@@ -113,6 +115,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         PurchaseDTO purchaseDTO = new PurchaseDTO();
         ENTITY2DTO4Purchase.copy(purchasePO, purchaseDTO, null);
+        fillApplicantName(purchaseDTO);
+        fillBuyTypeName(purchaseDTO);
+        fillMngApproveStatusName(purchaseDTO);
 
         List<PurchaseAttaPO> attaPOs = purchaseApplyDao.getPurchaseAttas(purchaseId);
         purchaseDTO.setPurchaseAttaDTOs(convertAttaPOs2AttaDTOs(attaPOs));
@@ -166,8 +171,9 @@ public class PurchaseServiceImpl implements PurchaseService {
             PurchaseDTO dto = new PurchaseDTO();
             ENTITY2DTO4Purchase.copy(record, dto, null);
 
-            EmployeeDTO employeeDTO = employeeService.loadEmployee(dto.getApplicant());
-            dto.setApplicantName(employeeDTO.getChineseName());
+            fillApplicantName(dto);
+            fillBuyTypeName(dto);
+            fillMngApproveStatusName(dto);
 
             resultDTOS.add(dto);
         }
@@ -175,4 +181,18 @@ public class PurchaseServiceImpl implements PurchaseService {
         result.setRecords(resultDTOS);
         return result;
     }
+
+    private void fillBuyTypeName(PurchaseDTO dto) {
+        dto.setBuyTypeName(PurchaseBuyTypeEnum.matchType(dto.getBuyType()).getDesc());
+    }
+
+    private void fillMngApproveStatusName(PurchaseDTO dto) {
+        dto.setMngApproveStatusName(PurchaseAuditStatusEnum.match(dto.getMngApproveStatus()).getDesc());
+    }
+
+    private void fillApplicantName(PurchaseDTO dto) {
+        EmployeeDTO employeeDTO = employeeService.loadEmployee(dto.getApplicant());
+        dto.setApplicantName(employeeDTO.getChineseName());
+    }
+
 }
