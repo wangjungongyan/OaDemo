@@ -121,12 +121,12 @@
         <tbody>
         <#if pageModel?? && pageModel.records?? && (pageModel.records?size>0)>
             <#list pageModel.records as myApply>
-                <td>${myApply.applyTime?string('yyyy-MM-dd')}</td>
-                <td>${myApply.buyTypeName}</td>
-                <td>${myApply.mngApproveStatusName}</td>
-                <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})"
-                       data-toggle="modal" data-target="#editModal">查看详情</a>
-                </td>
+            <td>${myApply.applyTime?string('yyyy-MM-dd')}</td>
+            <td>${myApply.buyTypeName}</td>
+            <td>${myApply.mngApproveStatusName}</td>
+            <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})"
+                   data-toggle="modal" data-target="#editModal">查看详情</a>
+            </td>
             </tr>
             </#list>
         </#if>
@@ -210,6 +210,7 @@
                     </table>
                 </div>
             </div>
+
             <div class="modal-footer">
                 <button type="button" name="closeButton" class="btn btn-default" id="closeEditButton"
                         data-dismiss="modal">关闭
@@ -297,13 +298,13 @@
                     $("input[name='dept']").val(dept);
 
                     var purchaseAttaDTOs = result.purchaseAttaDTOs;
-                    var purchaseItemDTOs= result.purchaseItemDTOs;
+                    var purchaseItemDTOs = result.purchaseItemDTOs;
 
                     if(purchaseItemDTOs!= ""){
-                       var items ="";
+                        var items ="";
                         $.each(purchaseItemDTOs,function(){
                             var dto = this;
-                            var item = "<tr>"
+                            var item = "<tr name='item'>"
                                     + "<td>" + dto.itemName + "</td>"
                                     + "<td>" + dto.quantity + "</td>"
                                     + "<td>" + dto.unitPrice + "</td>"
@@ -313,7 +314,7 @@
                                     + "</tr>";
                             items = items + item;
                         });
-                       $("#itemsTable").append(items);
+                        $("#itemsTable").append(items);
                     }
 
                     if(purchaseAttaDTOs!= ""){
@@ -321,14 +322,13 @@
                         $.each(purchaseAttaDTOs,function(){
                             var dto = this;
                             var atta = "<tr>"
-                                    + "<td><a href='" + dto.filePath + ">" + dto.fileName + "</a></td>"
+                                    + "<td><a href='" + dto.filePath + "'>" + dto.fileName + "</a></td>"
                                     + "</tr>";
                             attas = attas + atta;
                         });
                         $("#attasTable").append(attas);
                     }
 
-                    attasTable
                 },
                 error: function () {
                     alert("出错咯，稍后再试吧.");
@@ -337,11 +337,19 @@
         });
 
         $("button[name='closeButton']").click(function () {
-            var removeSize = 0;
-            while (removeSize < 2) {
-                ++removeSize;
-                $("#auditChainTable tr:last").remove();
-            }
+            $.each($("#attasTable").children().children(), function () {
+                var tdlength = $(this).find("td").length;
+                if (tdlength > 0) {
+                    this.remove();
+                }
+            });
+
+            $.each($("#itemsTable").children().children(), function () {
+                var tdlength = $(this).find("td").length;
+                if (tdlength > 0) {
+                    this.remove();
+                }
+            })
         });
     });
 

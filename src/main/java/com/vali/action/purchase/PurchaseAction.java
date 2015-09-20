@@ -3,6 +3,7 @@ package com.vali.action.purchase;
 import com.leya.idal.model.PageModel;
 import com.vali.bo.LoginBO;
 import com.vali.bo.PageBO;
+import com.vali.bo.UploadBO;
 import com.vali.dto.purchase.PurchaseApplyQueryDTO;
 import com.vali.dto.purchase.PurchaseAttaDTO;
 import com.vali.dto.purchase.PurchaseDTO;
@@ -36,14 +37,6 @@ import java.util.*;
 public class PurchaseAction {
 
     @Setter
-    @Value("${temp.upload.path}")
-    private String tempPath;
-
-    @Setter
-    @Value("${real.upload.path}")
-    private String realPath;
-
-    @Setter
     @Value("${root.upload.path}")
     private String rootPath;
 
@@ -71,12 +64,12 @@ public class PurchaseAction {
 
     private PurchaseDTO parseFileUpload(HttpServletRequest request) {
 
-        FileUtil.createFolder(rootPath + tempPath);
-        FileUtil.createFolder(rootPath + realPath);
+        FileUtil.createFolder(rootPath + UploadBO.getTempPath());
+        FileUtil.createFolder(rootPath + UploadBO.getRealPath());
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(5 * 1024);
-        factory.setRepository(new File(rootPath + tempPath));
+        factory.setRepository(new File(rootPath + UploadBO.getTempPath()));
         ServletFileUpload upload = new ServletFileUpload(factory);
         upload.setSizeMax(1024 * 1024);
 
@@ -108,7 +101,7 @@ public class PurchaseAction {
                 PurchaseAttaDTO atta = this.preparePurchaseAtta(item.getName());
                 attas.add(atta);
 
-                item.write(new File(rootPath + realPath + atta.getFilePath()));
+                item.write(new File(rootPath + UploadBO.getRealPath() + atta.getFilePath()));
             }
 
             purchaseDTO.setPurchaseItemDTOs(preparePurchaseItems(items));

@@ -1,6 +1,7 @@
 package com.vali.service.purchase.impl;
 
 import com.leya.idal.model.PageModel;
+import com.vali.bo.UploadBO;
 import com.vali.dao.purchase.PurchaseApplyDao;
 import com.vali.dto.purchase.*;
 import com.vali.dto.user.EmployeeDTO;
@@ -152,10 +153,16 @@ public class PurchaseServiceImpl implements PurchaseService {
         for (PurchaseAttaPO attaPO : attaPOs) {
             PurchaseAttaDTO attaDTO = new PurchaseAttaDTO();
             ENTITY2DTO4PurchaseAtta.copy(attaPO, attaDTO, null);
+            this.fillCompleteFilePath(attaDTO);
             attaDTOs.add(attaDTO);
         }
 
         return attaDTOs;
+    }
+
+    private void fillCompleteFilePath(PurchaseAttaDTO attaDTO) {
+        String filePath = attaDTO.getFilePath();
+        attaDTO.setFilePath("http://lloa.com" + UploadBO.getRealPath() + filePath);
     }
 
     private PageModel convertEntityModel2DTOModel(PageModel queryModel) {
