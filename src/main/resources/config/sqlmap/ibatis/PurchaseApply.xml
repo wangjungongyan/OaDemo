@@ -53,9 +53,9 @@
 
     <update id="updateMngApproveStatus">
         update LL_Purchase
-        set MngApproveStatus = #mngApproveStatus#
+        set MngApproveStatus = #mngApproveStatus#,
+        UpdateTime = NOW()
         where ID= #purchaseId#
-        and UpdateTime = NOW()
     </update>
 
     <select id="getPurchaseApplyRecord" resultMap="PurchaseResult">
@@ -124,6 +124,62 @@
         </isGreaterThan>
         <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
             BuyType =#po.buyType#
+        </isGreaterThan>
+    </select>
+
+    <select id="pagePurchaseAuditRecords" resultMap="PurchaseResult">
+        select distinct a.ID,
+        a.Applicant,
+        a.Dept,
+        a.ApplyTime,
+        a.BuyType,
+        a.BuyUser,
+        a.Manager,
+        a.MngApproveStatus,
+        a.AddTime,
+        a.UpdateTime
+        from LL_Purchase a
+        where a.Manager =#po.manager#
+        and a.MngApproveStatus = 1
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             a.ApplyTime >=#po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 a.ApplyTime <=#po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.applyUserId" compareValue="0">
+            a.Applicant =#po.applyUserId#
+        </isGreaterThan>
+        <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
+            a.BuyType =#po.buyType#
+        </isGreaterThan>
+        order by AddTime desc
+    </select>
+
+    <select id="pagePurchaseAuditRecords_count" resultClass="int">
+        select count(distinct a.ID)
+        from LL_Purchase a
+        where a.Manager =#po.manager#
+        and a.MngApproveStatus = 1
+        <isNotEmpty property="po.startTime" prepend="and">
+            <![CDATA[
+             a.ApplyTime >=#po.startTime#
+             ]]>
+        </isNotEmpty>
+        <isNotEmpty property="po.endTime" prepend="and">
+            <![CDATA[
+                 a.ApplyTime <=#po.endTime#
+             ]]>
+        </isNotEmpty>
+        <isGreaterThan prepend="and" property="po.applyUserId" compareValue="0">
+            a.Applicant =#po.applyUserId#
+        </isGreaterThan>
+        <isGreaterThan prepend="and" property="po.buyType" compareValue="0">
+            a.BuyType =#po.buyType#
         </isGreaterThan>
     </select>
 

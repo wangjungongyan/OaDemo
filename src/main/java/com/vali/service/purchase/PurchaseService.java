@@ -14,6 +14,8 @@ public interface PurchaseService {
 
     public PageModel pagePurchaseApplys(PurchaseApplyQueryDTO queryDTO, int pageNo, int pageSize);
 
+    public PageModel pagePurchaseAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize);
+
     public PageModel pagePurchaseHisAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize);
 
     public boolean auditPurchaseApply(int purchaseId, int mngApproveStatus);

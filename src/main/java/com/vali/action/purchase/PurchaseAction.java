@@ -57,7 +57,7 @@ public class PurchaseAction {
     public ModelAndView apply(HttpServletRequest request) {
         PurchaseDTO purchaseDTO = parseFileUpload(request);
         int purchaseId = purchaseService.savePurchaseApply(purchaseDTO);
-        logWhenApplyPurchase(purchaseId);
+        logPurchaseDetail(purchaseId, PurchaseOperateTypeEnum.COMMIT_MANAGER.getType(), "");
 
         EmployeeDTO employee = LoginBO.getLoginUser();
         Map model = new HashMap();
@@ -65,12 +65,13 @@ public class PurchaseAction {
         return new ModelAndView("purchase/purchaseIndex", model);
     }
 
-    private void logWhenApplyPurchase(int purchaseId) {
+    private void logPurchaseDetail(int purchaseId, int operateType, String desc) {
         PurchaseOperateDetailDTO detailDTO = new PurchaseOperateDetailDTO();
         detailDTO.setPurchaseId(purchaseId);
-        detailDTO.setOperateType(PurchaseOperateTypeEnum.COMMIT_MANAGER.getType());
+        detailDTO.setOperateType(operateType);
         detailDTO.setOperateId(LoginBO.getLoginUser().getId());
         detailDTO.setOperateTime(new Date());
+        detailDTO.setDescription(desc);
         purchaseOperateService.savePurchaseOperate(detailDTO);
     }
 
@@ -243,20 +244,51 @@ public class PurchaseAction {
         return new ModelAndView("purchase/myApply", model);
     }
 
-    @RequestMapping(value = "/purchase/myHisAudits")
+    @RequestMapping(value = "/purchase/myAudits")
     public ModelAndView myAudits(PurchaseAuditQueryDTO queryDTO, Integer pageNo, Integer pageSize) {
         int applicantID = LoginBO.getLoginUser().getId();
         queryDTO.setManager(applicantID);
 
-        PageModel pageModel = purchaseService.pagePurchaseHisAudits(queryDTO, PageBO.getPageNo(pageNo),
-                                                                    PageBO.getPageSize(
-                                                                            pageSize));
+        PageModel pageModel = purchaseService.pagePurchaseAudits(queryDTO, PageBO.getPageNo(pageNo),
+                                                                 PageBO.getPageSize(
+                                                                         pageSize)
+        );
 
         Map model = new HashMap();
         model.put("queryDTO", queryDTO);
         model.put("pageModel", pageModel);
 
         return new ModelAndView("purchase/myAudit", model);
+    }
+
+    @RequestMapping(value = "/purchase/myHisAudits")
+    public ModelAndView myHisAudits(PurchaseAuditQueryDTO queryDTO, Integer pageNo, Integer pageSize) {
+        int applicantID = LoginBO.getLoginUser().getId();
+        queryDTO.setManager(applicantID);
+
+        PageModel pageModel = purchaseService.pagePurchaseHisAudits(queryDTO, PageBO.getPageNo(pageNo),
+                                                                    PageBO.getPageSize(
+                                                                            pageSize)
+        );
+
+        Map model = new HashMap();
+        model.put("queryDTO", queryDTO);
+        model.put("pageModel", pageModel);
+
+        return new ModelAndView("purchase/myHisAudit", model);
+    }
+
+    @RequestMapping(value = "/purchase/ajaxAudit", produces = { "text/javascript;charset=UTF-8" })
+    @ResponseBody
+    public String auditPurchaseApply(Integer purchaseId, Integer auditStatus, String auditSuggest) {
+        boolean updated = purchaseService.auditPurchaseApply(purchaseId, auditStatus);
+
+        if (!updated) {
+            return "操作失败，稍后再试.";
+        }
+
+        this.logPurchaseDetail(purchaseId, auditStatus, auditSuggest);
+        return "操作成功";
     }
 
     @RequestMapping(value = "/purchase/ajaxGetPurchaseDetail")

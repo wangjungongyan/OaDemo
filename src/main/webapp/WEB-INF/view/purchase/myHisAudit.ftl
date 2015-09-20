@@ -80,7 +80,7 @@
 
 <div class="container">
 
-    <form class="form-inline" id="queryForm" action="/purchase/myAudits" method="post">
+    <form class="form-inline" id="queryForm" action="/purchase/myHisAudits" method="post">
         <table>
             <tr>
                 <div class="form-group">
@@ -121,13 +121,12 @@
         <tbody>
         <#if pageModel?? && pageModel.records?? && (pageModel.records?size>0)>
             <#list pageModel.records as myApply>
-            <tr id="apply${myApply.id}">
-                <td>${myApply.applyTime?string('yyyy-MM-dd')}</td>
-                <td>${myApply.buyTypeName}</td>
-                <td>${myApply.mngApproveStatusName}</td>
-                <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})"
-                       data-toggle="modal" data-target="#editModal">查看详情</a>
-                </td>
+            <td>${myApply.applyTime?string('yyyy-MM-dd')}</td>
+            <td>${myApply.buyTypeName}</td>
+            <td>${myApply.mngApproveStatusName}</td>
+            <td><a href="javascript:void(0)" name="showApplyDetail" onclick="getSelectedApplyId(${myApply.id})"
+                   data-toggle="modal" data-target="#editModal">查看详情</a>
+            </td>
             </tr>
             </#list>
         </#if>
@@ -187,25 +186,6 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <label class="col-sm-8 control-label">
-                                    审批意见
-                                </label>
-                            </td>
-                            <td>
-                                <div class="col-sm-3">
-                                    <textarea class="form-control" rows="3" cols="40" id="suggest"></textarea>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align:center">
-                                <button type="button" name="auditButton" class="btn btn-success" value="2">审批通过</button>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="button" name="auditButton" class="btn btn-danger" value="3">审批不通过</button>
-                            </td>
-                        </tr>
                     </table>
                 </form>
 
@@ -232,7 +212,6 @@
             </div>
 
             <div class="modal-footer">
-                <div id="alertSucess" class='alert alert-sucess' role='alert' style='text-align: center;'></div>
                 <button type="button" name="closeButton" class="btn btn-default" id="closeEditButton"
                         data-dismiss="modal">关闭
                 </button>
@@ -295,10 +274,6 @@
         return new Date(parseInt(originDate)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
     }
 
-    function hideModal() {
-        $('#editModal').modal('hide');
-    }
-
     $(document).ready(function () {
 
         $("a[name='showApplyDetail']").click(function () {
@@ -325,9 +300,9 @@
                     var purchaseAttaDTOs = result.purchaseAttaDTOs;
                     var purchaseItemDTOs = result.purchaseItemDTOs;
 
-                    if (purchaseItemDTOs != "") {
-                        var items = "";
-                        $.each(purchaseItemDTOs, function () {
+                    if(purchaseItemDTOs!= ""){
+                        var items ="";
+                        $.each(purchaseItemDTOs,function(){
                             var dto = this;
                             var item = "<tr name='item'>"
                                     + "<td>" + dto.itemName + "</td>"
@@ -342,9 +317,9 @@
                         $("#itemsTable").append(items);
                     }
 
-                    if (purchaseAttaDTOs != "") {
-                        var attas = "";
-                        $.each(purchaseAttaDTOs, function () {
+                    if(purchaseAttaDTOs!= ""){
+                        var attas ="";
+                        $.each(purchaseAttaDTOs,function(){
                             var dto = this;
                             var atta = "<tr>"
                                     + "<td><a href='" + dto.filePath + "'>" + dto.fileName + "</a></td>"
@@ -376,36 +351,6 @@
                 }
             })
         });
-
-        $("button[name='auditButton']").click(function () {
-            var auditStatus = $(this).val();
-            var suggest = $("#suggest").val();
-            var url = "/purchase/ajaxAudit";
-            var alertSucess = $("#alertSucess");
-
-            $.ajax(url, {
-                dataType: "text",
-                contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                type: "post",
-                data: {
-                    "purchaseId": selectedApplyId,
-                    "auditStatus": auditStatus,
-                    "auditSuggest": suggest
-                },
-                success: function (msg) {
-                    alertSucess.text(msg).show().delay(2000).hide(0);
-                    var selelctedTr = "#apply" + selectedApplyId;
-                    $(selelctedTr).remove();
-                    setTimeout(hideModal, 2500);
-                },
-                error: function (msg) {
-                    alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
-                    setTimeout(hideModal, 2500);
-                }
-            });
-
-        });
-
     });
 
 </script>

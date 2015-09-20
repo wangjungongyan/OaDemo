@@ -94,6 +94,14 @@ public class PurchaseServiceImpl implements PurchaseService {
         return convertEntityModel2DTOModel(queryModel);
     }
 
+    @Override public PageModel pagePurchaseAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize) {
+        PurchaseAuditQueryPO po = new PurchaseAuditQueryPO();
+        DTO2ENTITY4PurchaseAuditQuery.copy(queryDTO, po, null);
+
+        PageModel queryModel = purchaseApplyDao.pagePurchaseAuditRecords(po, pageNo, pageSize);
+        return convertEntityModel2DTOModel(queryModel);
+    }
+
     @Override public PageModel pagePurchaseHisAudits(PurchaseAuditQueryDTO queryDTO, int pageNo, int pageSize) {
         PurchaseAuditQueryPO po = new PurchaseAuditQueryPO();
         DTO2ENTITY4PurchaseAuditQuery.copy(queryDTO, po, null);
