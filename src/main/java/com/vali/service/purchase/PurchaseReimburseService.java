@@ -13,4 +13,12 @@ public interface PurchaseReimburseService {
     void savePurchaseReimburseApply(PurchaseReimburseDTO purchaseReimburseDTO);
 
     PageModel queryMyPurchaseReimburse(EmployeeDTO loginUser, int pageNo, int limit);
+
+    PageModel queryPreApprove(EmployeeDTO loginUser, Integer pageNo, int limit);
+
+    PageModel queryMyApprove(EmployeeDTO loginUser, Integer pageNo, int limit);
+
+    PurchaseReimburseDTO queryPurchaseReimburse(Integer applyId);
+
+    void doPurchaseReimburseApprove(EmployeeDTO loginUser, Integer applyId, Integer status, String mark, String approveType);
 }
