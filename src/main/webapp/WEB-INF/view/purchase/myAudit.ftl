@@ -394,9 +394,11 @@
                 },
                 success: function (msg) {
                     alertSucess.text(msg).show().delay(2000).hide(0);
-                    var selelctedTr = "#apply" + selectedApplyId;
-                    $(selelctedTr).remove();
-                    setTimeout(hideModal, 2500);
+                    if (msg == '操作成功') {
+                        var selelctedTr = "#apply" + selectedApplyId;
+                        $(selelctedTr).remove();
+                        setTimeout(hideModal, 2500);
+                    }
                 },
                 error: function (msg) {
                     alertSucess.text("操作失败，稍后再试吧.").show().delay(2000).hide(0);
