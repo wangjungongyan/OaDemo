@@ -67,7 +67,7 @@
         NOW(),
         NOW())
 
-        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+        <selectKey resultClass="java.lang.Integer" keyProperty="purchaseReimburse.id">
             SELECT @@IDENTITY AS ff
         </selectKey>
     </insert>
@@ -129,7 +129,7 @@
         where Applicant = #applicant#
     </select>
 
-    <select id="pagePurchaseReimburseManagerApproves" resultMap="PurchaseReimburseResult">
+    <select id="pagePurchaseReimbursePreApproves" resultMap="PurchaseReimburseResult">
         select ID,
          PurchaseId,
          Applicant,
@@ -151,14 +151,14 @@
          AddTime,
          UpdateTime
         from LL_PurchaseReimburse
-        where Manager = #manager#
+        where Manager = #approveUserId# or FinnaceUserId = #approveUserId#
         order by AddTime desc
     </select>
 
-    <select id="pagePurchaseReimburseManagerApproves_count" resultClass="int">
+    <select id="pagePurchaseReimbursePreApproves_count" resultClass="int">
         select count(1)
         from LL_PurchaseReimburse
-        where Manager = #manager#
+        where Manager = #approveUserId# or FinnaceUserId = #approveUserId#
     </select>
 
     <select id="pagePurchaseReimburseFinnaceApproves" resultMap="PurchaseReimburseResult">
@@ -202,6 +202,11 @@
     <update id="updateFinnaceApproveStatus">
         update LL_PurchaseReimburse
         set FinnaceApproveStatus =  #finnaceApproveStatus#
+        where ID = #reimburseId#
+    </update>
+    <update id="updatePurchaseReimburseStatus">
+        update LL_PurchaseReimburse
+        set status =  #status#
         where ID = #reimburseId#
     </update>
 

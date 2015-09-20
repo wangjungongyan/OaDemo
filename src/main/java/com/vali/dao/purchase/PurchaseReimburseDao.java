@@ -20,7 +20,7 @@ public interface PurchaseReimburseDao {
     public int savePurchaseReimburse(@ParamName("purchaseReimburse") PurchaseReimbursePO purchaseReimburse);
 
     @Action(action = ActionType.QUERY_LIST)
-    public List<PurchasePO> getPurchaseReimburse(@ParamName("applicant") int applicant);
+    public List<PurchaseReimbursePO> getPurchaseReimburse(@ParamName("applicant") int applicant);
 
     @Action(action = ActionType.PAGE)
     public PageModel pagePurchaseReimburses(@ParamName("applicant") int applicant,
@@ -28,20 +28,25 @@ public interface PurchaseReimburseDao {
                                             @ParamName("pageSize") int pageSize);
 
     @Action(action = ActionType.PAGE)
-    public PageModel pagePurchaseReimburseManagerApproves(@ParamName("manager") int manager,
+    public PageModel pagePurchaseReimbursePreApproves(@ParamName("approveUserId") int approveUserId,
                                                           @ParamName("pageNo") int pageNo,
                                                           @ParamName("pageSize") int pageSize);
 
-    @Action(action = ActionType.PAGE)
-    public PageModel pagePurchaseReimburseFinnaceApproves(@ParamName("finnaceUserId") int finnaceUserId,
-                                                          @ParamName("pageNo") int pageNo,
-                                                          @ParamName("pageSize") int pageSize);
+//    @Action(action = ActionType.PAGE)
+//    public PageModel pagePurchaseReimburseFinnaceApproves(@ParamName("finnaceUserId") int finnaceUserId,
+//                                                          @ParamName("pageNo") int pageNo,
+//                                                          @ParamName("pageSize") int pageSize);
 
     @Action(action = ActionType.UPDATE)
     public int updateMngApproveStatus(@ParamName("reimburseId") int reimburseId,
                                       @ParamName("mngApproveStatus") int mngApproveStatus);
 
     @Action(action = ActionType.UPDATE)
+    public int updatePurchaseReimburseStatus(@ParamName("reimburseId") int reimburseId,
+                                          @ParamName("status") int status);
+
+    @Action(action = ActionType.UPDATE)
     public int updateFinnaceApproveStatus(@ParamName("reimburseId") int reimburseId,
                                           @ParamName("finnaceApproveStatus") int finnaceApproveStatus);
+
 }

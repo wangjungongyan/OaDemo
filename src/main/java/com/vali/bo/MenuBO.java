@@ -47,8 +47,8 @@ public class MenuBO {
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购审批","/purchase/myPurchaseAudits",4004));
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销申请","/purchase/reimburseApplyIndex",4005));
         firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("我的请购报销","/purchase/myReimburseApply",4006));
-        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销审核","/purchase/approveIndex",4007));
-        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销查询","/purchase/myApprove",4008));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销审核","/purchase/reimburseApproveIndex",4007));
+        firstMenuDTO1.addSecondMenuDTO(getSecondMenuDTO("请购报销查询","/purchase/myReimburseApprove",4008));
         return firstMenuDTO1;
     }
     //请假管理
